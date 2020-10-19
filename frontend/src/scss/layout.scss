@@ -1,0 +1,28 @@
+body {
+   font-size: 16px;
+   transition: all 0.3s ease;
+   background-color: $bodyColorDark;
+}
+*::-webkit-scrollbar {
+   width: 3px;
+   background-color: $bodyColorDark;
+}
+*::-webkit-scrollbar-thumb {
+   border-radius: 10px;
+   background-color: $scrollbarThumb;
+}
+.wrapper {
+   width: 100%;
+   min-height: 100%;
+   overflow: hidden;
+   display: flex;
+   flex-direction: column;
+}
+.container {
+   max-width: $maxWidthContainer;
+   margin: 0 auto;
+}
+.page {
+   padding-top: 130px;
+   flex: 1 1 auto;
+}

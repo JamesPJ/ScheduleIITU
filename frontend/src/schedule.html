@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ru">
+@@include('_head.html',{
+"title":"Schedule IITU"
+})
+
+<body id="schedule-page">
+   <div class="wrapper">
+      @@include('_header_staff.html',{})
+      <main class="page">
+         <div class="schedule">
+            <div class="schedule__container">
+               <h1 class="schedule__title page-title"><i class="fas fa-users"></i> CSSE-1803K</h1>
+               <div class="schedule__slider">
+                  <div class="schedule__slider_indicator" id="schedule-indicator"></div>
+                  <button class="schedule__slider_btn" data-day="0" disabled>
+                     <span class="schedule__slider_btn--title--expand">Monday</span>
+                     <span class="schedule__slider_btn--title--tablet">Mon</span>
+                     <span class="schedule__slider_btn--title--mobile">M</span>
+                  </button>
+                  <button class="schedule__slider_btn" data-day="1" disabled>
+                     <span class="schedule__slider_btn--title--expand">Tuesday</span>
+                     <span class="schedule__slider_btn--title--tablet">Tue</span>
+                     <span class="schedule__slider_btn--title--mobile">Tu</span>
+                  </button>
+                  <button class="schedule__slider_btn" data-day="2" disabled>
+                     <span class="schedule__slider_btn--title--expand">Wednesday</span>
+                     <span class="schedule__slider_btn--title--tablet">Wed</span>
+                     <span class="schedule__slider_btn--title--mobile">W</span>
+                  </button>
+                  <button class="schedule__slider_btn" data-day="3" disabled>
+                     <span class="schedule__slider_btn--title--expand">Thursday</span>
+                     <span class="schedule__slider_btn--title--tablet">Thu</span>
+                     <span class="schedule__slider_btn--title--mobile">Th</span>
+                  </button>
+                  <button class="schedule__slider_btn" data-day="4" disabled>
+                     <span class="schedule__slider_btn--title--expand">Friday</span>
+                     <span class="schedule__slider_btn--title--tablet">Fri</span>
+                     <span class="schedule__slider_btn--title--mobile">F</span>
+                  </button>
+                  <button class="schedule__slider_btn" data-day="5" disabled>
+                     <span class="schedule__slider_btn--title--expand">Saturday</span>
+                     <span class="schedule__slider_btn--title--tablet">Sat</span>
+                     <span class="schedule__slider_btn--title--mobile">St</span>
+                  </button>
+                  <!-- <button class="schedule__slider_btn" data-day="6" disabled>
+                     <span class="schedule__slider_btn--title--expand">Sunday</span>
+                     <span class="schedule__slider_btn--title--tablet">Sun</span>
+                     <span class="schedule__slider_btn--title--mobile">Sn</span>
+                  </button> -->
+               </div>
+
+               <div class="schedule__timetable">
+                  <div class="schedule__time">
+                     <div class="schedule__time_elem time__elem" data-start="08:00" data-end="08:50">
+                        <span class="time__elem_start"></span>
+                        <span class="time__elem_end"></span>
+                     </div>
+                     <div class="schedule__time_elem time__elem" data-start="09:00" data-end="09:50">
+                        <span class="time__elem_start"></span>
+                        <span class="time__elem_end"></span>
+                     </div>
+                     <div class="schedule__time_elem time__elem" data-start="10:00" data-end="10:50">
+                        <span class="time__elem_start"></span>
+                        <span class="time__elem_end"></span>
+                     </div>
+                     <div class="schedule__time_elem time__elem" data-start="11:00" data-end="11:50">
+                        <span class="time__elem_start"></span>
+                        <span class="time__elem_end"></span>
+                     </div>
+                     <div class="schedule__time_elem time__elem" data-start="12:10" data-end="13:00">
+                        <span class="time__elem_start"></span>
+                        <span class="time__elem_end"></span>
+                     </div>
+                     <div class="schedule__time_elem time__elem" data-start="13:10" data-end="14:00">
+                        <span class="time__elem_start"></span>
+                        <span class="time__elem_end"></span>
+                     </div>
+                     <div class="schedule__time_elem time__elem" data-start="14:10" data-end="15:00">
+                        <span class="time__elem_start"></span>
+                        <span class="time__elem_end"></span>
+                     </div>
+                     <div class="schedule__time_elem time__elem" data-start="15:10" data-end="16:00">
+                        <span class="time__elem_start"></span>
+                        <span class="time__elem_end"></span>
+                     </div>
+                  </div>
+
+                  <div class="schedule__list">
+                     <div class="schedule__column schedule-day active" data-day="0">
+                        <div class="schedule-day__subj" data-start="08:00" data-end="08:50">
+                           <button class="schedule-day__subj_content schedule-subj">
+                              <span class="schedule-subj__teacher">Sapakova S.Z</span>
+                              <span class="schedule-subj__class">301</span>
+                              <span class="schedule-subj__name">Operating System</span>
+                              <span class="schedule-subj__type">Lecture</span>
+                              <span class="schedule-subj__time"></span>
+                              <ul class="schedule-subj__groups">
+                                 <li class="schedule-subj__groups_elem">CSSE-1801K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1802K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1803K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1804K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1805K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1806K</li>
+                                 <li class="schedule-subj__groups_elem">IT2CCO-2001</li>
+                              </ul>
+                           </button>
+                        </div>
+
+                        <div class="schedule-day__subj" data-start="09:00" data-end="09:50">
+                           <button class="schedule-day__subj_content schedule-subj">
+                              <span class="schedule-subj__teacher">Mukazhanov N.K</span>
+                              <span class="schedule-subj__class">301</span>
+                              <span class="schedule-subj__name">Web Technologies</span>
+                              <span class="schedule-subj__type">Lecture</span>
+                              <span class="schedule-subj__time"></span>
+                              <ul class="schedule-subj__groups">
+                                 <li class="schedule-subj__groups_elem">CSSE-1801K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1802K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1803K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1804K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1805K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1806K</li>
+                                 <li class="schedule-subj__groups_elem">IT2CCO-2001</li>
+                              </ul>
+                           </button>
+                        </div>
+
+                        <div class="schedule-day__subj" data-start="10:00" data-end="10:50">
+                           <button class="schedule-day__subj_content schedule-subj">
+                              <span class="schedule-subj__teacher">Dauletbek E.T</span>
+                              <span class="schedule-subj__class">800</span>
+                              <span class="schedule-subj__name">Microsoft .NET Framework</span>
+                              <span class="schedule-subj__type">Lecture</span>
+                              <span class="schedule-subj__time"></span>
+                              <ul class="schedule-subj__groups">
+                                 <li class="schedule-subj__groups_elem">CSSE-1801K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1802K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1803K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1804K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1805K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1806K</li>
+                                 <li class="schedule-subj__groups_elem">IT2CCO-2001</li>
+                              </ul>
+                           </button>
+                        </div>
+
+                        <div class="schedule-day__subj schedule-day__subj_empty" data-start="11:00" data-end="11:50">
+                        </div>
+
+                        <div class="schedule-day__subj" data-start="12:10" data-end="13:00">
+                           <button class="schedule-day__subj_content schedule-subj">
+                              <span class="schedule-subj__teacher">Coursera</span>
+                              <span class="schedule-subj__class">901</span>
+                              <span class="schedule-subj__name">Architecture and Organization of Computer Systems</span>
+                              <span class="schedule-subj__type">Lecture</span>
+                              <span class="schedule-subj__time"></span>
+                              <ul class="schedule-subj__groups">
+                                 <li class="schedule-subj__groups_elem">CSSE-1801K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1802K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1803K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1804K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1805K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1806K</li>
+                              </ul>
+                           </button>
+                        </div>
+
+                        <div class="schedule-day__subj" data-start="13:10" data-end="14:00">
+                           <button class="schedule-day__subj_content schedule-subj">
+                              <span class="schedule-subj__teacher">Coursera</span>
+                              <span class="schedule-subj__class">903</span>
+                              <span class="schedule-subj__name">Architecture and Organization of Computer Systems</span>
+                              <span class="schedule-subj__type">Practice</span>
+                              <span class="schedule-subj__time"></span>
+                              <ul class="schedule-subj__groups">
+                                 <li class="schedule-subj__groups_elem">CSSE-1801K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1802K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1803K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1804K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1805K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1806K</li>
+                              </ul>
+                           </button>
+                        </div>
+
+                        <div class="schedule-day__subj" data-start="14:10" data-end="15:00">
+                           <button class="schedule-day__subj_content schedule-subj">
+                              <span class="schedule-subj__teacher">Coursera</span>
+                              <span class="schedule-subj__class">903</span>
+                              <span class="schedule-subj__name">Architecture and Organization of Computer Systems</span>
+                              <span class="schedule-subj__type">Lab</span>
+                              <span class="schedule-subj__time"></span>
+                              <ul class="schedule-subj__groups">
+                                 <li class="schedule-subj__groups_elem">CSSE-1801K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1802K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1803K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1804K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1805K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1806K</li>
+                              </ul>
+                           </button>
+                        </div>
+
+                        <div class="schedule-day__subj" data-start="15:10" data-end="16:00">
+                           <button class="schedule-day__subj_content schedule-subj">
+                              <span class="schedule-subj__teacher">Coursera</span>
+                              <span class="schedule-subj__class">902</span>
+                              <span class="schedule-subj__name">Architecture and Organization of Computer Systems</span>
+                              <span class="schedule-subj__type">Lab</span>
+                              <span class="schedule-subj__time"></span>
+                              <ul class="schedule-subj__groups">
+                                 <li class="schedule-subj__groups_elem">CSSE-1801K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1802K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1803K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1804K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1805K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1806K</li>
+                              </ul>
+                           </button>
+                        </div>
+                     </div>
+
+                     <div class="schedule__column schedule-day" data-day="1">
+                        <div class="schedule-day__subj" data-start="08:00" data-end="08:50">
+                           <button class="schedule-day__subj_content schedule-subj">
+                              <span class="schedule-subj__teacher">Zhuanyshev I.O</span>
+                              <span class="schedule-subj__class">404</span>
+                              <span class="schedule-subj__name">Java EE Web-Component Developer</span>
+                              <span class="schedule-subj__type">Practice</span>
+                              <span class="schedule-subj__time"></span>
+                              <ul class="schedule-subj__groups">
+                                 <li class="schedule-subj__groups_elem">CSSE-1803K</li>
+                              </ul>
+                           </button>
+                        </div>
+
+                        <div class="schedule-day__subj" data-start="09:00" data-end="09:50">
+                           <button class="schedule-day__subj_content schedule-subj">
+                              <span class="schedule-subj__teacher">Zhuanyshev I.O</span>
+                              <span class="schedule-subj__class">404</span>
+                              <span class="schedule-subj__name">Java EE Web-Component Developer</span>
+                              <span class="schedule-subj__type">Lab</span>
+                              <span class="schedule-subj__time"></span>
+                              <ul class="schedule-subj__groups">
+                                 <li class="schedule-subj__groups_elem">CSSE-1803K</li>
+                              </ul>
+                           </button>
+                        </div>
+
+                        <div class="schedule-day__subj" data-start="10:00" data-end="11:50">
+                           <button class="schedule-day__subj_content schedule-subj">
+                              <span class="schedule-subj__teacher">Zhuanyshev I.O</span>
+                              <span class="schedule-subj__class">404</span>
+                              <span class="schedule-subj__name">Java EE Web-Component Developer</span>
+                              <span class="schedule-subj__type">Lab</span>
+                              <span class="schedule-subj__time"></span>
+                              <ul class="schedule-subj__groups">
+                                 <li class="schedule-subj__groups_elem">CSSE-1803K</li>
+                              </ul>
+                           </button>
+                        </div>
+                     </div>
+
+                     <div class="schedule__column schedule-day" data-day="2">
+                        <div class="schedule-day__subj" data-start="08:00" data-end="08:50">
+                           <button class="schedule-day__subj_content schedule-subj">
+                              <span class="schedule-subj__teacher">Zhuanyshev I.O</span>
+                              <span class="schedule-subj__class">301</span>
+                              <span class="schedule-subj__name">Java EE Web-Component Developer</span>
+                              <span class="schedule-subj__type">Lecture</span>
+                              <span class="schedule-subj__time"></span>
+                              <ul class="schedule-subj__groups">
+                                 <li class="schedule-subj__groups_elem">CSSE-1801K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1802K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1803K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1804K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1805K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1806K</li>
+                              </ul>
+                           </button>
+                        </div>
+
+                        <div class="schedule-day__subj" data-start="09:00" data-end="09:50">
+                           <button class="schedule-day__subj_content schedule-subj">
+                              <span class="schedule-subj__teacher">Sapakova S.Z</span>
+                              <span class="schedule-subj__class">408</span>
+                              <span class="schedule-subj__name">Operating System</span>
+                              <span class="schedule-subj__type">Practice</span>
+                              <span class="schedule-subj__time"></span>
+                              <ul class="schedule-subj__groups">
+                                 <li class="schedule-subj__groups_elem">CSSE-1803K</li>
+                              </ul>
+                           </button>
+                        </div>
+
+                        <div class="schedule-day__subj" data-start="10:00" data-end="10:50">
+                           <button class="schedule-day__subj_content schedule-subj">
+                              <span class="schedule-subj__teacher">Sapakova S.Z</span>
+                              <span class="schedule-subj__class">408</span>
+                              <span class="schedule-subj__name">Operating System</span>
+                              <span class="schedule-subj__type">Lab</span>
+                              <span class="schedule-subj__time"></span>
+                              <ul class="schedule-subj__groups">
+                                 <li class="schedule-subj__groups_elem">CSSE-1803K</li>
+                              </ul>
+                           </button>
+                        </div>
+
+                        <div class="schedule-day__subj" data-start="11:00" data-end="11:50">
+                           <button class="schedule-day__subj_content schedule-subj">
+                              <span class="schedule-subj__teacher">Sapakova S.Z</span>
+                              <span class="schedule-subj__class">408</span>
+                              <span class="schedule-subj__name">Operating System</span>
+                              <span class="schedule-subj__type">Lab</span>
+                              <span class="schedule-subj__time"></span>
+                              <ul class="schedule-subj__groups">
+                                 <li class="schedule-subj__groups_elem">CSSE-1803K</li>
+                              </ul>
+                           </button>
+                        </div>
+
+                        <div class="schedule-day__subj" data-start="12:10" data-end="13:00">
+                           <button class="schedule-day__subj_content schedule-subj">
+                              <span class="schedule-subj__teacher">Kalpeyeva Z.B</span>
+                              <span class="schedule-subj__class">800</span>
+                              <span class="schedule-subj__name">Software Development Tools</span>
+                              <span class="schedule-subj__type">Lecture</span>
+                              <span class="schedule-subj__time"></span>
+                              <ul class="schedule-subj__groups">
+                                 <li class="schedule-subj__groups_elem">CSSE-1801K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1802K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1803K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1804K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1805K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1806K</li>
+                                 <li class="schedule-subj__groups_elem">CSSE-1815KCCO</li>
+                              </ul>
+                           </button>
+                        </div>
+                     </div>
+
+                     <div class="schedule__column schedule-day" data-day="3">
+                        <div class="schedule-day__subj" data-start="08:00" data-end="08:50">
+                           <button class="schedule-day__subj_content schedule-subj ongoing">
+                              <span class="schedule-subj__teacher">Alpysbay N.E</span>
+                              <span class="schedule-subj__class">405</span>
+                              <span class="schedule-subj__name">Web Technologies</span>
+                              <span class="schedule-subj__type">Practice</span>
+                              <span class="schedule-subj__time"></span>
+                              <ul class="schedule-subj__groups">
+                                 <li class="schedule-subj__groups_elem">CSSE-1803K</li>
+                              </ul>
+                           </button>
+                        </div>
+
+                        <div class="schedule-day__subj" data-start="09:00" data-end="09:50">
+                           <button class="schedule-day__subj_content schedule-subj soon">
+                              <span class="schedule-subj__teacher">Alpysbay N.E</span>
+                              <span class="schedule-subj__class">405</span>
+                              <span class="schedule-subj__name">Web Technologies</span>
+                              <span class="schedule-subj__type">Lab</span>
+                              <span class="schedule-subj__time"></span>
+                              <ul class="schedule-subj__groups">
+                                 <li class="schedule-subj__groups_elem">CSSE-1803K</li>
+                              </ul>
+                           </button>
+                        </div>
+
+                        <div class="schedule-day__subj" data-start="10:00" data-end="10:50">
+                           <button class="schedule-day__subj_content schedule-subj">
+                              <span class="schedule-subj__teacher">Alpysbay N.E</span>
+                              <span class="schedule-subj__class">405</span>
+                              <span class="schedule-subj__name">Web Technologies</span>
+                              <span class="schedule-subj__type">Lab</span>
+                              <span class="schedule-subj__time"></span>
+                              <ul class="schedule-subj__groups">
+                                 <li class="schedule-subj__groups_elem">CSSE-1803K</li>
+                              </ul>
+                           </button>
+                        </div>
+
+                        <div class="schedule-day__subj" data-start="11:00" data-end="11:50">
+                           <button class="schedule-day__subj_content schedule-subj">
+                              <span class="schedule-subj__teacher">Bolshibayeva A.K</span>
+                              <span class="schedule-subj__class">405</span>
+                              <span class="schedule-subj__name">Software Development Tools</span>
+                              <span class="schedule-subj__type">Lab</span>
+                              <span class="schedule-subj__time"></span>
+                              <ul class="schedule-subj__groups">
+                                 <li class="schedule-subj__groups_elem">CSSE-1803K</li>
+                              </ul>
+                           </button>
+                        </div>
+
+                        <div class="schedule-day__subj" data-start="12:10" data-end="13:00">
+                           <button class="schedule-day__subj_content schedule-subj">
+                              <span class="schedule-subj__teacher">Bolshibayeva A.K</span>
+                              <span class="schedule-subj__class">405</span>
+                              <span class="schedule-subj__name">Software Development Tools</span>
+                              <span class="schedule-subj__type">Lab</span>
+                              <span class="schedule-subj__time"></span>
+                              <ul class="schedule-subj__groups">
+                                 <li class="schedule-subj__groups_elem">CSSE-1803K</li>
+                              </ul>
+                           </button>
+                        </div>
+                     </div>
+
+                     <div class="schedule__column schedule-day" data-day="4"></div>
+
+                     <div class="schedule__column schedule-day" data-day="5">
+                        <div class="schedule-day__subj" data-start="08:00" data-end="10:50">
+                           <button class="schedule-day__subj_content schedule-subj">
+                              <span class="schedule-subj__teacher">Sagalova A.S</span>
+                              <span class="schedule-subj__class">401</span>
+                              <span class="schedule-subj__name">Microsoft .NET Framework</span>
+                              <span class="schedule-subj__type">Practice</span>
+                              <span class="schedule-subj__time"></span>
+                              <ul class="schedule-subj__groups">
+                                 <li class="schedule-subj__groups_elem">CSSE-1803K</li>
+                              </ul>
+                           </button>
+                        </div>
+
+                        <div class="schedule-day__subj" data-start="09:00" data-end="09:50">
+                           <button class="schedule-day__subj_content schedule-subj">
+                              <span class="schedule-subj__teacher">Sagalova A.S</span>
+                              <span class="schedule-subj__class">401</span>
+                              <span class="schedule-subj__name">Microsoft .NET Framework</span>
+                              <span class="schedule-subj__type">Lab</span>
+                              <span class="schedule-subj__time"></span>
+                              <ul class="schedule-subj__groups">
+                                 <li class="schedule-subj__groups_elem">CSSE-1803K</li>
+                              </ul>
+                           </button>
+                        </div>
+
+                        <div class="schedule-day__subj" data-start="10:00" data-end="10:50">
+                           <button class="schedule-day__subj_content schedule-subj">
+                              <span class="schedule-subj__teacher">Sagalova A.S</span>
+                              <span class="schedule-subj__class">401</span>
+                              <span class="schedule-subj__name">Microsoft .NET Framework</span>
+                              <span class="schedule-subj__type">Lab</span>
+                              <span class="schedule-subj__time"></span>
+                              <ul class="schedule-subj__groups">
+                                 <li class="schedule-subj__groups_elem">CSSE-1803K</li>
+                              </ul>
+                           </button>
+                        </div>
+                     </div>
+
+                     <!-- <div class="schedule__column schedule-day"></div> -->
+                  </div>
+
+                  <div class="schedule__modal" id="schedule-modal">
+                     <div class="schedule__modal_content modal-content">
+                        <button class="close-modal" onclick="subjModalClose()"><i class="fas fa-times"></i></button>
+                        <h1 class="modal-content__subj" id="modal-subj-name"></h1>
+                        <p class="modal-content__time" id="modal-time">
+                           <span class="modal-content__time_start"></span>
+                           <span class="modal-content__time_end"></span>
+                        </p>
+                        <div class="modal-content__block">
+                           <h2 class="modal-content__block_title" id="modal-groups-title">Group</h2>
+                           <ul class="modal-content__block_list" id="modal-groups">
+                              <li class="modal-content__block_elem"></li>
+                           </ul>
+                        </div>
+                        <div class="modal-content__block">
+                           <h2 class="modal-content__block_title">Teacher</h2>
+                           <p class="modal-content__block_text" id="modal-teacher-name"></p>
+                        </div>
+                        <div class="modal-content__block">
+                           <h2 class="modal-content__block_title">Subject Type</h2>
+                           <p class="modal-content__block_text" id="modal-subj-type"></p>
+                        </div>
+                        <div class="modal-content__block mbc">
+                           <h2 class="modal-content__block_title">Classroom</h2>
+                           <p class="modal-content__block_text" id="modal-classroom"></p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </main>
+      @@include('_footer.html',{})
+   </div>
+   @@include('_js.html',{})
+</body>
+
+</html>

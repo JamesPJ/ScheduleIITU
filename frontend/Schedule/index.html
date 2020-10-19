@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<title>Schedule IITU</title>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="css/style.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://kit.fontawesome.com/dc04de3ae3.js" crossorigin="anonymous"></script>
+</head>
+
+<body id="home-page">
+
+	<div id="bg">
+		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920"
+			height="1080" preserveAspectRatio="none" viewBox="0 0 1920 1080">
+			<g>
+				<path class="leftTop" d="M0,652.378C121.267,679.866,253.674,622.703,348.489,542.259C438.917,465.537,449.91,335.835,499.862,228.279C550.216,
+					119.856,660.336,25.833,643.283,-92.49C626.23,-210.813,496.095,-271.76,415.122,-359.706C337.044,-444.507,281.712,-553.593,
+					176.136,-599.865C64.165,-648.94,-66.106,-658.94,-182.533,-621.65C-297.728,-584.754,-385.44,-493.628,-457.914,
+					-396.785C-526.708,-304.86,-563.369,-196.879,-584.831,-84.086C-607.145,33.185,-650.301,167.396,-584.178,266.785C-517.788,
+					366.574,-359.896,338.334,-259.866,404.36C-157.865,471.687,-119.193,625.36,0,652.378">
+				</path>
+				<path class="rightBottom" d="M1920 1751.613C2047.62 1743.821 2075.745 1556.7060000000001 2173.077 1473.795 2252.104 
+					1406.4769999999999 2376.325 1401.204 2433.2619999999997 1314.399 2492.925 1223.439 2500.2380000000003 
+					1106.474 2484.626 998.819 2469.025 891.242 2410.863 798.126 2345.768 711.0699999999999 2276.424 618.331 
+					2203.571 523.171 2096.32 479.51 1983.671 433.65099999999995 1847.704 409.246 1739.163 464.125 1632.842 
+					517.882 1604.019 652.294 1547.333 757.082 1502.836 839.3389999999999 1474.66 923.398 1443.094 1011.431 
+					1402.6680000000001 1124.174 1290.384 1235.963 1335.897 1346.751 1380.992 1456.522 1548.718 1438.356 
+					1646.252 1505.96 1749.099 1577.247 1795.096 1759.239 1920 1751.613">
+				</path>
+			</g>
+		</svg>
+	</div>
+
+	<div class="wrapper">
+		<header class="header">
+	<div class="header__content container">
+		<a href="index.html" class="header__logo"><img src="img/logo.png" alt="Logo"></a>
+		<nav class="header__menu menu">
+			<div class="menu__lang lang">
+				<button class="lang__btn lang__btn_drop" onclick="langDropDown()">
+					<span class="lang__btn_title">En</span>
+					<span class="lang__btn_down">
+						<svg fill="#fff" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+							xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 491.996 491.996"
+							style="enable-background:new 0 0 491.996 491.996;" xml:space="preserve">
+							<g>
+								<g>
+									<path d="M484.132,124.986l-16.116-16.228c-5.072-5.068-11.82-7.86-19.032-7.86c-7.208,0-13.964,2.792-19.036,7.86l-183.84,183.848
+									L62.056,108.554c-5.064-5.068-11.82-7.856-19.028-7.856s-13.968,2.788-19.036,7.856l-16.12,16.128
+									c-10.496,10.488-10.496,27.572,0,38.06l219.136,219.924c5.064,5.064,11.812,8.632,19.084,8.632h0.084
+									c7.212,0,13.96-3.572,19.024-8.632l218.932-219.328c5.072-5.064,7.856-12.016,7.864-19.224
+									C491.996,136.902,489.204,130.046,484.132,124.986z" />
+								</g>
+							</g>
+						</svg>
+					</span>
+				</button>
+				<div class="lang__dropdown" id="lang-dropdown">
+					<a href="" class="lang__btn">
+						<span class="lang__btn_title">Ru</span>
+					</a>
+					<a href="" class="lang__btn">
+						<span class="lang__btn_title">Kz</span>
+					</a>
+				</div>
+			</div>
+		</nav>
+	</div>
+</header>
+		<main class="page">
+			<div class="search">
+				<h1 class="search__title">What are you looking for?</h1>
+				<form action="search.html" class="search__form">
+					<input name="keyword" type="text" placeholder="Group, Teacher, Room..." required autocomplete="off"
+						onfocus="bgAnimate()" onfocusout="bgAnimate()">
+					<button type="submit"><i class="fas fa-search"></i></button>
+				</form>
+				<h2 class="search__subtitle">Or</h2>
+				<a href="select.html" class="search__openid"><i class="fab fa-microsoft"></i> OpenID</a>
+			</div>
+		</main>
+		<footer class="footer">
+	<div class="footer__content container">
+		<p class="footer__content_text">
+			All rights reserved &copy;
+			<a href="https://github.com/hypev" target="_blank">kurr</a>
+			2020
+		</p>
+	</div>
+</footer>
+	</div>
+	<script src="js/app.min.js"></script>
+</body>
+
+</html>

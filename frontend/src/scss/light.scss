@@ -1,0 +1,113 @@
+@media (prefers-color-scheme: light) {
+   body {
+      background-color: $bodyColorLight;
+      select {
+         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      }
+      .menu__btn {
+         color: #000;
+         &:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+         }
+      }
+      .page-title {
+         color: #000;
+      }
+      &#home-page #bg svg {
+         .leftTop {
+            fill: $homeBgColorLightLT;
+         }
+         .rightBottom {
+            fill: $homeBgColorLightRB;
+         }
+      }
+      &#home-page .search {
+         color: #000;
+         &__openid {
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+         }
+         &__form {
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+         }
+      }
+      &#schedule-page {
+         .schedule {
+            .time__elem span {
+               color: #000;
+            }
+            &-day__subj_content {
+               background: $cellColorLight;
+            }
+         }
+         .modal-content {
+            background-color: #f8f9f9;
+            color: #000;
+            .close-modal {
+               color: #000;
+            }
+            &__block {
+               color: #000;
+               background-color: #f8f9f9;
+               box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+               &_title {
+                  color: rgb(75, 74, 74);
+               }
+            }
+         }
+      }
+      &#search-page {
+         .search__item {
+            background: $searchItemColorLight;
+         }
+      }
+      &#select-page {
+         .select__title {
+            color: #000;
+         }
+      }
+      &#profile-page {
+         .profile {
+            color: #000;
+            &__container {
+               background-color: #f8f9f9;
+               box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+            }
+            &__nav {
+               background-color: #f2f3f5;
+               &_link {
+                  color: #000;
+                  &.active {
+                     background-color: rgba(0, 0, 0, 0.1);
+                     &:hover {
+                        background-color: rgba(0, 0, 0, 0.1);
+                     }
+                  }
+                  &:hover {
+                     background-color: rgba(0, 0, 0, 0.05);
+                  }
+               }
+            }
+            &__content {
+               background-color: #fff;
+            }
+            &__block {
+               color: #000;
+               background-color: #f8f9f9;
+               box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+               &_subtitle {
+                  color: rgb(75, 74, 74);
+               }
+            }
+         }
+      }
+      .footer__content_text {
+         color: #000;
+         & a {
+            color: #000;
+         }
+      }
+   }
+   *::-webkit-scrollbar {
+      background-color: $bodyColorLight;
+   }
+}

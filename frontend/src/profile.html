@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+@@include('_head.html',{
+"title":"Schedule IITU"
+})
+
+<body id="profile-page">
+   <div class="wrapper">
+      @@include('_header_staff.html',{})
+      <main class="page">
+         <div class="profile">
+            <div class="profile__container">
+               <div class="profile__nav">
+                  <a href="#" class="profile__nav_link active">
+                     <span class="lg">Profile</span>
+                     <span class="sm"><i class="fas fa-cog"></i></span>
+                  </a>
+                  <a href="schedule.html" class="profile__nav_link">
+                     <span class="lg">Schedule</span>
+                     <span class="sm"><i class="fas fa-calendar-alt"></i></span>
+                  </a>
+                  <a href="exams.html" class="profile__nav_link">
+                     <span class="lg">Exams</span>
+                     <span class="sm"><i class="fas fa-file-alt"></i></span>
+                  </a>
+               </div>
+               <div class="profile__content">
+                  <h1 class="profile__content_title">Personal info</h1>
+                  <div class="profile__block">
+                     <h2 class="profile__block_title">Fullname</h2>
+                     <p class="profile__block_subtitle">Kurbanali Ruslan</p>
+                  </div>
+                  <div class="profile__block">
+                     <h2 class="profile__block_title">E-Mail</h2>
+                     <p class="profile__block_subtitle">26459@edu.iitu.kz</p>
+                  </div>
+                  <h1 class="profile__content_title">Group</h1>
+                  <div class="profile__block">
+                     <form action="#" class="profile__form">
+                        <select id="course">
+                           <option disabled>Course</option>
+                           <option value="1">1</option>
+                           <option value="2">2</option>
+                           <option selected value="3">3</option>
+                           <option value="4">4</option>
+                        </select>
+                        <select id="speciality">
+                           <option disabled>Speciality</option>
+                           <option value="CS">CS</option>
+                           <option value="CSp">CSp</option>
+                           <option selected value="CSSE">CSSE</option>
+                           <option value="dCSSE">dCSSE</option>
+                           <option value="IS">IS</option>
+                           <option value="dIS">dIS</option>
+                           <option value="SIS">SIS</option>
+                           <option value="RET">RET</option>
+                           <option value="MCM">MCM</option>
+                           <option value="FIN">FIN</option>
+                           <option value="ITM">ITM</option>
+                           <option value="JUR">JUR</option>
+                        </select>
+                        <select id="group" disabled>
+                           <option disabled>Group</option>
+                           <option value="CSSE-1801K">CSSE-1801K</option>
+                           <option value="CSSE-1802K">CSSE-1802K</option>
+                           <option selected value="CSSE-1803K">CSSE-1803K</option>
+                           <option value="CSSE-1804K">CSSE-1804K</option>
+                           <option value="CSSE-1805K">CSSE-1805K</option>
+                           <option value="CSSE-1806K">CSSE-1806K</option>
+                           <option value="CSSE-1807K">CSSE-1807K</option>
+                           <option value="CSSE-1808K">CSSE-1808K</option>
+                           <option value="CSSE-1809K">CSSE-1809K</option>
+                           <option value="CSSE-1810K">CSSE-1810K</option>
+                           <option value="CSSE-1811R">CSSE-1811R</option>
+                           <option value="CSSE-1812R">CSSE-1812R</option>
+                        </select>
+                        <button type="submit" class="profile__form_btn profile__form_save">Save</button>
+                     </form>
+                  </div>
+                  <form action="#" class="profile__form">
+                     <button type="submit" class="profile__form_btn profile__form_logout">Log out</button>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </main>
+      @@include('_footer.html',{})
+   </div>
+   @@include('_js.html',{})
+</body>
+
+</html>
