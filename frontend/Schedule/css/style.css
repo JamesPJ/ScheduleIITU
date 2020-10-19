@@ -1345,6 +1345,69 @@ body#profile-page .page {
   margin-left: auto;
 }
 
+.exams__container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.exams__list {
+  padding: 40px;
+}
+
+.exams__elem {
+  width: 100%;
+  background-color: #36393f;
+  color: #fff;
+  padding: 40px;
+  margin: 40px 0;
+  border-radius: 10px;
+}
+
+.exams__elem:first-child {
+  margin-top: 0;
+}
+
+.exams__elem:last-child {
+  margin-bottom: 0;
+}
+
+.exams__elem_subj {
+  text-align: center;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.exams__blocks {
+  margin-top: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.exams__block {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 40%;
+          flex: 1 1 40%;
+  min-width: 40%;
+  margin: 10px;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #292b2f;
+}
+
+.exams__block_title {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.exams__block_text {
+  font-size: 18px;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
 @media (max-width: 991.98px) {
   .schedule__slider {
     border-radius: 40px;
@@ -1525,6 +1588,24 @@ body#profile-page .page {
   .profile__form_logout {
     margin-top: 0;
   }
+
+  .exams__container {
+    width: 95%;
+  }
+
+  .exams__list {
+    padding: 20px;
+  }
+
+  .exams__elem {
+    padding: 30px;
+  }
+
+  .exams__block {
+    -webkit-box-flex: 1;
+        -ms-flex: 1 1 100%;
+            flex: 1 1 100%;
+  }
 }
 
 @media (max-width: 479.98px) {
@@ -1603,6 +1684,24 @@ body#profile-page .page {
 
   .profile__container {
     width: 95%;
+  }
+
+  .exams__list {
+    padding: 0;
+  }
+
+  .exams__elem {
+    padding: 10px;
+  }
+
+  .exams__elem_subj {
+    font-size: 18px;
+    padding: 0 20px;
+    padding-top: 20px;
+  }
+
+  .exams__block {
+    padding: 10px;
   }
 }
 
@@ -1729,6 +1828,20 @@ body#profile-page .page {
 
   body#profile-page .profile__block_subtitle {
     color: #4b4a4a;
+  }
+
+  body#exams-page .exams__elem {
+    color: #000;
+    background-color: #f8f9f9;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  }
+
+  body#exams-page .exams__block {
+    color: #000;
+    background-color: #f8f9f9;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   }
 
   body .footer__content_text {
