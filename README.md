@@ -4,8 +4,8 @@
 
 # Kurbanali Ruslan :atom_symbol:
 #### *Group: CSSE-1803K*
-#### *Discepline "Web Technologies*
-*__Builded Front-end Part on ScheduleIITU/frontend/Schedule/ path__*
+#### *Discepline "Web Technologies"*
+*__Builded Front-end Part on ScheduleIITU/frontend/Schedule/__*
 
 # Introduction
 The main idea is to simplify the work for those who draw up the schedule of our university, that is, to provide more functionality for the Dean's office, as well as teachers. Convenience and updated design for new standards will be a plus for students, and not only for students.
