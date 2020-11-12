@@ -1,0 +1,23 @@
+.error {
+   background-color: rgba($color: $error, $alpha: 1);
+   color: $textDark;
+}
+select {
+   font-family: $fontFamily;
+   font-size: 16px;
+   line-height: 1;
+   padding: 10px 25px;
+   border-radius: 5px;
+   position: relative;
+   cursor: pointer;
+   background-color: #fff;
+   @media (prefers-color-scheme: dark) {
+      box-shadow: none;
+   }
+   box-shadow: $shadow;
+   transition: all 0.3s ease;
+   appearance: caret;
+   &:disabled {
+      background-color: #dddddd;
+   }
+}

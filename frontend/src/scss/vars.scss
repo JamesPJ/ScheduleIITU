@@ -6,52 +6,29 @@ $md2: 991.98px;
 $md3: 767.98px;
 $md4: 479.98px;
 
-$fontFamily: "Helvetica Neue", sans-serif;
+$fontFamily: "Product Sans", sans-serif;
 
-$bodyColorDark: #000;
-$bodyColorLight: #edf2f4;
-$scrollbarThumb: #d63030;
+$shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
-$primaryBtnBgColorDark: #d63030;
+// ! COLORS
+$bgDark: #121212;
+$bgLightDark: #2c2f33;
+$bgLight: #ffffff;
 
-$homeBgColorDarkLT: #1c1c1e;
-$homeBgColorDarkRB: #1c1c1e;
-$homeBgColorLightLT: #ffc6c6;
-$homeBgColorLightRB: #ffc6c6;
+$textDark: #ffffff;
+$textLight: #121212;
 
-$daySliderBgColorDark: #36393f;
+$primary: #d63030;
+
+$success: #03dac6;
+$error: #e63946;
 
 $dayIndicatorColorDark: #d63031;
-
-$dayBtnBgColorDark: #36393f;
+$ongoing: #00ff37;
+$soon: #fbff00;
 
 $timeStart: #00b894;
 $timeEnd: #d63031;
 
 $cellColorDark: #2f3136;
 $cellColorLight: #c52a2a;
-
-$ongoing: #00ff37;
-$soon: #fbff00;
-
-$searchItemColorDark: #1c1c1e;
-$searchItemColorLight: #c52a2a;
-
-*[data-gradient="yellow"] {
-   background: linear-gradient(to right, #f2994a, #f2c94c);
-}
-*[data-gradient="green"] {
-   background: linear-gradient(to right, #00b09b, #96c93d);
-}
-*[data-gradient="blue"] {
-   background: linear-gradient(to right, #36d1dc, #5b86e5);
-}
-*[data-gradient="black"] {
-   background: linear-gradient(to bottom right, #000428, #004e92);
-}
-*[data-gradient="red"] {
-   background: linear-gradient(to right, #cb356b, #bd3f32);
-}
-*[data-gradient="pink"] {
-   background: linear-gradient(to right, #834d9b, #d04ed6);
-}

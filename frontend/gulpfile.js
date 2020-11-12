@@ -7,17 +7,12 @@ let scss = require("gulp-sass");
 let group_media = require("gulp-group-css-media-queries");
 let plumber = require("gulp-plumber");
 let del = require("del");
-let imagemin = require("gulp-imagemin");
-let uglify = require("gulp-uglify-es").default;
-let rename = require("gulp-rename");
 let fileinclude = require("gulp-file-include");
-let clean_css = require("gulp-clean-css");
-let newer = require('gulp-newer');
 let fonter = require('gulp-fonter');
 let ttf2woff = require('gulp-ttf2woff');
 let ttf2woff2 = require('gulp-ttf2woff2');
 
-let project_name = require("path").basename(__dirname);
+let project_name = "build";
 let src_folder = "src";
 
 let path = {
@@ -29,7 +24,7 @@ let path = {
 		fonts: project_name + "/fonts/"
 	},
 	src: {
-		favicon: src_folder + "/img/favicon.{jpg,png,svg,gif,ico,webp}",
+		favicon: src_folder + "/img/favicon.ico",
 		html: [src_folder + "/*.html", "!" + src_folder + "/_*.html"],
 		js: src_folder + "/js/app.js",
 		css: src_folder + "/scss/style.scss",
@@ -77,41 +72,17 @@ function css() {
 			})
 		)
 		.pipe(dest(path.build.css))
-		.pipe(clean_css())
-		.pipe(
-			rename({
-				extname: ".min.css"
-			})
-		)
-		.pipe(dest(path.build.css))
 		.pipe(browsersync.stream());
 }
 function js() {
 	return src(path.src.js, {})
 		.pipe(plumber())
 		.pipe(fileinclude())
-		.pipe(gulp.dest(path.build.js))
-		.pipe(uglify(/* options */))
-		.pipe(
-			rename({
-				suffix: ".min",
-				extname: ".js"
-			})
-		)
 		.pipe(dest(path.build.js))
 		.pipe(browsersync.stream());
 }
 function images() {
 	return src(path.src.images)
-		.pipe(newer(path.build.images))
-		.pipe(
-			imagemin({
-				progressive: true,
-				svgoPlugins: [{ removeViewBox: false }],
-				interlaced: true,
-				optimizationLevel: 3
-			})
-		)
 		.pipe(dest(path.build.images))
 }
 function fonts_otf() {

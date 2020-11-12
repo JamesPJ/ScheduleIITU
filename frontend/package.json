@@ -21,7 +21,8 @@
 		"gulp-rename": "latest",
 		"gulp-replace": "latest",
 		"gulp-responsive": "latest",
-		"gulp-sass": "latest",
+		"gulp-sass": "^4.1.0",
+		"gulp-sass-glob": "^1.1.0",
 		"gulp-ttf2woff": "latest",
 		"gulp-ttf2woff2": "latest",
 		"gulp-uglify-es": "latest",
@@ -29,5 +30,8 @@
 		"gulp-webp-html": "latest",
 		"imagemin-webp": "latest",
 		"transform-runtime": "0.0.0"
+	},
+	"dependencies": {
+		"node-sass": "^5.0.0"
 	}
 }
