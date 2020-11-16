@@ -8,6 +8,8 @@ class SelectController extends Controller
 {
     public function select(Request $request)
     {
-        return view('select');
+        $data = $this->data();
+
+        return view('select', $data);
     }
 }

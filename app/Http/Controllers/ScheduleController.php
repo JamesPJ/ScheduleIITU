@@ -9,11 +9,15 @@ class ScheduleController extends Controller
 
     public function schedule(Request $request)
     {
-        return view('schedule');
+        $data = $this->data();
+
+        return view('schedule', $data);
     }
 
     public function timetable($id)
     {
-        return view('schedule');
+        $data = $this->data();
+
+        return view('schedule', $data);
     }
 }

@@ -1,7 +1,5 @@
 @extends('layouts.app')
 @section('title', 'Schedule IITU')
-@section('page-name', 'page=\'index\'')
-@section('page-center', 'center')
 
 
 @section('background')
@@ -30,14 +28,26 @@
 
 
 @section('content')
-<div class="search">
-   <h1 class="search__title">What are you looking for?</h1>
-   <form action="/search" method="GET" class="search__form">
-      <input name="keyword" type="text" placeholder="Group, Teacher, Room..." required autocomplete="off"
-         onfocus="bgAnimate()" onfocusout="bgAnimate()">
-      <button type="submit"><i class="fas fa-search"></i></button>
-   </form>
-   <h2 class="search__subtitle">Or</h2>
-   <a href="/login" class="search__openid"><i class="fab fa-microsoft"></i>OpenID</a>
-</div>
+
+<app-nav lang="En">
+   <a class="btn tr" href="/profile"><i class="fas fa-user"></i></a>
+   <a class="btn tr" href="/admin"><i class="fas fa-cog"></i></a>
+</app-nav>
+
+<main class="page center">
+
+   <div class="search">
+      <h1 class="search__title">What are you looking for?</h1>
+      <form action="{{ route('search') }}" method="GET" class="search__form">
+         <input name="keyword" type="text" placeholder="Group, Teacher, Room..." required autocomplete="off"
+            onfocus="bgAnimate()" onfocusout="bgAnimate()">
+         <button type="submit"><i class="fas fa-search"></i></button>
+      </form>
+      <h2 class="search__subtitle">Or</h2>
+      <a href="/login" class="search__openid"><i class="fab fa-microsoft"></i>OpenID</a>
+   </div>
+
+</main>
+
+<app-footer text="All rights reserved"></app-footer>
 @endsection

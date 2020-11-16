@@ -8,6 +8,8 @@ class ProfileController extends Controller
 {
     public function profile()
     {
-        return view('profile');
+        $data = $this->data();
+
+        return view('profile', $data);
     }
 }

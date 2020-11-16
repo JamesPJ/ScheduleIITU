@@ -13,10 +13,10 @@ use \League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 
 class AuthController extends Controller
 {
-
+  
   public function login()
   {
-    // Initialize the OAuth client
+    // ! Initialize the OAuth client
     $oauthClient = new GenericProvider([
       'clientId'                => env('OAUTH_APP_ID'),
       'clientSecret'            => env('OAUTH_APP_PASSWORD'),
@@ -27,37 +27,36 @@ class AuthController extends Controller
       'scopes'                  => env('OAUTH_SCOPES')
     ]);
 
-    $authUrl = $oauthClient->getAuthorizationUrl();
-
-    // Save client state so we can validate in openID
+    // ! Save client state so we can validate in openID
     session(['oauthState' => $oauthClient->getState()]);
 
-    // Redirect to login.microsoftonline.com signin page
-    return redirect()->away($authUrl);
+    // ! Redirect to login.microsoftonline.com signin page
+    return redirect()->away($oauthClient->getAuthorizationUrl());
   }
 
   public function openID(Request $request)
   {
-    // Validate state
+    // ! Validate state
     $expectedState = session('oauthState');
     $request->session()->forget('oauthState');
     $providedState = $request->query('state');
 
+    // ! If there is no expected state in the session,
+    // ! do nothing and redirect to the home page.
     if (!isset($expectedState)) {
-      // If there is no expected state in the session,
-      // do nothing and redirect to the home page.
       return redirect()->route('index');
     }
 
+    // ! If expected state not match to provided state
     if (!isset($providedState) || $expectedState != $providedState) {
       return redirect()->route('index')
         ->with('error', 'Invalid authorization state');
     }
 
-    // Authorization code should be in the "code" query param
+    // ! Authorization code should be in the "code" query param
     $authCode = $request->query('code');
     if (isset($authCode)) {
-      // Initialize the OAuth client
+      // ! Initialize the OAuth client
       $oauthClient = new GenericProvider([
         'clientId'                => env('OAUTH_APP_ID'),
         'clientSecret'            => env('OAUTH_APP_PASSWORD'),
@@ -69,7 +68,7 @@ class AuthController extends Controller
       ]);
 
       try {
-        // Make the token request
+        // ! Make the token request
         $accessToken = $oauthClient->getAccessToken('authorization_code', [
           'code' => $authCode
         ]);
@@ -87,20 +86,22 @@ class AuthController extends Controller
         $userName = $user->getDisplayName();
         $userEmail = $user->getMail();
 
+        // ! Checking if user name and login accessed
         if (isset($userName) && isset($userEmail)) {
-
+          // ! Check existing in database
           $user = User::where('email', $userEmail)->first();
           if (isset($user)) {
+            // ! If Exist redirect to profile
             return redirect()->route('profile');
           }
 
+          // ! If not Exist create new user
           User::create(['fullname' => $userName, 'email' => $userEmail]);
           return redirect()->route('profile');
         }
 
         return redirect()->route('index')
           ->with('error', 'Authentication error, try again!');
-
       } catch (IdentityProviderException $e) {
         return redirect()->route('index')
           ->with('error', 'Error requesting Open ID');

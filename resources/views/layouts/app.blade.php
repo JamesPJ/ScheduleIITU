@@ -14,29 +14,25 @@
 <body class="lock">
   <div id="app">
 
-    @if (session('error'))
-      <alert title='Error' message='{{ session('error') }}' type='error'></alert>
-    @endif
-    @if (session('success'))
-      <alert title='Success' message='{{ session('success') }}' type='success'></alert>
-    @endif
-
     <div class="loader" :class="{hide:!loaderActive}">
       <div class="loader-box">
         <div class="loader-circle"></div>
       </div>
     </div>
 
+    @if (isset($error))
+      <alert title='Error' message='{{ $error }}' type='error'></alert>
+    @endif
+    @if (isset($success))
+      <alert title='Success' message='{{ $success }}' type='success'></alert>
+    @endif
+
     @yield('background')
 
     <div class="wrapper">
-      <app-nav @yield('page-name') role='anonymous' lang="En" @yield('nav-top')></app-nav>
-      <main class="page @yield('page-center')">
-
-        @yield('content')
-
-      </main>
-      <app-footer text="All rights reserved"></app-footer>
+    
+      @yield('content')
+      
     </div>
 
   </div>

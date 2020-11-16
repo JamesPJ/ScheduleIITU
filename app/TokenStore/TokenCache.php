@@ -28,19 +28,19 @@ class TokenCache
 
    public function getAccessToken()
    {
-      // Check if tokens exist
+      // ! Check if tokens exist
       if (empty(session('accessToken')) || empty(session('refreshToken')) || empty(session('tokenExpires'))) {
          return '';
       }
 
-      // Check if token is expired
-      // Get current time + 5 minutes (to allow for time differences)
+      // ! Check if token is expired
+      // ! Get current time + 5 minutes (to allow for time differences)
       $now = time() + 300;
       if (session('tokenExpires') <= $now) {
-         // Token is expired (or very close to it)
-         // so let's refresh
+         // ! Token is expired (or very close to it)
+         // ! so let's refresh
 
-         // Initialize the OAuth client
+         // ! Initialize the OAuth client
          $oauthClient = new \League\OAuth2\Client\Provider\GenericProvider([
             'clientId'                => env('OAUTH_APP_ID'),
             'clientSecret'            => env('OAUTH_APP_PASSWORD'),
@@ -56,7 +56,7 @@ class TokenCache
                'refresh_token' => session('refreshToken')
             ]);
 
-            // Store the new values
+            // ! Store the new values
             $this->updateTokens($newToken);
 
             return $newToken->getToken();
@@ -65,7 +65,7 @@ class TokenCache
          }
       }
 
-      // Token is still valid, just return it
+      // ! Token is still valid, just return it
       return session('accessToken');
    }
 

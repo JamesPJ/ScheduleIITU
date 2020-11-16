@@ -1,4 +1,3 @@
-
 Vue.component('app-footer', {
    props: ['text'],
    data: function () {
@@ -26,26 +25,12 @@ Vue.component('app-footer', {
 });
 
 Vue.component('app-nav', {
-   props: ['role', 'page', 'lang', 'top'],
+   props: ['lang', 'top'],
    data: function () {
       return {
          dropDown: false,
          langs: ['En', 'Ru', 'Kz'],
       };
-   },
-   computed: {
-      isNotIndex: function () {
-         return !this.page;
-      },
-      isUser: function () {
-         return this.role.includes('student') || this.role.includes('teacher');
-      },
-      isDeans: function () {
-         return this.role.includes('deans');
-      },
-      isTop: function () {
-         return this.top;
-      }
    },
    methods: {
       langDropDown: function () {
@@ -53,20 +38,22 @@ Vue.component('app-nav', {
       }
    },
    template: `
-      <header class="header" :class="{z:isTop}">
+      <header class="header">
          <div class="header__content">
             <nav class="menu">
                <div class="lang">
-                  <button class="btn tr" v-if="isNotIndex" data-modal="search"><i class="fas fa-search"></i></button>
-                  <modal id="search" v-if="isNotIndex">
+
+                  <button class="btn tr" data-modal="search"><i class="fas fa-search"></i></button>
+                  <modal id="search">
                      <form action="/search" method='GET' class="search__form" id="search-overlay-form">
                         <input name="keyword" type="text" placeholder="Group, Teacher, Room..." required
                            autocomplete="off">
                         <button type="submit"><i class="fas fa-search"></i></button>
                      </form>
                   </modal>
-                  <a class="btn tr" href="profile.html" v-if="isUser"><i class="fas fa-user"></i></a>
-                  <a class="btn tr" href="admin/" v-if="isDeans"><i class="fas fa-cog"></i></a>
+
+                  <slot></slot>
+
                   <div class="lang">
                      <button class="btn lang__btn" @click="langDropDown">
                         {{ lang }} <i class="fas fa-angle-down"></i>
@@ -90,7 +77,7 @@ Vue.component('alert', {
       }
    },
    computed: {
-      classc: function () {
+      classComputed: function () {
          return this.obj ? this.obj.class : this.classType;
       },
       classType: function () {
@@ -112,10 +99,10 @@ Vue.component('alert', {
             active: this.active
          };
       },
-      titlec: function () {
+      titleComputed: function () {
          return this.obj ? this.obj.title : this.title ? this.title : "Where is title?";
       },
-      messagec: function () {
+      messageComputed: function () {
          return this.obj ? this.obj.message : this.message ? this.message : "";
       }
    },
@@ -131,10 +118,9 @@ Vue.component('alert', {
       this.active = this.obj ? this.obj.class.active : true;
    },
    template: `
-      <div id="alert" :class="classc">
-         <strong>{{ titlec }}</strong>
-         <span v-if="messagec != ''">{{messagec}}</span>
-         <span><slot></slot></span>
+      <div id="alert" :class="classComputed">
+         <strong>{{ titleComputed }}</strong>
+         <span v-if="messageComputed != ''">{{messageComputed}}</span>
          <button type="button" @click="close"><i class="fas fa-times"></i></button>
       </div>
    `
@@ -171,21 +157,19 @@ Vue.component('modal', {
 });
 
 Vue.component('group-select', {
-   props: ['text', 'db-graduation', 'db-course', 'db-speciality', 'db-group', 'group-id'],
+   props: ['text'],
    data: function () {
       return {
          graduation: "",
-         gradError: false,
          course: "",
-         courseError: false,
          speciality: "",
-         specError: false,
          group: "",
+         gradError: false,
+         courseError: false,
+         specError: false,
          groupError: false,
-         message: "",
          changed: false,
-         withOptions: false,
-         deleteBtn: false,
+         message: "",
          alert: {
             title: "",
             message: "",
@@ -249,9 +233,9 @@ Vue.component('group-select', {
       },
       sendForm: function () {
          if (this.validate()) {
-            window.location.href = "profile.html";
+            window.location.href = "/profile";
          } else {
-            this.alert.title = "Error!";
+            this.alert.title = "Error";
             this.alert.message = this.message;
             this.alert.class.success = false;
             this.alert.class.error = true;
@@ -342,16 +326,6 @@ Vue.component('group-select', {
          this.changed = true;
       }
    },
-   created: function () {
-      if (this.dbGraduation && this.dbCourse && this.dbSpeciality && this.dbGroup) {
-         this.graduation = this.dbGraduation;
-         this.course = +this.dbCourse;
-         this.speciality = this.dbSpeciality;
-         this.group = this.dbGroup;
-         this.withOptions = true;
-         this.deleteBtn = true;
-      }
-   },
    template: `
       <form class="select__form" :class="{'select__form__profile':deleteBtn}">
          <alert :obj="alert"></alert>
@@ -372,7 +346,6 @@ Vue.component('group-select', {
             <option v-for="g in groups" :value="g">{{g}}</option>
          </select>
          <button type="button" :class="{'select__form_btn':!deleteBtn, 'btn outline':deleteBtn}" @click="sendForm">{{ text }}</button>
-         <button type="button" class="btn outline danger" v-if="deleteBtn">Delete</button>
       </form>
    `
 });
@@ -515,23 +488,6 @@ Vue.component('profile-tab', {
    `
 });
 
-Vue.component('tabs-list', {
-   props: [],
-   template: `
-      <div class="tabs">
-         <slot></slot>
-      </div>
-   `
-});
-
-Vue.component('profile', {
-   template: `
-      <div class="profile">
-         <slot></slot>
-      </div>
-   `
-});
-
 Vue.component('sidebar', {
    props: ['name', 'role', 'email'],
    data: function () {
@@ -631,28 +587,14 @@ Vue.component('search-item', {
    props: ['type', 'name', 'timetable-id'],
    computed: {
       link: function () {
-         return "/timetable?id=" + this.timetableId;
+         return "/timetable/" + this.timetableId;
       }
    },
    template: `
-      <a href="schedule.html" class="search__item">
+      <a :href="link" class="search__item">
          <span class="search__item_type">{{ type }}</span>
          <span class="search__item_name">{{ name }}</span>
       </a>
-   `
-});
-
-Vue.component('search', {
-   props: ['word'],
-   template: `
-      <div class="search">
-         <div class="search__container">
-            <h1 class="search__title">Search results for: "{{word}}"</h1>
-            <div class="search__list">
-               <slot></slot>
-            </div>
-         </div>
-      </div>
    `
 });
 
@@ -714,14 +656,6 @@ Vue.component('day-slider-btn', {
    `
 });
 
-Vue.component('timetable', {
-   template: `
-      <div class="schedule__timetable">
-         <slot></slot>
-      </div>
-   `
-});
-
 Vue.component('timetable-folder', {
    props: ['count'],
    template: `
@@ -738,28 +672,12 @@ Vue.component('timetable-folder', {
    `
 });
 
-Vue.component('timetable-time-cell', {
+Vue.component('timetable-time', {
    props: ['start', 'end'],
    template: `
-      <div class="schedule__time_elem time__elem" :data-start="start" data-end="end">
+      <div class="schedule__time_elem time__elem">
          <span class="time__elem_start">{{start}}</span>
          <span class="time__elem_end">{{end}}</span>
-      </div>
-   `
-});
-
-Vue.component('timetable-time', {
-   template: `
-      <div class="schedule__time">
-         <slot></slot>
-      </div>
-   `
-});
-
-Vue.component('timetable-list', {
-   template: `
-      <div class="schedule__list">
-         <slot></slot>
       </div>
    `
 });

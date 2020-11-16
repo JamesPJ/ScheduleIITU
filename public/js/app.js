@@ -115,33 +115,19 @@ Vue.component('app-footer', {
   template: "\n      <footer class=\"footer\">\n         <div class=\"footer-content container\">\n            <p class=\"footer-content-text\">\n               {{ text }} &copy;\n               <a :href=\"link\" target=\"_blank\">{{ name }}</a>\n               {{ year }}\n            </p>\n         </div>\n      </footer>\n   "
 });
 Vue.component('app-nav', {
-  props: ['role', 'page', 'lang', 'top'],
+  props: ['lang', 'top'],
   data: function data() {
     return {
       dropDown: false,
       langs: ['En', 'Ru', 'Kz']
     };
   },
-  computed: {
-    isNotIndex: function isNotIndex() {
-      return !this.page;
-    },
-    isUser: function isUser() {
-      return this.role.includes('student') || this.role.includes('teacher');
-    },
-    isDeans: function isDeans() {
-      return this.role.includes('deans');
-    },
-    isTop: function isTop() {
-      return this.top;
-    }
-  },
   methods: {
     langDropDown: function langDropDown() {
       this.dropDown = !this.dropDown;
     }
   },
-  template: "\n      <header class=\"header\" :class=\"{z:isTop}\">\n         <div class=\"header__content\">\n            <nav class=\"menu\">\n               <div class=\"lang\">\n                  <button class=\"btn tr\" v-if=\"isNotIndex\" data-modal=\"search\"><i class=\"fas fa-search\"></i></button>\n                  <modal id=\"search\" v-if=\"isNotIndex\">\n                     <form action=\"/search\" method='GET' class=\"search__form\" id=\"search-overlay-form\">\n                        <input name=\"keyword\" type=\"text\" placeholder=\"Group, Teacher, Room...\" required\n                           autocomplete=\"off\">\n                        <button type=\"submit\"><i class=\"fas fa-search\"></i></button>\n                     </form>\n                  </modal>\n                  <a class=\"btn tr\" href=\"profile.html\" v-if=\"isUser\"><i class=\"fas fa-user\"></i></a>\n                  <a class=\"btn tr\" href=\"admin/\" v-if=\"isDeans\"><i class=\"fas fa-cog\"></i></a>\n                  <div class=\"lang\">\n                     <button class=\"btn lang__btn\" @click=\"langDropDown\">\n                        {{ lang }} <i class=\"fas fa-angle-down\"></i>\n                     </button>\n                     <div class=\"lang__dropdown\" :class=\"{active:dropDown}\">\n                        <a href=\"#\" class=\"btn lang__btn\" v-for=\"l of langs\" v-if=\"l != lang\">{{l}}</a>\n                     </div>\n                  </div>\n               </div>\n            </nav>\n         </div>\n      </header>\n   "
+  template: "\n      <header class=\"header\">\n         <div class=\"header__content\">\n            <nav class=\"menu\">\n               <div class=\"lang\">\n\n                  <button class=\"btn tr\" data-modal=\"search\"><i class=\"fas fa-search\"></i></button>\n                  <modal id=\"search\">\n                     <form action=\"/search\" method='GET' class=\"search__form\" id=\"search-overlay-form\">\n                        <input name=\"keyword\" type=\"text\" placeholder=\"Group, Teacher, Room...\" required\n                           autocomplete=\"off\">\n                        <button type=\"submit\"><i class=\"fas fa-search\"></i></button>\n                     </form>\n                  </modal>\n\n                  <slot></slot>\n\n                  <div class=\"lang\">\n                     <button class=\"btn lang__btn\" @click=\"langDropDown\">\n                        {{ lang }} <i class=\"fas fa-angle-down\"></i>\n                     </button>\n                     <div class=\"lang__dropdown\" :class=\"{active:dropDown}\">\n                        <a href=\"#\" class=\"btn lang__btn\" v-for=\"l of langs\" v-if=\"l != lang\">{{l}}</a>\n                     </div>\n                  </div>\n               </div>\n            </nav>\n         </div>\n      </header>\n   "
 });
 Vue.component('alert', {
   props: ['obj', 'title', 'message', 'type'],
@@ -151,7 +137,7 @@ Vue.component('alert', {
     };
   },
   computed: {
-    classc: function classc() {
+    classComputed: function classComputed() {
       return this.obj ? this.obj["class"] : this.classType;
     },
     classType: function classType() {
@@ -171,10 +157,10 @@ Vue.component('alert', {
         active: this.active
       };
     },
-    titlec: function titlec() {
+    titleComputed: function titleComputed() {
       return this.obj ? this.obj.title : this.title ? this.title : "Where is title?";
     },
-    messagec: function messagec() {
+    messageComputed: function messageComputed() {
       return this.obj ? this.obj.message : this.message ? this.message : "";
     }
   },
@@ -186,7 +172,7 @@ Vue.component('alert', {
   created: function created() {
     this.active = this.obj ? this.obj["class"].active : true;
   },
-  template: "\n      <div id=\"alert\" :class=\"classc\">\n         <strong>{{ titlec }}</strong>\n         <span v-if=\"messagec != ''\">{{messagec}}</span>\n         <span><slot></slot></span>\n         <button type=\"button\" @click=\"close\"><i class=\"fas fa-times\"></i></button>\n      </div>\n   "
+  template: "\n      <div id=\"alert\" :class=\"classComputed\">\n         <strong>{{ titleComputed }}</strong>\n         <span v-if=\"messageComputed != ''\">{{messageComputed}}</span>\n         <button type=\"button\" @click=\"close\"><i class=\"fas fa-times\"></i></button>\n      </div>\n   "
 });
 Vue.component('modal', {
   props: ['id', 'hide-button'],
@@ -213,21 +199,19 @@ Vue.component('modal', {
   template: "\n      <div class=\"modal\" :id=\"id\" @click=\"checkContent\">\n         <button class=\"modal__btn\" v-if=\"!hideButton\"><i class=\"fas fa-times\"></i></button>\n         <div class=\"modal__content\">\n            <slot></slot>\n         </div>\n      </div>\n   "
 });
 Vue.component('group-select', {
-  props: ['text', 'db-graduation', 'db-course', 'db-speciality', 'db-group', 'group-id'],
+  props: ['text'],
   data: function data() {
     return {
       graduation: "",
-      gradError: false,
       course: "",
-      courseError: false,
       speciality: "",
-      specError: false,
       group: "",
+      gradError: false,
+      courseError: false,
+      specError: false,
       groupError: false,
-      message: "",
       changed: false,
-      withOptions: false,
-      deleteBtn: false,
+      message: "",
       alert: {
         title: "",
         message: "",
@@ -289,9 +273,9 @@ Vue.component('group-select', {
     },
     sendForm: function sendForm() {
       if (this.validate()) {
-        window.location.href = "profile.html";
+        window.location.href = "/profile";
       } else {
-        this.alert.title = "Error!";
+        this.alert.title = "Error";
         this.alert.message = this.message;
         this.alert["class"].success = false;
         this.alert["class"].error = true;
@@ -392,17 +376,7 @@ Vue.component('group-select', {
       this.changed = true;
     }
   },
-  created: function created() {
-    if (this.dbGraduation && this.dbCourse && this.dbSpeciality && this.dbGroup) {
-      this.graduation = this.dbGraduation;
-      this.course = +this.dbCourse;
-      this.speciality = this.dbSpeciality;
-      this.group = this.dbGroup;
-      this.withOptions = true;
-      this.deleteBtn = true;
-    }
-  },
-  template: "\n      <form class=\"select__form\" :class=\"{'select__form__profile':deleteBtn}\">\n         <alert :obj=\"alert\"></alert>\n         <select v-model=\"graduation\" :class=\"{error:gradError}\">\n            <option disabled value=\"\">Graduation</option>\n            <option v-for=\"g in grads\" :value=\"g\">{{g}}</option>\n         </select>\n         <select v-model=\"course\" :disabled=\"!isCourses\" :class=\"{error:courseError}\">\n            <option disabled value=\"\">Course</option>\n            <option v-for=\"c in courses\" :value=\"c\">{{c}}</option>\n         </select>\n         <select v-model=\"speciality\" :disabled=\"!isSpecialities\" :class=\"{error:specError}\">\n            <option disabled value=\"\">Speciality</option>\n            <option v-for=\"s in specialities\" :value=\"s\">{{s}}</option>\n         </select>\n         <select v-model=\"group\" :disabled=\"!isGroups\" :class=\"{error:groupError}\">\n            <option disabled value=\"\">Group</option>\n            <option v-for=\"g in groups\" :value=\"g\">{{g}}</option>\n         </select>\n         <button type=\"button\" :class=\"{'select__form_btn':!deleteBtn, 'btn outline':deleteBtn}\" @click=\"sendForm\">{{ text }}</button>\n         <button type=\"button\" class=\"btn outline danger\" v-if=\"deleteBtn\">Delete</button>\n      </form>\n   "
+  template: "\n      <form class=\"select__form\" :class=\"{'select__form__profile':deleteBtn}\">\n         <alert :obj=\"alert\"></alert>\n         <select v-model=\"graduation\" :class=\"{error:gradError}\">\n            <option disabled value=\"\">Graduation</option>\n            <option v-for=\"g in grads\" :value=\"g\">{{g}}</option>\n         </select>\n         <select v-model=\"course\" :disabled=\"!isCourses\" :class=\"{error:courseError}\">\n            <option disabled value=\"\">Course</option>\n            <option v-for=\"c in courses\" :value=\"c\">{{c}}</option>\n         </select>\n         <select v-model=\"speciality\" :disabled=\"!isSpecialities\" :class=\"{error:specError}\">\n            <option disabled value=\"\">Speciality</option>\n            <option v-for=\"s in specialities\" :value=\"s\">{{s}}</option>\n         </select>\n         <select v-model=\"group\" :disabled=\"!isGroups\" :class=\"{error:groupError}\">\n            <option disabled value=\"\">Group</option>\n            <option v-for=\"g in groups\" :value=\"g\">{{g}}</option>\n         </select>\n         <button type=\"button\" :class=\"{'select__form_btn':!deleteBtn, 'btn outline':deleteBtn}\" @click=\"sendForm\">{{ text }}</button>\n      </form>\n   "
 }); // ! PROFILE PAGE
 
 Vue.component('profile-block', {
@@ -456,13 +430,6 @@ Vue.component('profile-teacher', {
 Vue.component('profile-tab', {
   props: ['title', 'center-block-title'],
   template: "\n      <div class=\"tab\" :class=\"{'center-block-title':centerBlockTitle}\">\n         <h1 class=\"tab__title\">{{ title }}</h1>\n         <slot></slot>\n      </div>\n   "
-});
-Vue.component('tabs-list', {
-  props: [],
-  template: "\n      <div class=\"tabs\">\n         <slot></slot>\n      </div>\n   "
-});
-Vue.component('profile', {
-  template: "\n      <div class=\"profile\">\n         <slot></slot>\n      </div>\n   "
 });
 Vue.component('sidebar', {
   props: ['name', 'role', 'email'],
@@ -563,14 +530,10 @@ Vue.component('search-item', {
   props: ['type', 'name', 'timetable-id'],
   computed: {
     link: function link() {
-      return "/timetable?id=" + this.timetableId;
+      return "/timetable/" + this.timetableId;
     }
   },
-  template: "\n      <a href=\"schedule.html\" class=\"search__item\">\n         <span class=\"search__item_type\">{{ type }}</span>\n         <span class=\"search__item_name\">{{ name }}</span>\n      </a>\n   "
-});
-Vue.component('search', {
-  props: ['word'],
-  template: "\n      <div class=\"search\">\n         <div class=\"search__container\">\n            <h1 class=\"search__title\">Search results for: \"{{word}}\"</h1>\n            <div class=\"search__list\">\n               <slot></slot>\n            </div>\n         </div>\n      </div>\n   "
+  template: "\n      <a :href=\"link\" class=\"search__item\">\n         <span class=\"search__item_type\">{{ type }}</span>\n         <span class=\"search__item_name\">{{ name }}</span>\n      </a>\n   "
 }); // ! SCHEDULE PAGE
 
 Vue.component('schedule', {
@@ -606,22 +569,13 @@ Vue.component('day-slider-btn', {
   },
   template: "\n      <button class=\"schedule__slider_btn\" :data-day=\"day\" @click=\"changeDay\" disabled>\n         <span class=\"schedule__slider_btn--title--expand\">{{ titleLg }}</span>\n         <span class=\"schedule__slider_btn--title--tablet\">{{ titleMd }}</span>\n         <span class=\"schedule__slider_btn--title--mobile\">{{ titleSm }}</span>\n      </button>\n   "
 });
-Vue.component('timetable', {
-  template: "\n      <div class=\"schedule__timetable\">\n         <slot></slot>\n      </div>\n   "
-});
 Vue.component('timetable-folder', {
   props: ['count'],
   template: "\n      <div class=\"schedule-day__folder\">\n         <button class=\"schedule-day__folder_list\" data-modal=\"subject-folder\">\n            <div class=\"schedule-day__folder_elem\" v-for=\"e in Math.min(count, 4)\"></div>\n         </button>\n         <modal id='subject-folder'>\n            <div class=\"schedule-day__folder_modal\">\n               <slot></slot>\n            </div>\n         </modal>\n      </div>\n   "
 });
-Vue.component('timetable-time-cell', {
-  props: ['start', 'end'],
-  template: "\n      <div class=\"schedule__time_elem time__elem\" :data-start=\"start\" data-end=\"end\">\n         <span class=\"time__elem_start\">{{start}}</span>\n         <span class=\"time__elem_end\">{{end}}</span>\n      </div>\n   "
-});
 Vue.component('timetable-time', {
-  template: "\n      <div class=\"schedule__time\">\n         <slot></slot>\n      </div>\n   "
-});
-Vue.component('timetable-list', {
-  template: "\n      <div class=\"schedule__list\">\n         <slot></slot>\n      </div>\n   "
+  props: ['start', 'end'],
+  template: "\n      <div class=\"schedule__time_elem time__elem\">\n         <span class=\"time__elem_start\">{{start}}</span>\n         <span class=\"time__elem_end\">{{end}}</span>\n      </div>\n   "
 });
 Vue.component('timetable-day', {
   props: ['day'],
