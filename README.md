@@ -10,25 +10,23 @@
 # Introduction
 The main idea is to simplify the work for those who draw up the schedule of our university, that is, to provide more functionality for the Dean's office, as well as teachers. Convenience and updated design for new standards will be a plus for students, and not only for students.
 
-# npm packages
-  * fs
-  * gulp
-  * browser-sync
-  * gulp-autoprefixer
-  * gulp-sass
-  * gulp-group-css-media-queries
-  * gulp-plumber
-  * del
-  * gulp-imagemin
-  * gulp-uglify-es
-  * gulp-rename
-  * gulp-file-include
-  * gulp-clean-css
-  * gulp-newer
-  * gulp-fonter
-  * gulp-ttf2woff
-  * gulp-ttf2woff2
-  
+# Install
+## Install Packages of npm
+`npm install`
+
+## Install Dependencies of composer
+`composer install`
+
+## Run Server
+`php artisan serve`
+
+## Run Watch of webpack
+`npm run watch`
+
+## Additional Dependencies beside Laravel default dependencies
+  * Microsoft Graph (for realization OpenID)
+    * `composer require league/oauth2-client microsoft/microsoft-graph`
+
 # Pages
   * [Main Page](https://kurr.me/projects/schedule/)
   * [Search Page](https://kurr.me/projects/schedule/search.html)
