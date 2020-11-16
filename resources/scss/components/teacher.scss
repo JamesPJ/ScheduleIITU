@@ -1,0 +1,16 @@
+.profile-teacher {
+   h1 {
+      font-weight: bold;
+      font-size: 24px;
+   }
+   p {
+      margin: 10px 0;
+      opacity: 0.7;
+   }
+   a {
+      color: $success;
+   }
+   @media (max-width: $md4) {
+      padding: 20px;
+   }
+}

@@ -1,0 +1,34 @@
+$minWidth: 320px;
+$maxWidth: 1920px;
+$maxWidthContainer: 1170px;
+$md1: $maxWidthContainer + 12px;
+$md2: 991.98px;
+$md3: 767.98px;
+$md4: 479.98px;
+
+$fontFamily: "Product Sans", sans-serif;
+
+$shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+// ! COLORS
+$bgDark: #121212;
+$bgLightDark: #2c2f33;
+$bgLight: #ffffff;
+
+$textDark: #ffffff;
+$textLight: #121212;
+
+$primary: #d63030;
+
+$success: #03dac6;
+$error: #e63946;
+
+$dayIndicatorColorDark: #d63031;
+$ongoing: #00ff37;
+$soon: #fbff00;
+
+$timeStart: #00b894;
+$timeEnd: #d63031;
+
+$cellColorDark: #2f3136;
+$cellColorLight: #c52a2a;

@@ -1,0 +1,45 @@
+.group {
+   width: 100%;
+   display: flex;
+   align-items: center;
+   margin: 20px 0;
+   @media (max-width: $md4) {
+      margin: 10px 0;
+   }
+   &:first-child {
+      margin-top: 0;
+   }
+   &:last-child {
+      margin-bottom: 0;
+   }
+   &__name {
+      flex: 1 1 auto;
+      font-weight: bold;
+      font-size: 24px;
+      @media (max-width: $md4) {
+         font-size: 18px;
+      }
+   }
+   .btn {
+      margin: 0 10px;
+   }
+   &__modal {
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: $bgLight;
+      border-radius: 5px;
+      color: $textLight;
+      h1 {
+         font-size: 24px;
+         margin-bottom: 20px;
+         font-weight: bold;
+         @media (max-width: $md4) {
+            text-align: center;
+            font-size: 20px;
+         }
+      }
+   }
+}

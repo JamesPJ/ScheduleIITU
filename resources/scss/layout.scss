@@ -1,0 +1,51 @@
+body {
+   font-size: 16px;
+   transition: all 0.3s ease;
+   background-color: $bgLight;
+   color: $textLight;
+   @media (prefers-color-scheme: dark) {
+      background-color: $bgDark;
+      color: $textDark;
+   }
+   &.lock {
+      overflow: hidden;
+   }
+}
+*::-webkit-scrollbar {
+   width: 3px;
+   height: 3px;
+   background-color: $bgLight;
+   transition: all .3s ease;
+   @media (prefers-color-scheme: dark) {
+      background-color: $bgDark;
+   }
+}
+*::-webkit-scrollbar-thumb {
+   border-radius: 10px;
+   background-color: $primary;
+   transition: all .3s ease;
+}
+#app {
+   width: 100%;
+   height: 100%;
+}
+.wrapper {
+   width: 100%;
+   min-height: 100%;
+   overflow: hidden;
+   display: flex;
+   flex-direction: column;
+}
+.container {
+   max-width: $maxWidthContainer;
+   margin: 0 auto;
+}
+.page {
+   flex: 1 1 auto;
+   padding-top: 130px;
+   &.center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+   }
+}
