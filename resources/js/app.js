@@ -25,7 +25,7 @@ Vue.component('app-footer', {
 });
 
 Vue.component('app-nav', {
-   props: ['lang', 'top'],
+   props: ['lang', 'top', 'search-page'],
    data: function () {
       return {
          dropDown: false,
@@ -45,7 +45,7 @@ Vue.component('app-nav', {
 
                   <button class="btn tr" data-modal="search"><i class="fas fa-search"></i></button>
                   <modal id="search">
-                     <form action="/search" method='GET' class="search__form" id="search-overlay-form">
+                     <form :action="searchPage" method='GET' class="search__form" id="search-overlay-form">
                         <input name="keyword" type="text" placeholder="Group, Teacher, Room..." required
                            autocomplete="off">
                         <button type="submit"><i class="fas fa-search"></i></button>
@@ -127,7 +127,7 @@ Vue.component('alert', {
 });
 
 Vue.component('modal', {
-   props: ['id', 'hide-button'],
+   props: ['id'],
    methods: {
       close: function () {
          if (!data.modalMoving) {
@@ -148,7 +148,7 @@ Vue.component('modal', {
    },
    template: `
       <div class="modal" :id="id" @click="checkContent">
-         <button class="modal__btn" v-if="!hideButton"><i class="fas fa-times"></i></button>
+         <button class="modal__btn"><i class="fas fa-times"></i></button>
          <div class="modal__content">
             <slot></slot>
          </div>
@@ -157,7 +157,7 @@ Vue.component('modal', {
 });
 
 Vue.component('group-select', {
-   props: ['text'],
+   props: ['text', 'link'],
    data: function () {
       return {
          graduation: "",
@@ -202,6 +202,9 @@ Vue.component('group-select', {
       },
       isGroups: function () {
          return this.specialities && this.speciality != "";
+      },
+      csrf: function () {
+         return document.querySelector('meta[name="csrf-token"]').content;
       }
    },
    methods: {
@@ -327,7 +330,7 @@ Vue.component('group-select', {
       }
    },
    template: `
-      <form class="select__form" :class="{'select__form__profile':deleteBtn}">
+      <form class="select__form" method="POST" :action="link">
          <alert :obj="alert"></alert>
          <select v-model="graduation" :class="{error:gradError}">
             <option disabled value="">Graduation</option>
@@ -345,7 +348,8 @@ Vue.component('group-select', {
             <option disabled value="">Group</option>
             <option v-for="g in groups" :value="g">{{g}}</option>
          </select>
-         <button type="button" :class="{'select__form_btn':!deleteBtn, 'btn outline':deleteBtn}" @click="sendForm">{{ text }}</button>
+         <input type='hidden' name="_token" v-model="csrf">
+         <button type="button" class="select__form_btn" @click="sendForm">{{ text }}</button>
       </form>
    `
 });
@@ -584,12 +588,7 @@ Vue.component('sidebar', {
 // ! SEARCH PAGE
 
 Vue.component('search-item', {
-   props: ['type', 'name', 'timetable-id'],
-   computed: {
-      link: function () {
-         return "/timetable/" + this.timetableId;
-      }
-   },
+   props: ['type', 'name', 'link'],
    template: `
       <a :href="link" class="search__item">
          <span class="search__item_type">{{ type }}</span>

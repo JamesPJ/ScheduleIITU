@@ -16,5 +16,6 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/search', [SearchController::class, 'filter'])->name('search');
 Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
 Route::get('/select', [SelectController::class, 'select'])->name('select');
+Route::post('/select', [SelectController::class, 'select'])->name('group-select');
 Route::get('/schedule', [ScheduleController::class, 'schedule'])->name('schedule');
 Route::get('/timetable/{id}', [ScheduleController::class, 'timetable'])->name('timetable');

@@ -31,12 +31,25 @@
 
     <div class="wrapper">
     
+      <app-nav lang="En" search-page='{{ route('search') }}' class='@yield('nav-top')'>
+        @if (isset($user) && $user->isUser)
+          <a class="btn tr" href="/profile"><i class="fas fa-user"></i></a>
+        @endif
+        @if (isset($user) && $user->isAdmin)
+          <a class="btn tr" href="/admin"><i class="fas fa-cog"></i></a>
+        @endif
+      </app-nav>
+
+
       @yield('content')
-      
+
+
+      @if (!isset($footer))
+        <app-footer text="All rights reserved"></app-footer>
+      @endif
     </div>
 
   </div>
-
 
   <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
   <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2"></script> -->

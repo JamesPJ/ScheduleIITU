@@ -26,9 +26,8 @@ class Controller extends BaseController
         }
 
         // If user logged in
-        if (session('userName')) {
-            $data['userFullname'] = session('userName');
-            $data['userEmail'] = session('userEmail');
+        if (session('user')) {
+            $data['user'] = session('user');
         }
 
         return $data;

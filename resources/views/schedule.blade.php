@@ -1,12 +1,8 @@
 @extends('layouts.app')
 @section('title', 'Schedule | Schedule IITU')
+@section('nav-top', 'z')
 
 @section('content')
-
-<app-nav lang="En" class='z'>
-   <a class="btn tr" href="/profile"><i class="fas fa-user"></i></a>
-   <a class="btn tr" href="/admin"><i class="fas fa-cog"></i></a>
-</app-nav>
 
 <main class="page">
 
@@ -114,5 +110,4 @@
 
 </main>
 
-<app-footer text="All rights reserved"></app-footer>
 @endsection

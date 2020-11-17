@@ -115,7 +115,7 @@ Vue.component('app-footer', {
   template: "\n      <footer class=\"footer\">\n         <div class=\"footer-content container\">\n            <p class=\"footer-content-text\">\n               {{ text }} &copy;\n               <a :href=\"link\" target=\"_blank\">{{ name }}</a>\n               {{ year }}\n            </p>\n         </div>\n      </footer>\n   "
 });
 Vue.component('app-nav', {
-  props: ['lang', 'top'],
+  props: ['lang', 'top', 'search-page'],
   data: function data() {
     return {
       dropDown: false,
@@ -127,7 +127,7 @@ Vue.component('app-nav', {
       this.dropDown = !this.dropDown;
     }
   },
-  template: "\n      <header class=\"header\">\n         <div class=\"header__content\">\n            <nav class=\"menu\">\n               <div class=\"lang\">\n\n                  <button class=\"btn tr\" data-modal=\"search\"><i class=\"fas fa-search\"></i></button>\n                  <modal id=\"search\">\n                     <form action=\"/search\" method='GET' class=\"search__form\" id=\"search-overlay-form\">\n                        <input name=\"keyword\" type=\"text\" placeholder=\"Group, Teacher, Room...\" required\n                           autocomplete=\"off\">\n                        <button type=\"submit\"><i class=\"fas fa-search\"></i></button>\n                     </form>\n                  </modal>\n\n                  <slot></slot>\n\n                  <div class=\"lang\">\n                     <button class=\"btn lang__btn\" @click=\"langDropDown\">\n                        {{ lang }} <i class=\"fas fa-angle-down\"></i>\n                     </button>\n                     <div class=\"lang__dropdown\" :class=\"{active:dropDown}\">\n                        <a href=\"#\" class=\"btn lang__btn\" v-for=\"l of langs\" v-if=\"l != lang\">{{l}}</a>\n                     </div>\n                  </div>\n               </div>\n            </nav>\n         </div>\n      </header>\n   "
+  template: "\n      <header class=\"header\">\n         <div class=\"header__content\">\n            <nav class=\"menu\">\n               <div class=\"lang\">\n\n                  <button class=\"btn tr\" data-modal=\"search\"><i class=\"fas fa-search\"></i></button>\n                  <modal id=\"search\">\n                     <form :action=\"searchPage\" method='GET' class=\"search__form\" id=\"search-overlay-form\">\n                        <input name=\"keyword\" type=\"text\" placeholder=\"Group, Teacher, Room...\" required\n                           autocomplete=\"off\">\n                        <button type=\"submit\"><i class=\"fas fa-search\"></i></button>\n                     </form>\n                  </modal>\n\n                  <slot></slot>\n\n                  <div class=\"lang\">\n                     <button class=\"btn lang__btn\" @click=\"langDropDown\">\n                        {{ lang }} <i class=\"fas fa-angle-down\"></i>\n                     </button>\n                     <div class=\"lang__dropdown\" :class=\"{active:dropDown}\">\n                        <a href=\"#\" class=\"btn lang__btn\" v-for=\"l of langs\" v-if=\"l != lang\">{{l}}</a>\n                     </div>\n                  </div>\n               </div>\n            </nav>\n         </div>\n      </header>\n   "
 });
 Vue.component('alert', {
   props: ['obj', 'title', 'message', 'type'],
@@ -175,7 +175,7 @@ Vue.component('alert', {
   template: "\n      <div id=\"alert\" :class=\"classComputed\">\n         <strong>{{ titleComputed }}</strong>\n         <span v-if=\"messageComputed != ''\">{{messageComputed}}</span>\n         <button type=\"button\" @click=\"close\"><i class=\"fas fa-times\"></i></button>\n      </div>\n   "
 });
 Vue.component('modal', {
-  props: ['id', 'hide-button'],
+  props: ['id'],
   methods: {
     close: function close() {
       var _this = this;
@@ -196,10 +196,10 @@ Vue.component('modal', {
       }
     }
   },
-  template: "\n      <div class=\"modal\" :id=\"id\" @click=\"checkContent\">\n         <button class=\"modal__btn\" v-if=\"!hideButton\"><i class=\"fas fa-times\"></i></button>\n         <div class=\"modal__content\">\n            <slot></slot>\n         </div>\n      </div>\n   "
+  template: "\n      <div class=\"modal\" :id=\"id\" @click=\"checkContent\">\n         <button class=\"modal__btn\"><i class=\"fas fa-times\"></i></button>\n         <div class=\"modal__content\">\n            <slot></slot>\n         </div>\n      </div>\n   "
 });
 Vue.component('group-select', {
-  props: ['text'],
+  props: ['text', 'link'],
   data: function data() {
     return {
       graduation: "",
@@ -244,6 +244,9 @@ Vue.component('group-select', {
     },
     isGroups: function isGroups() {
       return this.specialities && this.speciality != "";
+    },
+    csrf: function csrf() {
+      return document.querySelector('meta[name="csrf-token"]').content;
     }
   },
   methods: {
@@ -376,7 +379,7 @@ Vue.component('group-select', {
       this.changed = true;
     }
   },
-  template: "\n      <form class=\"select__form\" :class=\"{'select__form__profile':deleteBtn}\">\n         <alert :obj=\"alert\"></alert>\n         <select v-model=\"graduation\" :class=\"{error:gradError}\">\n            <option disabled value=\"\">Graduation</option>\n            <option v-for=\"g in grads\" :value=\"g\">{{g}}</option>\n         </select>\n         <select v-model=\"course\" :disabled=\"!isCourses\" :class=\"{error:courseError}\">\n            <option disabled value=\"\">Course</option>\n            <option v-for=\"c in courses\" :value=\"c\">{{c}}</option>\n         </select>\n         <select v-model=\"speciality\" :disabled=\"!isSpecialities\" :class=\"{error:specError}\">\n            <option disabled value=\"\">Speciality</option>\n            <option v-for=\"s in specialities\" :value=\"s\">{{s}}</option>\n         </select>\n         <select v-model=\"group\" :disabled=\"!isGroups\" :class=\"{error:groupError}\">\n            <option disabled value=\"\">Group</option>\n            <option v-for=\"g in groups\" :value=\"g\">{{g}}</option>\n         </select>\n         <button type=\"button\" :class=\"{'select__form_btn':!deleteBtn, 'btn outline':deleteBtn}\" @click=\"sendForm\">{{ text }}</button>\n      </form>\n   "
+  template: "\n      <form class=\"select__form\" method=\"POST\" :action=\"link\">\n         <alert :obj=\"alert\"></alert>\n         <select v-model=\"graduation\" :class=\"{error:gradError}\">\n            <option disabled value=\"\">Graduation</option>\n            <option v-for=\"g in grads\" :value=\"g\">{{g}}</option>\n         </select>\n         <select v-model=\"course\" :disabled=\"!isCourses\" :class=\"{error:courseError}\">\n            <option disabled value=\"\">Course</option>\n            <option v-for=\"c in courses\" :value=\"c\">{{c}}</option>\n         </select>\n         <select v-model=\"speciality\" :disabled=\"!isSpecialities\" :class=\"{error:specError}\">\n            <option disabled value=\"\">Speciality</option>\n            <option v-for=\"s in specialities\" :value=\"s\">{{s}}</option>\n         </select>\n         <select v-model=\"group\" :disabled=\"!isGroups\" :class=\"{error:groupError}\">\n            <option disabled value=\"\">Group</option>\n            <option v-for=\"g in groups\" :value=\"g\">{{g}}</option>\n         </select>\n         <input type='hidden' name=\"_token\" v-model=\"csrf\">\n         <button type=\"button\" class=\"select__form_btn\" @click=\"sendForm\">{{ text }}</button>\n      </form>\n   "
 }); // ! PROFILE PAGE
 
 Vue.component('profile-block', {
@@ -527,12 +530,7 @@ Vue.component('sidebar', {
 }); // ! SEARCH PAGE
 
 Vue.component('search-item', {
-  props: ['type', 'name', 'timetable-id'],
-  computed: {
-    link: function link() {
-      return "/timetable/" + this.timetableId;
-    }
-  },
+  props: ['type', 'name', 'link'],
   template: "\n      <a :href=\"link\" class=\"search__item\">\n         <span class=\"search__item_type\">{{ type }}</span>\n         <span class=\"search__item_name\">{{ name }}</span>\n      </a>\n   "
 }); // ! SCHEDULE PAGE
 

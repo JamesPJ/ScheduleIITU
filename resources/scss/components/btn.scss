@@ -17,6 +17,9 @@
    &.tr {
       background-color: transparent;
       color: $textLight;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       &:hover {
          background-color: rgba($color: $bgDark, $alpha: 0.1);
       }

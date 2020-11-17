@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Schedule IITU')
 
-
 @section('background')
 <div id="homeBG">
    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920"
@@ -26,13 +25,7 @@
 </div>
 @endsection
 
-
 @section('content')
-
-<app-nav lang="En">
-   <a class="btn tr" href="/profile"><i class="fas fa-user"></i></a>
-   <a class="btn tr" href="/admin"><i class="fas fa-cog"></i></a>
-</app-nav>
 
 <main class="page center">
 
@@ -44,10 +37,9 @@
          <button type="submit"><i class="fas fa-search"></i></button>
       </form>
       <h2 class="search__subtitle">Or</h2>
-      <a href="/login" class="search__openid"><i class="fab fa-microsoft"></i>OpenID</a>
+      <a href="{{ route('login') }}" class="search__openid"><i class="fab fa-microsoft"></i>OpenID</a>
    </div>
 
 </main>
 
-<app-footer text="All rights reserved"></app-footer>
 @endsection

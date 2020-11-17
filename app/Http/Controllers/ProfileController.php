@@ -9,6 +9,7 @@ class ProfileController extends Controller
     public function profile()
     {
         $data = $this->data();
+        $data['footer'] = false;
 
         return view('profile', $data);
     }

@@ -3,11 +3,6 @@
 
 @section('content')
 
-<app-nav lang="En">
-   <a class="btn tr" href="/profile"><i class="fas fa-user"></i></a>
-   <a class="btn tr" href="/admin"><i class="fas fa-cog"></i></a>
-</app-nav>
-
 <main class="page center">
 
    <div class="profile">
@@ -15,7 +10,7 @@
          <i class="fas fa-angle-right"></i>
       </button>
       
-      <sidebar name='{{ $userFullname }}' email='{{ $userEmail }}' role='student'></sidebar>
+      <sidebar name='{{ $user['fullname'] }}' email='{{ $user['email'] }}' role='{{ $user->stringRoles }}'></sidebar>
       
       <div class="tabs">
          <!-- ! PROFILE -->
@@ -28,7 +23,7 @@
             <button class="btn outline success" data-modal="add-group">Add Group</button>
             <modal id="add-group">
                <div class="container">
-                  <group-select text="Add"></group-select>
+                  <group-select link="{{ route('group-select') }}" text="Add"></group-select>
                </div>
             </modal>
          </profile-tab>
@@ -151,4 +146,5 @@
    </div>
 
 </main>
+
 @endsection
