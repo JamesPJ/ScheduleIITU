@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Role;
+use App\Models\Student;
 use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
@@ -19,6 +20,11 @@ class User extends Model
       return $this->belongsToMany(Role::class);
    }
 
+   public function student()
+   {
+      return $this->hasOne(Student::class);
+   }
+
    public function getStringRolesAttribute()
    {
       return $this->roles->implode('name', ', ');
@@ -26,13 +32,11 @@ class User extends Model
 
    public function getIsUserAttribute()
    {
-      return str_contains($this->stringRoles, 'student')
-         || str_contains($this->stringRoles, 'teacher');
+      return isset($this->student) || str_contains($this->stringRoles, 'teacher');
    }
 
    public function getIsAdminAttribute()
    {
-      return str_contains($this->stringRoles, 'deans')
-         || str_contains($this->stringRoles, 'admin');
+      return str_contains($this->stringRoles, 'deans') || str_contains($this->stringRoles, 'admin');
    }
 }

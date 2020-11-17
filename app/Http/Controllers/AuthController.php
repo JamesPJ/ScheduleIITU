@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Microsoft\Graph\Graph;
 use Microsoft\Graph\Model;
@@ -99,15 +100,17 @@ class AuthController extends Controller
               return redirect()->route('index')
                 ->with('error', 'Looks like you are not from our university:)');
             }
+            $user = User::create(['fullname' => $userName, 'email' => $userEmail]);
             $mail = substr($userEmail, 0, strpos($userEmail, '@'));
-            $role = 'teacher';
             if (is_numeric($mail)) {
               $role = 'student';
+              $student = Student::create(['user_id' => $user->id]);
+              $user->student()->save($student);
+            } else {
+              $role = 'teacher';
             }
-
-            User::create(['fullname' => $userName, 'email' => $userEmail]);
-            $user = User::where('email', $userEmail)->first();
             $user->roles()->attach(Role::where('name', $role)->first()->id);
+
             session(['user' => $user]);
             return redirect()->route('select')
               ->with('success', 'Registration is complete');
