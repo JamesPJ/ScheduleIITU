@@ -326,6 +326,9 @@ Vue.component('group-select', {
          this.courses = [];
          this.specialities = [];
          this.groups = [];
+         this.course = "";
+         this.speciality = "";
+         this.group = "";
          this.getCourses();
       },
       course: function () {
@@ -338,6 +341,8 @@ Vue.component('group-select', {
          }
          this.specialities = [];
          this.groups = [];
+         this.speciality = "";
+         this.group = "";
          this.changed = true;
          this.getSpecialities();
       },
@@ -350,6 +355,7 @@ Vue.component('group-select', {
             this.alert.class.active = false;
          }
          this.groups = [];
+         this.group = "";
          this.changed = true;
          this.getGroups();
       },
@@ -496,15 +502,6 @@ Vue.component('profile-exam', {
    `
 });
 
-Vue.component('profile-groupmate', {
-   props: ['name'],
-   template: `
-      <div class="groupmate">
-         <h1>{{name}}</h1>
-      </div>
-   `
-});
-
 Vue.component('profile-teacher', {
    props: ['name', 'email', 'role', 'degree', 'department'],
    computed: {
@@ -534,92 +531,23 @@ Vue.component('profile-tab', {
 });
 
 Vue.component('sidebar', {
-   props: ['name', 'role', 'email'],
-   data: function () {
-      return {
-         tabs: []
-      }
-   },
+   props: ['name', 'role', 'email', 'logo-link'],
    computed: {
-      isTeacher: function () {
-         return this.role.includes('teacher');
-      },
-      isStudent: function () {
-         return this.role.includes('student')
-      },
       roleCap: function () {
          return this.role.charAt(0).toUpperCase() + this.role.slice(1);
-      }
-   },
-   methods: {
-      changeTab: function (event) {
-         let btn = event.target;
-         let prevBtn = document.querySelector('.sidebar__link.active');
-         if (!btn.classList.contains('active')) {
-            prevBtn.classList.remove('active');
-            btn.classList.add('active');
-            menuOpen();
-            let menu = document.getElementById("menu-open");
-            let computedStyle = window.getComputedStyle(menu, null).getPropertyValue('display');
-            let timeOut = computedStyle == 'none' ? 0 : 310;
-
-            setTimeout(() => {
-
-               let find = false;
-               for (t of this.tabs) {
-                  if (t.name == btn.dataset.tab) {
-                     find = true;
-                     document.getElementById(t.name + "-tab").classList.add('active');
-                     document.getElementById(t.name + "-tab").classList.remove('bottom');
-                     document.getElementById(t.name + "-tab").classList.remove('top');
-                     continue;
-                  } else if (!find) {
-                     document.getElementById(t.name + "-tab").classList.remove('active');
-                     document.getElementById(t.name + "-tab").classList.add('top');
-                     document.getElementById(t.name + "-tab").classList.remove('bottom');
-                  } else {
-                     document.getElementById(t.name + "-tab").classList.remove('active');
-                     document.getElementById(t.name + "-tab").classList.add('bottom');
-                     document.getElementById(t.name + "-tab").classList.remove('top');
-                  }
-               }
-            }, timeOut);
-
-         }
-      }
-   },
-   created: function () {
-      if (this.isStudent) {
-         this.tabs = [
-            { name: 'profile', class: 'active' },
-            { name: 'exams', class: 'bottom' },
-            { name: 'groupmates', class: 'bottom' },
-            { name: 'teachers', class: 'bottom' }
-         ]
-      } else if (this.isTeacher) {
-         this.tabs = [
-            { name: 'exams', class: 'active' },
-            { name: 'departmentmates', class: 'bottom' },
-         ]
       }
    },
    template: `
       <div class="sidebar" id="sidebar">
          <div class="sidebar__blank">
-            <img src="img/logo.png" alt="Logo">
+            <img :src="logoLink" alt="Logo">
          </div>
          <div class="sidebar__content">
             <h1 class="sidebar__name">{{ name }}</h1>
             <h2 class="sidebar__email">{{ email }}</h2>
             <p class="sidebar__role">{{ roleCap }}</p>
             <div class="sidebar__links">
-               <a href="#" class="sidebar__link" :class="{active:isStudent}" @click.prevent="changeTab" data-tab="profile" v-if="isStudent">Profile</a>
-               <a href="schedule.html" class="sidebar__link">Schedule</a>
-               <a href="#" class="sidebar__link" :class="{active:isTeacher}" @click.prevent="changeTab" data-tab="exams">Exams</a>
-               <a href="#" class="sidebar__link" @click.prevent="changeTab" data-tab="groupmates" v-if="isStudent">Groupmates</a>
-               <a href="#" class="sidebar__link" @click.prevent="changeTab" data-tab="teachers" v-if="isStudent">Teachers</a>
-               <a href="#" class="sidebar__link" @click.prevent="changeTab" data-tab="departmentmates" v-if="isTeacher">Departmentmates</a>
-               <a href="/logout" class="sidebar__link danger">Logout</a>
+               <slot></slot>
             </div>
          </div>
       </div>

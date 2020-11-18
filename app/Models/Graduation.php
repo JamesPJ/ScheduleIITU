@@ -9,11 +9,6 @@ class Graduation extends Model
 {
     public $timestamps = false;
 
-    protected $fillable = [
-        'name',
-        'abrr'
-    ];
-
     public function specialities()
     {
         return $this->hasMany(Speciality::class);

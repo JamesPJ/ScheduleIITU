@@ -5,7 +5,7 @@
   <title>@yield('title')</title>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
-  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="{{ asset('/img/favicon.ico') }}" type="image/x-icon">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <script src="https://kit.fontawesome.com/dc04de3ae3.js" crossorigin="anonymous"></script>

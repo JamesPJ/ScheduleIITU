@@ -27,4 +27,17 @@ class Student extends Model
     {
         return count($this->groups) > 0;
     }
+
+    public function getGroupmatesAttribute()
+    {
+        $groupmates = [];
+        foreach ($this->groups as $group) {
+            foreach ($group->students as $student) {
+                if ($student->user != $this->user) {
+                    $groupmates[] = $student;
+                }
+            }
+        }
+        return $groupmates;
+    }
 }

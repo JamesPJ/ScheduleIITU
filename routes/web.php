@@ -21,6 +21,11 @@ Route::prefix('profile')->group(function () {
    Route::name('profile.')->group(function () {
 
       Route::get('', [ProfileController::class, 'profile'])->name('index');
+      Route::get('groupmates', [ProfileController::class, 'groupmates'])->name('groupmates');
+      Route::get('exams', [ProfileController::class, 'exams'])->name('exams');
+      Route::get('teachers', [ProfileController::class, 'teachers'])->name('teachers');
+
+      Route::get('departmentmates', [ProfileController::class, 'departmentmates'])->name('departmentmates');
 
       Route::prefix('group')->group(function () {
          Route::name('group.')->group(function () {

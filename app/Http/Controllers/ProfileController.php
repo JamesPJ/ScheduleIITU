@@ -12,7 +12,7 @@ class ProfileController extends Controller
         $data = $this->data();
         $data['footer'] = false;
 
-        return view('profile', $data);
+        return view('profile.index', $data);
     }
 
     public function groupAdd(Request $request)
@@ -49,5 +49,37 @@ class ProfileController extends Controller
                 ->with('error', 'This group doesn\'t exists');
         }
         return redirect()->route('index');
+    }
+
+    public function groupmates()
+    {
+        $data = $this->data();
+        $data['footer'] = false;
+
+        return view('profile.groupmates', $data);
+    }
+
+    public function exams()
+    {
+        $data = $this->data();
+        $data['footer'] = false;
+
+        return view('profile.exams', $data);
+    }
+
+    public function teachers()
+    {
+        $data = $this->data();
+        $data['footer'] = false;
+
+        return view('profile.teachers', $data);
+    }
+
+    public function departmentmates()
+    {
+        $data = $this->data();
+        $data['footer'] = false;
+
+        return view('profile.departmentmates', $data);
     }
 }

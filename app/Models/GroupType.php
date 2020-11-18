@@ -9,12 +9,8 @@ class GroupType extends Model
 {
     public $timestamps = false;
 
-    protected $fillable = [
-        'name',
-        'abrr'
-    ];
-
-    public function groups() {
+    public function groups()
+    {
         return $this->hasMany(Group::class);
     }
 }

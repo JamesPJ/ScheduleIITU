@@ -9,10 +9,6 @@ class Degree extends Model
 {
     public $timestamps = false;
 
-    protected $fillable = [
-        'name'
-    ];
-
     public function teachers()
     {
         return $this->hasMany(Teacher::class);

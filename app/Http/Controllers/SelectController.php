@@ -39,7 +39,7 @@ class SelectController extends Controller
     {
         $course = $request->input('course');
         $courseYear = date('Y') - $course + 1;
-        $allGroupsById = Group::select('speciality_id')->where('year', $courseYear)->get();
+        $allGroupsById = Group::select('speciality_id')->where('year', $courseYear)->orderBy('name')->get();
         $specialities = Speciality::find($allGroupsById);
 
         return response()->json($specialities);
@@ -51,7 +51,7 @@ class SelectController extends Controller
         $course = $request->input('course');
         $courseYear = date('Y') - $course + 1;
         $groups = Group::where('speciality_id', $specialityId)
-            ->where('year', $courseYear)->get();
+            ->where('year', $courseYear)->orderBy('name')->get();
 
         return response()->json($groups);
     }

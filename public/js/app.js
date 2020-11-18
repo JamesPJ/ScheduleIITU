@@ -2426,6 +2426,9 @@ Vue.component('group-select', {
       this.courses = [];
       this.specialities = [];
       this.groups = [];
+      this.course = "";
+      this.speciality = "";
+      this.group = "";
       this.getCourses();
     },
     course: function course() {
@@ -2439,6 +2442,8 @@ Vue.component('group-select', {
 
       this.specialities = [];
       this.groups = [];
+      this.speciality = "";
+      this.group = "";
       this.changed = true;
       this.getSpecialities();
     },
@@ -2452,6 +2457,7 @@ Vue.component('group-select', {
       }
 
       this.groups = [];
+      this.group = "";
       this.changed = true;
       this.getGroups();
     },
@@ -2510,10 +2516,6 @@ Vue.component('profile-exam', {
   },
   template: "\n      <div class=\"exam\">\n         <h1 :class=\"classObj\">{{when}}</h1>\n         <ul>\n            <li>\n               <i class=\"fas fa-circle\"></i>\n               <span>Subject:</span> {{subjectName}}\n            </li>\n            <li>\n               <i class=\"far fa-calendar-alt\"></i>\n               <span>Date and Time:</span> {{date}} | {{time}}\n            </li>\n            <li>\n               <i class=\"fas fa-hourglass\"></i>\n               <span>Duration:</span> {{duration}} min\n            </li>\n            <li>\n               <i class=\"fas fa-map-marker-alt\"></i>\n               <span>Room:</span> {{room}}\n            </li>\n            <li>\n               <i class=\"fas fa-users\"></i>\n               <span>Students Number:</span> {{studentsNumber}}\n            </li>\n            <li>\n               <i class=\"fas fa-edit\"></i>\n               <span>Exam Form:</span> {{examForm}}\n            </li>\n            <li>\n               <i class=\"fas fa-user-tie\"></i>\n               <span>Teacher:</span> {{teacher}}\n            </li>\n            <li>\n               <i class=\"fas fa-users\"></i>\n               <span>Group:</span> {{group}}\n            </li>\n         </ul>\n      </div>\n   "
 });
-Vue.component('profile-groupmate', {
-  props: ['name'],
-  template: "\n      <div class=\"groupmate\">\n         <h1>{{name}}</h1>\n      </div>\n   "
-});
 Vue.component('profile-teacher', {
   props: ['name', 'email', 'role', 'degree', 'department'],
   computed: {
@@ -2528,98 +2530,13 @@ Vue.component('profile-tab', {
   template: "\n      <div class=\"tab\" :class=\"{'center-block-title':centerBlockTitle}\">\n         <h1 class=\"tab__title\">{{ title }}</h1>\n         <slot></slot>\n      </div>\n   "
 });
 Vue.component('sidebar', {
-  props: ['name', 'role', 'email'],
-  data: function data() {
-    return {
-      tabs: []
-    };
-  },
+  props: ['name', 'role', 'email', 'logo-link'],
   computed: {
-    isTeacher: function isTeacher() {
-      return this.role.includes('teacher');
-    },
-    isStudent: function isStudent() {
-      return this.role.includes('student');
-    },
     roleCap: function roleCap() {
       return this.role.charAt(0).toUpperCase() + this.role.slice(1);
     }
   },
-  methods: {
-    changeTab: function changeTab(event) {
-      var _this6 = this;
-
-      var btn = event.target;
-      var prevBtn = document.querySelector('.sidebar__link.active');
-
-      if (!btn.classList.contains('active')) {
-        prevBtn.classList.remove('active');
-        btn.classList.add('active');
-        menuOpen();
-        var menu = document.getElementById("menu-open");
-        var computedStyle = window.getComputedStyle(menu, null).getPropertyValue('display');
-        var timeOut = computedStyle == 'none' ? 0 : 310;
-        setTimeout(function () {
-          var find = false;
-
-          var _iterator5 = _createForOfIteratorHelper(_this6.tabs),
-              _step5;
-
-          try {
-            for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
-              t = _step5.value;
-
-              if (t.name == btn.dataset.tab) {
-                find = true;
-                document.getElementById(t.name + "-tab").classList.add('active');
-                document.getElementById(t.name + "-tab").classList.remove('bottom');
-                document.getElementById(t.name + "-tab").classList.remove('top');
-                continue;
-              } else if (!find) {
-                document.getElementById(t.name + "-tab").classList.remove('active');
-                document.getElementById(t.name + "-tab").classList.add('top');
-                document.getElementById(t.name + "-tab").classList.remove('bottom');
-              } else {
-                document.getElementById(t.name + "-tab").classList.remove('active');
-                document.getElementById(t.name + "-tab").classList.add('bottom');
-                document.getElementById(t.name + "-tab").classList.remove('top');
-              }
-            }
-          } catch (err) {
-            _iterator5.e(err);
-          } finally {
-            _iterator5.f();
-          }
-        }, timeOut);
-      }
-    }
-  },
-  created: function created() {
-    if (this.isStudent) {
-      this.tabs = [{
-        name: 'profile',
-        "class": 'active'
-      }, {
-        name: 'exams',
-        "class": 'bottom'
-      }, {
-        name: 'groupmates',
-        "class": 'bottom'
-      }, {
-        name: 'teachers',
-        "class": 'bottom'
-      }];
-    } else if (this.isTeacher) {
-      this.tabs = [{
-        name: 'exams',
-        "class": 'active'
-      }, {
-        name: 'departmentmates',
-        "class": 'bottom'
-      }];
-    }
-  },
-  template: "\n      <div class=\"sidebar\" id=\"sidebar\">\n         <div class=\"sidebar__blank\">\n            <img src=\"img/logo.png\" alt=\"Logo\">\n         </div>\n         <div class=\"sidebar__content\">\n            <h1 class=\"sidebar__name\">{{ name }}</h1>\n            <h2 class=\"sidebar__email\">{{ email }}</h2>\n            <p class=\"sidebar__role\">{{ roleCap }}</p>\n            <div class=\"sidebar__links\">\n               <a href=\"#\" class=\"sidebar__link\" :class=\"{active:isStudent}\" @click.prevent=\"changeTab\" data-tab=\"profile\" v-if=\"isStudent\">Profile</a>\n               <a href=\"schedule.html\" class=\"sidebar__link\">Schedule</a>\n               <a href=\"#\" class=\"sidebar__link\" :class=\"{active:isTeacher}\" @click.prevent=\"changeTab\" data-tab=\"exams\">Exams</a>\n               <a href=\"#\" class=\"sidebar__link\" @click.prevent=\"changeTab\" data-tab=\"groupmates\" v-if=\"isStudent\">Groupmates</a>\n               <a href=\"#\" class=\"sidebar__link\" @click.prevent=\"changeTab\" data-tab=\"teachers\" v-if=\"isStudent\">Teachers</a>\n               <a href=\"#\" class=\"sidebar__link\" @click.prevent=\"changeTab\" data-tab=\"departmentmates\" v-if=\"isTeacher\">Departmentmates</a>\n               <a href=\"/logout\" class=\"sidebar__link danger\">Logout</a>\n            </div>\n         </div>\n      </div>\n   "
+  template: "\n      <div class=\"sidebar\" id=\"sidebar\">\n         <div class=\"sidebar__blank\">\n            <img :src=\"logoLink\" alt=\"Logo\">\n         </div>\n         <div class=\"sidebar__content\">\n            <h1 class=\"sidebar__name\">{{ name }}</h1>\n            <h2 class=\"sidebar__email\">{{ email }}</h2>\n            <p class=\"sidebar__role\">{{ roleCap }}</p>\n            <div class=\"sidebar__links\">\n               <slot></slot>\n            </div>\n         </div>\n      </div>\n   "
 }); // ! SEARCH PAGE
 
 Vue.component('search-item', {
@@ -2899,7 +2816,7 @@ window.subjModalClose = function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
+throw new Error("Module build failed (from ./node_modules/css-loader/index.js):\nModuleBuildError: Module build failed (from ./node_modules/sass-loader/dist/cjs.js):\nSassError: Can't find stylesheet to import.\n  ╷\n9 │ @import \"components/tabs\";\r\n  │         ^^^^^^^^^^^^^^^^^\n  ╵\n  resources\\scss\\components.scss 9:9  @import\n  C:\\xampp\\htdocs\\schedule-iitu\\resources\\scss\\style.scss 7:9                           root stylesheet\n    at C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\webpack\\lib\\NormalModule.js:316:20\n    at C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\loader-runner\\lib\\LoaderRunner.js:367:11\n    at C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\loader-runner\\lib\\LoaderRunner.js:233:18\n    at context.callback (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\loader-runner\\lib\\LoaderRunner.js:111:13)\n    at C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass-loader\\dist\\index.js:73:7\n    at Function.call$2 (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:90547:16)\n    at _render_closure1.call$2 (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:79617:12)\n    at _RootZone.runBinary$3$3 (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:27035:18)\n    at _FutureListener.handleError$1 (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:25563:19)\n    at _Future__propagateToListeners_handleError.call$0 (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:25860:49)\n    at Object._Future__propagateToListeners (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:4539:77)\n    at _Future._completeError$2 (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:25693:9)\n    at _AsyncAwaitCompleter.completeError$2 (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:25036:12)\n    at Object._asyncRethrow (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:4288:17)\n    at C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:13174:20\n    at _wrapJsFunctionForAsync_closure.$protected (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:4313:15)\n    at _wrapJsFunctionForAsync_closure.call$2 (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:25057:12)\n    at _awaitOnObject_closure0.call$2 (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:25049:25)\n    at _RootZone.runBinary$3$3 (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:27035:18)\n    at _FutureListener.handleError$1 (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:25563:19)\n    at _Future__propagateToListeners_handleError.call$0 (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:25860:49)\n    at Object._Future__propagateToListeners (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:4539:77)\n    at _Future._completeError$2 (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:25693:9)\n    at _AsyncAwaitCompleter.completeError$2 (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:25036:12)\n    at Object._asyncRethrow (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:4288:17)\n    at C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:17915:20\n    at _wrapJsFunctionForAsync_closure.$protected (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:4313:15)\n    at _wrapJsFunctionForAsync_closure.call$2 (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:25057:12)\n    at _awaitOnObject_closure0.call$2 (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:25049:25)\n    at _RootZone.runBinary$3$3 (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:27035:18)\n    at _FutureListener.handleError$1 (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:25563:19)\n    at _Future__propagateToListeners_handleError.call$0 (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:25860:49)\n    at Object._Future__propagateToListeners (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:4539:77)\n    at _Future._completeError$2 (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:25693:9)\n    at _AsyncAwaitCompleter.completeError$2 (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:25036:12)\n    at Object._asyncRethrow (C:\\xampp\\htdocs\\schedule-iitu\\node_modules\\sass\\sass.dart.js:4288:17)");
 
 /***/ }),
 
