@@ -13,20 +13,31 @@
       <sidebar name='{{ $user['fullname'] }}' email='{{ $user['email'] }}' role='{{ $user->stringRoles }}'></sidebar>
       
       <div class="tabs">
-         <!-- ! PROFILE -->
-         <profile-tab title="Profile Setting" class="active" id="profile-tab">
+         
+         @if (isset($user->student))
+            <profile-tab title="Profile Setting" class="active" id="profile-tab">
+
             <profile-block title='Groups' expand='yes'>
-               <profile-group group-id='1' name='CSSE-1803K'></profile-group>
-               <profile-group group-id='2' name='CSSE-1807K'></profile-group>
-               <profile-group group-id='3' name='CSSE-1808K'></profile-group>
+            @foreach ($user->student->groups as $group)
+               <profile-group group-id='{{ $group->id }}' 
+                           name='{{ $group->name }}' 
+                           link='{{ route('profile.group.delete') }}'></profile-group>
+            @endforeach
             </profile-block>
+
             <button class="btn outline success" data-modal="add-group">Add Group</button>
             <modal id="add-group">
                <div class="container">
-                  <group-select link="{{ route('group-select') }}" text="Add"></group-select>
+                  <group-select link="{{ route('profile.group.add') }}" 
+                              text='This is my group!'
+                              api-grads="{{ route('api.graduations') }}"
+                              api-courses="{{ route('api.courses') }}"
+                              api-specialities="{{ route('api.specialities') }}"
+                              api-groups="{{ route('api.groups') }}"></group-select>
                </div>
             </modal>
          </profile-tab>
+         @endif
 
          <!-- ! EXAMS -->
          <profile-tab title='Exams' class="bottom" id="exams-tab">

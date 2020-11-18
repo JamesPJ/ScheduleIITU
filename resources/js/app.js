@@ -1,3 +1,5 @@
+const { default: Axios } = require("axios");
+
 Vue.component('app-footer', {
    props: ['text'],
    data: function () {
@@ -157,9 +159,13 @@ Vue.component('modal', {
 });
 
 Vue.component('group-select', {
-   props: ['text', 'link'],
+   props: ['text', 'link', 'api-grads', 'api-courses', 'api-specialities', 'api-groups'],
    data: function () {
       return {
+         grads: [],
+         courses: [],
+         specialities: [],
+         groups: [],
          graduation: "",
          course: "",
          speciality: "",
@@ -182,26 +188,17 @@ Vue.component('group-select', {
       };
    },
    computed: {
-      grads: function () {
-         return this.getGrads();
-      },
-      courses: function () {
-         return this.getCourses();
+      isGrads: function () {
+         return this.grads.length > 0;
       },
       isCourses: function () {
-         return this.grads && this.graduation != "";
-      },
-      specialities: function () {
-         return this.getSpecialities();
+         return this.graduation != "" && this.courses.length > 0;
       },
       isSpecialities: function () {
-         return this.courses && this.course != "";
-      },
-      groups: function () {
-         return this.getGroups();
+         return this.course != "" && this.specialities.length > 0;
       },
       isGroups: function () {
-         return this.specialities && this.speciality != "";
+         return this.speciality != "" && this.groups.length > 0;
       },
       csrf: function () {
          return document.querySelector('meta[name="csrf-token"]').content;
@@ -209,63 +206,102 @@ Vue.component('group-select', {
    },
    methods: {
       getGrads: function () {
-         return ['Bachelor', 'Master', 'Doctor studies'];
+         Axios
+            .get(this.apiGrads)
+            .then(response => {
+               for (let g of response.data) {
+                  this.grads.push({
+                     id: g.id,
+                     name: g.name
+                  });
+               }
+            });
       },
       getCourses: function () {
-         if (this.graduation) {
-            return [1, 2, 3, 4];
+         if (this.graduation != "") {
+            Axios
+               .get(this.apiCourses, {
+                  params: {
+                     id: this.graduation
+                  }
+               })
+               .then(response => {
+                  for (let c of response.data) {
+                     this.courses.push(c);
+                  }
+               });
          }
-         return null;
       },
       getSpecialities: function () {
          if (this.course) {
-            return [
-               'CS', 'CSp', 'CSSE', 'IS', 'SIS',
-               'RET', 'MCM', 'FIN', 'ITM', 'JUR'
-            ];
+            Axios
+               .get(this.apiSpecialities, {
+                  params: {
+                     course: this.course
+                  }
+               })
+               .then(response => {
+                  for (let s of response.data) {
+                     this.specialities.push({
+                        id: s.id,
+                        name: s.abbr
+                     });
+                  }
+               });
          }
          return null;
       },
       getGroups: function () {
          if (this.speciality) {
-            return [
-               'CSSE-1803K', 'CSSE-1807K'
-            ];
+            Axios
+               .get(this.apiGroups, {
+                  params: {
+                     id: this.speciality,
+                     course: this.course
+                  }
+               })
+               .then(response => {
+                  for (let s of response.data) {
+                     this.groups.push({
+                        id: s.id,
+                        name: s.name
+                     });
+                  }
+               });
          }
          return null;
       },
-      sendForm: function () {
-         if (this.validate()) {
-            window.location.href = "/profile";
-         } else {
+      sendForm: function (event) {
+         if (!this.validate()) {
             this.alert.title = "Error";
             this.alert.message = this.message;
             this.alert.class.success = false;
             this.alert.class.error = true;
             this.alert.class.active = true;
+            event.preventDefault();
          }
       },
       validate: function () {
          this.changed = false;
-         if (this.grads && !this.grads.includes(this.graduation)) {
+         if (this.grads && this.graduation == "") {
             this.message = "Please choose Graduation!";
             this.gradError = true;
             return false;
          } else this.gradError = false;
 
-         if (this.courses && !this.courses.includes(this.course)) {
+         if (this.courses && this.course == "") {
             this.message = "Please choose Course!";
             this.courseError = true;
             return false;
          } else this.courseError = false;
 
-         if (this.specialities && !this.specialities.includes(this.speciality)) {
+         if (this.specialities && this.speciality == "") {
             this.message = "Please choose Speciality!";
             this.specError = true;
             return false;
          } else this.specError = false;
 
-         if (this.groups && !this.groups.includes(this.group)) {
+         if (this.groups && this.group == "") {
             this.message = "Please choose Group!";
             this.groupError = true;
             return false;
@@ -274,9 +310,12 @@ Vue.component('group-select', {
          return true;
       }
    },
+   created: function () {
+      this.getGrads();
+   },
    watch: {
       graduation: function () {
-         if (this.grads && !this.grads.includes(this.graduation)) {
+         if (this.graduation == "") {
             this.message = "Please choose Graduation!";
             this.gradError = true;
          } else {
@@ -284,42 +323,38 @@ Vue.component('group-select', {
             this.alert.class.active = false;
          }
          this.changed = true;
-         if (!this.withOptions) {
-            this.course = "";
-            this.speciality = "";
-            this.group = "";
-         }
+         this.courses = [];
+         this.specialities = [];
+         this.groups = [];
+         this.getCourses();
       },
       course: function () {
-         if (!this.changed && this.courses && !this.courses.includes(this.course)) {
+         if (!this.changed && this.course == "") {
             this.message = "Please choose Course!";
             this.courseError = true;
          } else {
             this.courseError = false;
             this.alert.class.active = false;
          }
+         this.specialities = [];
+         this.groups = [];
          this.changed = true;
-         if (!this.withOptions) {
-            this.speciality = "";
-            this.group = "";
-         }
+         this.getSpecialities();
       },
       speciality: function () {
-         if (!this.changed && this.specialities && !this.specialities.includes(this.speciality)) {
+         if (!this.changed && this.speciality == "") {
             this.message = "Please choose Speciality!";
             this.specError = true;
          } else {
             this.specError = false;
             this.alert.class.active = false;
          }
+         this.groups = [];
          this.changed = true;
-         if (!this.withOptions) {
-            this.group = "";
-         }
-         this.withOptions = false;
+         this.getGroups();
       },
       group: function () {
-         if (!this.changed && this.groups && !this.groups.includes(this.group)) {
+         if (!this.changed && this.group == "") {
             this.message = "Please choose Group!";
             this.groupError = true;
          } else {
@@ -332,9 +367,9 @@ Vue.component('group-select', {
    template: `
       <form class="select__form" method="POST" :action="link">
          <alert :obj="alert"></alert>
-         <select v-model="graduation" :class="{error:gradError}">
+         <select v-model="graduation" :disabled="!isGrads" :class="{error:gradError}">
             <option disabled value="">Graduation</option>
-            <option v-for="g in grads" :value="g">{{g}}</option>
+            <option v-for="g in grads" :value="g.id">{{g.name}}</option>
          </select>
          <select v-model="course" :disabled="!isCourses" :class="{error:courseError}">
             <option disabled value="">Course</option>
@@ -342,14 +377,14 @@ Vue.component('group-select', {
          </select>
          <select v-model="speciality" :disabled="!isSpecialities" :class="{error:specError}">
             <option disabled value="">Speciality</option>
-            <option v-for="s in specialities" :value="s">{{s}}</option>
+            <option v-for="s in specialities" :value="s.id">{{s.name}}</option>
          </select>
-         <select v-model="group" :disabled="!isGroups" :class="{error:groupError}">
+         <select name="group_id" v-model="group" :disabled="!isGroups" :class="{error:groupError}">
             <option disabled value="">Group</option>
-            <option v-for="g in groups" :value="g">{{g}}</option>
+            <option v-for="g in groups" :value="g.id">{{g.name}}</option>
          </select>
          <input type='hidden' name="_token" v-model="csrf">
-         <button type="button" class="select__form_btn" @click="sendForm">{{ text }}</button>
+         <button type="submit" class="select__form_btn" @click="sendForm($event)">{{ text }}</button>
       </form>
    `
 });
@@ -374,7 +409,12 @@ Vue.component('profile-block', {
 });
 
 Vue.component('profile-group', {
-   props: ['group-id', 'name'],
+   props: ['group-id', 'name', 'link'],
+   computed: {
+      csrf: function () {
+         return document.querySelector('meta[name="csrf-token"]').content;
+      }
+   },
    template: `
       <div class="group">
          <h1 class="group__name">{{ name }}</h1>
@@ -382,8 +422,9 @@ Vue.component('profile-group', {
          <modal :id='name'>
             <div class="group__modal">
                <h1>Do you want delete {{name}} from group list?</h1>
-               <form>
-                  <input type="hidden" name="id" :value="groupId">
+               <form :action='link' method='post'>
+                  <input type="hidden" name="_token" v-model="csrf">
+                  <input type="hidden" name="id" v-model="groupId">
                   <button class="btn">Delete</button>
                </form>
             </div>

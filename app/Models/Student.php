@@ -17,4 +17,14 @@ class Student extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class);
+    }
+
+    public function getHasGroupAttribute()
+    {
+        return count($this->groups) > 0;
+    }
 }

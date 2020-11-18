@@ -18,11 +18,6 @@ class User extends Model
       return $this->belongsToMany(Role::class);
    }
 
-   public function groups()
-   {
-      return $this->belongsToMany(Group::class);
-   }
-
    public function student()
    {
       return $this->hasOne(Student::class);

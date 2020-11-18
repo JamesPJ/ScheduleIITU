@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SelectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::name('api.')->group(function () {
+   Route::get('graduations', [SelectController::class, 'graduations'])->name('graduations');
+   Route::get('courses', [SelectController::class, 'courses'])->name('courses');
+   Route::get('specialities', [SelectController::class, 'specialities'])->name('specialities');
+   Route::get('groups', [SelectController::class, 'groups'])->name('groups');
+});

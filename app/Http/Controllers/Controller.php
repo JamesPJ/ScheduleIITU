@@ -11,6 +11,11 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    /**
+     * Data - loads flash messages and user if logged in
+     *
+     * @return void
+     */
     public function data()
     {
         $data = [];

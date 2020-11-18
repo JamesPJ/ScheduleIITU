@@ -8,7 +8,12 @@
    <div class="select">
       <h1 class="select__title">First time here? Let's select your group.</h1>
       <p class="select__subtitle">You can add more groups later in profile!</p>
-      <group-select link="{{ route('group-select') }}" text='This is my group!'></group-select>
+      <group-select link="{{ route('profile.group.add') }}" 
+                  text='This is my group!'
+                  api-grads="{{ route('api.graduations') }}"
+                  api-courses="{{ route('api.courses') }}"
+                  api-specialities="{{ route('api.specialities') }}"
+                  api-groups="{{ route('api.groups') }}"></group-select>
    </div>
 
 </main>

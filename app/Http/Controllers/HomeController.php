@@ -14,6 +14,8 @@ class HomeController extends Controller
   public function home()
   {
     $data = $this->data();
+    if (isset($data['user']))
+      return redirect()->route('schedule');
 
     return view('home', $data);
   }

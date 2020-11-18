@@ -120,7 +120,7 @@ class AuthController extends Controller
           }
           session(['user' => $user]);
 
-          return redirect()->route('profile');
+          return redirect()->route('profile.index');
         }
 
 
