@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Student;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Microsoft\Graph\Graph;
 use Microsoft\Graph\Model;
@@ -98,7 +99,7 @@ class AuthController extends Controller
             $domain = substr($userEmail, strpos($userEmail, '@') + 1);
             if ($domain !== env('OAUTH_DOMAIN')) {
               return redirect()->route('index')
-                ->with('error', 'Looks like you are not from our university:)');
+                ->with('error', 'Looks like you are not from our university');
             }
             $user = User::create(['fullname' => $userName, 'email' => $userEmail]);
             $mail = substr($userEmail, 0, strpos($userEmail, '@'));
@@ -108,12 +109,14 @@ class AuthController extends Controller
               $user->student()->save($student);
             } else {
               $role = 'teacher';
+              $teacher = Teacher::create(['user_id' => $user->id]);
+              $user->teacher()->save($teacher);
             }
             $user->roles()->attach(Role::where('name', $role)->first()->id);
 
             session(['user' => $user]);
             return redirect()->route('select')
-              ->with('success', 'Registration is complete');
+              ->with('success', 'Registration is completed');
           }
           session(['user' => $user]);
 

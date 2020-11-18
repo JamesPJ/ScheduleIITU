@@ -5,16 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Student extends Model
+class Graduation extends Model
 {
     public $timestamps = false;
 
     protected $fillable = [
-        'user_id'
+        'name',
+        'abrr'
     ];
 
-    public function user()
+    public function specialities()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(Speciality::class);
     }
 }
