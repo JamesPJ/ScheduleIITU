@@ -11,6 +11,8 @@ class Degree extends Model
 
     public function teachers()
     {
-        return $this->hasMany(Teacher::class);
+        return $this->hasMany(Teacher::class)
+            ->join('users', 'teachers.user_id', 'users.id')
+            ->orderBy('users.fullname');
     }
 }

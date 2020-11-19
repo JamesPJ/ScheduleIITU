@@ -71,6 +71,15 @@ Vue.component('app-nav', {
    `
 });
 
+Vue.component('list-empty', {
+   props: ['text'],
+   template: `
+      <div class='empty'>
+         {{ text }}
+      </div>
+   `
+});
+
 Vue.component('alert', {
    props: ['obj', 'title', 'message', 'type'],
    data: function () {
@@ -440,25 +449,56 @@ Vue.component('profile-group', {
 });
 
 Vue.component('profile-exam', {
-   props: ['subject-name', 'date', 'time', 'duration', 'room', 'students-number', 'exam-form', 'teacher', 'group'],
+   props: ['subject-name', 'date', 'duration', 'room', 'students-number', 'exam-form', 'teacher', 'group'],
    computed: {
       when: function () {
          let text = this.days > 0 ? this.days + " days left" :
             this.days < 0 ? Math.abs(this.days) + " days passed" :
                "Today";
+
+         if (this.days == 0) {
+            let hour = Math.floor(Math.abs(this.minutes) / 60);
+            let minute = (Math.abs(this.minutes) - hour * 60);
+            let time = "";
+            if (hour > 0)
+               time += hour + " hour ";
+            if (minute > 0)
+               time += minute + " minutes";
+            text = this.minutes > 0 ? time + " left" :
+               this.minutes < 0 ? time + " passed" :
+                  "Now";
+         }
          return text;
       },
       days: function () {
          let day = 24 * 3600 * 1000;
          let examsDate = new Date(this.date);
          let nowDate = new Date();
-         return Math.ceil((examsDate - nowDate) / day);
+         let days = (examsDate - nowDate) / day;
+         return days > 0 ? Math.floor(days) : Math.ceil(days);
+      },
+      minutes: function () {
+         let minute = 60 * 1000;
+         let examsTime = new Date(this.date);
+         let nowTime = new Date();
+         let minutes = (examsTime - nowTime) / minute;
+         return minutes > 0 ? Math.floor(minutes) : Math.ceil(minutes);
       },
       classObj: function () {
          return {
             red: this.days < 0,
             green: this.days == 0
          };
+      },
+      dateComputed: function () {
+         let date = new Date(this.date);
+         let dateStr = "";
+         dateStr += ("0" + date.getDate()).slice(-2) + "/";
+         dateStr += ("0" + (date.getMonth() + 1)).slice(-2) + "/";
+         dateStr += date.getFullYear() + " ";
+         dateStr += ("0" + date.getHours()).slice(-2) + ":";
+         dateStr += ("0" + date.getMinutes()).slice(-2);
+         return dateStr;
       }
    },
    template: `
@@ -471,7 +511,7 @@ Vue.component('profile-exam', {
             </li>
             <li>
                <i class="far fa-calendar-alt"></i>
-               <span>Date and Time:</span> {{date}} | {{time}}
+               <span>Date and Time:</span> {{dateComputed}}
             </li>
             <li>
                <i class="fas fa-hourglass"></i>
@@ -489,7 +529,7 @@ Vue.component('profile-exam', {
                <i class="fas fa-edit"></i>
                <span>Exam Form:</span> {{examForm}}
             </li>
-            <li>
+            <li v-if="teacher">
                <i class="fas fa-user-tie"></i>
                <span>Teacher:</span> {{teacher}}
             </li>
@@ -512,9 +552,9 @@ Vue.component('profile-teacher', {
    template: `
       <div class="profile-teacher">
          <h1>{{name}}</h1>
-         <p>{{role}}</p>
+         <p v-if="role">{{role}}</p>
          <p>{{degree}}</p>
-         <p>Department: {{department}}</p>
+         <p v-if="department">Department: {{department}}</p>
          <a :href="link">{{email}}</a>
       </div>
    `

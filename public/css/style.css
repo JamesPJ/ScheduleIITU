@@ -697,6 +697,10 @@ select:disabled {
   }
 }
 
+.tab.center-block-title .block__title {
+  text-align: center;
+}
+
 .group {
   width: 100%;
   display: flex;
@@ -843,6 +847,17 @@ select:disabled {
 @media (max-width: 479.98px) {
   .profile-teacher {
     padding: 20px;
+  }
+}
+
+.empty {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+@media (max-width: 479.98px) {
+  .empty {
+    padding: 10px;
   }
 }
 

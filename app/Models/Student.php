@@ -20,7 +20,7 @@ class Student extends Model
 
     public function groups()
     {
-        return $this->belongsToMany(Group::class);
+        return $this->belongsToMany(Group::class)->orderBy('name');
     }
 
     public function getHasGroupAttribute()
@@ -30,14 +30,30 @@ class Student extends Model
 
     public function getGroupmatesAttribute()
     {
-        $groupmates = [];
+        $groups = [];
         foreach ($this->groups as $group) {
+            $students = [];
             foreach ($group->students as $student) {
                 if ($student->user != $this->user) {
-                    $groupmates[] = $student;
+                    $students[] = $student;
                 }
             }
+            $groups[] = array(
+                'name' => $group->name,
+                'students' => $students
+            );
         }
-        return $groupmates;
+        return $groups;
+    }
+
+    public function getExamsAttribute()
+    {
+        $exams = [];
+        foreach ($this->groups as $group) {
+            foreach ($group->exams as $exam) {
+                $exams[] = $exam;
+            }
+        }
+        return $exams;
     }
 }

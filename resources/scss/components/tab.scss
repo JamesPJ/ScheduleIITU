@@ -29,4 +29,9 @@
          font-size: 24px;
       }
    }
+   &.center-block-title {
+      .block__title {
+         text-align: center;
+      }
+   }
 }

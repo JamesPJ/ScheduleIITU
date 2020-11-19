@@ -13,7 +13,7 @@ class ProfileController extends Controller
         $data['footer'] = false;
 
         if (isset($data['user']->teacher))
-            return redirect()->route('profile.exams');
+            return redirect()->route('profile.departmentmates');
 
         return view('profile.index', $data);
     }
@@ -91,6 +91,6 @@ class ProfileController extends Controller
         if (isset($data['user']->student))
             return redirect()->route('profile.index');
 
-        return view('profile.departmentmates', $data);
+        return view('profile.depmates', $data);
     }
 }

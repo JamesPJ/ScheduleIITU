@@ -7,11 +7,13 @@
 <profile-tab title="Profile Setting">
 
    <profile-block title='Groups' expand='yes'>
-   @foreach ($user->student->groups as $group)
+   @forelse ($user->student->groups as $group)
       <profile-group group-id='{{ $group->id }}' 
                   name='{{ $group->name }}' 
                   link='{{ route('profile.group.delete') }}'></profile-group>
-   @endforeach
+   @empty
+      <list-empty text="You haven't added any group"></list-empty>
+   @endforelse
    </profile-block>
 
    <button class="btn outline success" data-modal="add-group">Add Group</button>

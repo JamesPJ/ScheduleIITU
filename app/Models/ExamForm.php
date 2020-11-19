@@ -5,12 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class GroupType extends Model
+class ExamForm extends Model
 {
     public $timestamps = false;
 
-    public function groups()
+    protected $fillable = [
+        'name',
+    ];
+
+    public function exams()
     {
-        return $this->hasMany(Group::class)->orderBy('name');
+        return $this->hasMany(Exam::class);
     }
 }

@@ -2140,6 +2140,10 @@ Vue.component('app-nav', {
   },
   template: "\n      <header class=\"header\">\n         <div class=\"header__content\">\n            <nav class=\"menu\">\n               <div class=\"lang\">\n\n                  <button class=\"btn tr\" data-modal=\"search\"><i class=\"fas fa-search\"></i></button>\n                  <modal id=\"search\">\n                     <form :action=\"searchPage\" method='GET' class=\"search__form\" id=\"search-overlay-form\">\n                        <input name=\"keyword\" type=\"text\" placeholder=\"Group, Teacher, Room...\" required\n                           autocomplete=\"off\">\n                        <button type=\"submit\"><i class=\"fas fa-search\"></i></button>\n                     </form>\n                  </modal>\n\n                  <slot></slot>\n\n                  <div class=\"lang\">\n                     <button class=\"btn lang__btn\" @click=\"langDropDown\">\n                        {{ lang }} <i class=\"fas fa-angle-down\"></i>\n                     </button>\n                     <div class=\"lang__dropdown\" :class=\"{active:dropDown}\">\n                        <a href=\"#\" class=\"btn lang__btn\" v-for=\"l of langs\" v-if=\"l != lang\">{{l}}</a>\n                     </div>\n                  </div>\n               </div>\n            </nav>\n         </div>\n      </header>\n   "
 });
+Vue.component('list-empty', {
+  props: ['text'],
+  template: "\n      <div class='empty'>\n         {{ text }}\n      </div>\n   "
+});
 Vue.component('alert', {
   props: ['obj', 'title', 'message', 'type'],
   data: function data() {
@@ -2495,26 +2499,54 @@ Vue.component('profile-group', {
   template: "\n      <div class=\"group\">\n         <h1 class=\"group__name\">{{ name }}</h1>\n         <button class=\"btn outline error\" :data-modal=\"name\">Delete</button>\n         <modal :id='name'>\n            <div class=\"group__modal\">\n               <h1>Do you want delete {{name}} from group list?</h1>\n               <form :action='link' method='post'>\n                  <input type=\"hidden\" name=\"_token\" v-model=\"csrf\">\n                  <input type=\"hidden\" name=\"id\" v-model=\"groupId\">\n                  <button class=\"btn\">Delete</button>\n               </form>\n            </div>\n         </modal>\n      </div>\n   "
 });
 Vue.component('profile-exam', {
-  props: ['subject-name', 'date', 'time', 'duration', 'room', 'students-number', 'exam-form', 'teacher', 'group'],
+  props: ['subject-name', 'date', 'duration', 'room', 'students-number', 'exam-form', 'teacher', 'group'],
   computed: {
     when: function when() {
       var text = this.days > 0 ? this.days + " days left" : this.days < 0 ? Math.abs(this.days) + " days passed" : "Today";
+
+      if (this.days == 0) {
+        var hour = Math.floor(Math.abs(this.minutes) / 60);
+        var minute = Math.abs(this.minutes) - hour * 60;
+        var time = "";
+        if (hour > 0) time += hour + " hour ";
+        if (minute > 0) time += minute + " minutes";
+        text = this.minutes > 0 ? time + " left" : this.minutes < 0 ? time + " passed" : "Now";
+      }
+
       return text;
     },
     days: function days() {
       var day = 24 * 3600 * 1000;
       var examsDate = new Date(this.date);
       var nowDate = new Date();
-      return Math.ceil((examsDate - nowDate) / day);
+      var days = (examsDate - nowDate) / day;
+      return days > 0 ? Math.floor(days) : Math.ceil(days);
+    },
+    minutes: function minutes() {
+      var minute = 60 * 1000;
+      var examsTime = new Date(this.date);
+      var nowTime = new Date();
+      var minutes = (examsTime - nowTime) / minute;
+      return minutes > 0 ? Math.floor(minutes) : Math.ceil(minutes);
     },
     classObj: function classObj() {
       return {
         red: this.days < 0,
         green: this.days == 0
       };
+    },
+    dateComputed: function dateComputed() {
+      var date = new Date(this.date);
+      var dateStr = "";
+      dateStr += ("0" + date.getDate()).slice(-2) + "/";
+      dateStr += ("0" + (date.getMonth() + 1)).slice(-2) + "/";
+      dateStr += date.getFullYear() + " ";
+      dateStr += ("0" + date.getHours()).slice(-2) + ":";
+      dateStr += ("0" + date.getMinutes()).slice(-2);
+      return dateStr;
     }
   },
-  template: "\n      <div class=\"exam\">\n         <h1 :class=\"classObj\">{{when}}</h1>\n         <ul>\n            <li>\n               <i class=\"fas fa-circle\"></i>\n               <span>Subject:</span> {{subjectName}}\n            </li>\n            <li>\n               <i class=\"far fa-calendar-alt\"></i>\n               <span>Date and Time:</span> {{date}} | {{time}}\n            </li>\n            <li>\n               <i class=\"fas fa-hourglass\"></i>\n               <span>Duration:</span> {{duration}} min\n            </li>\n            <li>\n               <i class=\"fas fa-map-marker-alt\"></i>\n               <span>Room:</span> {{room}}\n            </li>\n            <li>\n               <i class=\"fas fa-users\"></i>\n               <span>Students Number:</span> {{studentsNumber}}\n            </li>\n            <li>\n               <i class=\"fas fa-edit\"></i>\n               <span>Exam Form:</span> {{examForm}}\n            </li>\n            <li>\n               <i class=\"fas fa-user-tie\"></i>\n               <span>Teacher:</span> {{teacher}}\n            </li>\n            <li>\n               <i class=\"fas fa-users\"></i>\n               <span>Group:</span> {{group}}\n            </li>\n         </ul>\n      </div>\n   "
+  template: "\n      <div class=\"exam\">\n         <h1 :class=\"classObj\">{{when}}</h1>\n         <ul>\n            <li>\n               <i class=\"fas fa-circle\"></i>\n               <span>Subject:</span> {{subjectName}}\n            </li>\n            <li>\n               <i class=\"far fa-calendar-alt\"></i>\n               <span>Date and Time:</span> {{dateComputed}}\n            </li>\n            <li>\n               <i class=\"fas fa-hourglass\"></i>\n               <span>Duration:</span> {{duration}} min\n            </li>\n            <li>\n               <i class=\"fas fa-map-marker-alt\"></i>\n               <span>Room:</span> {{room}}\n            </li>\n            <li>\n               <i class=\"fas fa-users\"></i>\n               <span>Students Number:</span> {{studentsNumber}}\n            </li>\n            <li>\n               <i class=\"fas fa-edit\"></i>\n               <span>Exam Form:</span> {{examForm}}\n            </li>\n            <li v-if=\"teacher\">\n               <i class=\"fas fa-user-tie\"></i>\n               <span>Teacher:</span> {{teacher}}\n            </li>\n            <li>\n               <i class=\"fas fa-users\"></i>\n               <span>Group:</span> {{group}}\n            </li>\n         </ul>\n      </div>\n   "
 });
 Vue.component('profile-teacher', {
   props: ['name', 'email', 'role', 'degree', 'department'],
@@ -2523,7 +2555,7 @@ Vue.component('profile-teacher', {
       return "mailto:" + this.email;
     }
   },
-  template: "\n      <div class=\"profile-teacher\">\n         <h1>{{name}}</h1>\n         <p>{{role}}</p>\n         <p>{{degree}}</p>\n         <p>Department: {{department}}</p>\n         <a :href=\"link\">{{email}}</a>\n      </div>\n   "
+  template: "\n      <div class=\"profile-teacher\">\n         <h1>{{name}}</h1>\n         <p v-if=\"role\">{{role}}</p>\n         <p>{{degree}}</p>\n         <p v-if=\"department\">Department: {{department}}</p>\n         <a :href=\"link\">{{email}}</a>\n      </div>\n   "
 });
 Vue.component('profile-tab', {
   props: ['title', 'center-block-title'],
