@@ -6,6 +6,13 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
+
+    /**
+     * Filter - search page
+     *
+     * @param  Request $request
+     * @return view
+     */
     public function filter(Request $request)
     {
         $data = $this->data();

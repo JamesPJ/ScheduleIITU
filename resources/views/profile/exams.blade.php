@@ -6,69 +6,28 @@
 
 <profile-tab title='Exams'>
 
-   @if (isset($user->teacher))
-      @forelse ($user->teacher->exams as $index=>$exam)
-         @if ($index == 0)
-            <profile-block title='Exams of this semester'>
-               <profile-exam subject-name="{{ $exam->subject->name }}" 
-                           date="{{ $exam->date_time }}" 
-                           duration='{{ $exam->duration }}'
-                           room='{{ $exam->room->location }}' 
-                           students-number='{{ $exam->students_number }}' 
-                           exam-form='{{ $exam->exam_form->name }}'
-                           group='{{ $exam->stringGroups }}'>
-               </profile-exam>
-            </profile-block>
-         @else
-            <profile-block>
-               <profile-exam subject-name="{{ $exam->subject->name }}" 
-                           date="{{ $exam->date_time }}" 
-                           duration='{{ $exam->duration }}'
-                           room='{{ $exam->room->location }}' 
-                           students-number='{{ $exam->students_number }}' 
-                           exam-form='{{ $exam->exam_form->name }}'
-                           group='{{ $exam->stringGroups }}'>
-               </profile-exam>
-            </profile-block>
-         @endif
-      @empty
-         <profile-block>
-            <list-empty text="Sector clear"></list-empty>
-         </profile-block>
-      @endforelse
-   @endif
-   @if (isset($user->student))
-      @forelse ($user->student->exams as $index=>$exam)
-         @if ($index == 0)
-            <profile-block title='Exams of this semester'>
-               <profile-exam subject-name="{{ $exam->subject->name }}" 
-                           date="{{ $exam->date_time }}" 
-                           duration='{{ $exam->duration }}'
-                           room='{{ $exam->room->location }}'
-                           teacher='{{ $exam->teacher->user->fullname }}'
-                           students-number='{{ $exam->students_number }}' 
-                           exam-form='{{ $exam->exam_form->name }}'
-                           group='{{ $exam->stringGroups }}'>
-               </profile-exam>
-            </profile-block>
-         @else
-            <profile-block>
-               <profile-exam subject-name="{{ $exam->subject->name }}" 
-                           date="{{ $exam->date_time }}" 
-                           duration='{{ $exam->duration }}'
-                           room='{{ $exam->room->location }}' 
-                           students-number='{{ $exam->students_number }}' 
-                           exam-form='{{ $exam->exam_form->name }}'
-                           group='{{ $exam->stringGroups }}'>
-               </profile-exam>
-            </profile-block>
-         @endif
-      @empty
-         <profile-block>
-            <list-empty text="Sector clear"></list-empty>
-         </profile-block>
-      @endforelse
-   @endif
+   <div class="blocks__title">
+      Exams of this semester
+   </div>
+   @forelse ($user->exams as $exam)
+      <profile-block>
+         <profile-exam subject-name='{{ $exam->subject->name }}' 
+                     date='{{ $exam->date_time }}' 
+                     duration='{{ $exam->duration }}'
+                     room='{{ $exam->room->location }}' 
+                     @if ($user->isStudent)
+                     teacher='{{ $exam->teacher->user->fullname }}'
+                     @endif
+                     students-number='{{ $exam->students_number }}' 
+                     exam-form='{{ $exam->exam_form->name }}'
+                     group='{{ $exam->stringGroups }}'>
+         </profile-exam>
+      </profile-block>
+   @empty
+      <profile-block>
+         <list-empty text="Nothing to take"></list-empty>
+      </profile-block>
+   @endforelse
 
 </profile-tab>
 

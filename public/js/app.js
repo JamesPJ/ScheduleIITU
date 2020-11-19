@@ -2481,13 +2481,13 @@ Vue.component('group-select', {
 }); // ! PROFILE PAGE
 
 Vue.component('profile-block', {
-  props: ['title', 'expand'],
+  props: ['expand'],
   computed: {
     large: function large() {
       return this.expand && this.expand === 'yes';
     }
   },
-  template: "\n      <div class=\"block\" :class=\"{expand:large}\">\n         <h2 class=\"block__title\" v-if='title'>{{ title }}</h2>\n         <div class=\"block__content\">\n            <slot></slot>\n         </div>\n      </div>\n   "
+  template: "\n      <div class=\"block\" :class=\"{expand:large}\">\n         <div class=\"block__content\">\n            <slot></slot>\n         </div>\n      </div>\n   "
 });
 Vue.component('profile-group', {
   props: ['group-id', 'name', 'link'],

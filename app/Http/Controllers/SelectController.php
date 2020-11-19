@@ -9,24 +9,37 @@ use App\Models\Group;
 
 class SelectController extends Controller
 {
+    /**
+     * Select page
+     *
+     * @return void
+     */
     public function select()
     {
         $data = $this->data();
 
-        if (!isset($data['user']))
-            return redirect()->route('index');
-
-        if (isset($data['user']->student) && $data['user']->student->hasGroup)
+        if ($data['user']->isStudent && $data['user']->student->hasGroup)
             return redirect()->route('profile.index');
 
         return view('select', $data);
     }
 
+    /**
+     * Graduations API
+     *
+     * @return json array of graduations
+     */
     public function graduations()
     {
         return response()->json(Graduation::all());
     }
 
+    /**
+     * Courses API
+     *
+     * @param  Request $request
+     * @return json array of courses in this speciality
+     */
     public function courses(Request $request)
     {
         $specialityId = $request->input('id');
@@ -38,19 +51,31 @@ class SelectController extends Controller
         }
     }
 
+    /**
+     * Specialities API
+     *
+     * @param  Request $request
+     * @return json array of specialities of this course
+     */
     public function specialities(Request $request)
     {
         $course = $request->input('course');
         if (isset($course)) {
             $courseYear = date('Y') - $course + 1;
-            $allGroupsById = Group::select('speciality_id')->where('year', $courseYear)->orderBy('name')->get();
-            if (isset($allGroupsById)) {
-                $specialities = Speciality::find($allGroupsById);
+            $groupsByYear = Group::select('speciality_id')->where('year', $courseYear)->orderBy('name')->get();
+            if (isset($groupsByYear)) {
+                $specialities = Speciality::find($groupsByYear);
                 return response()->json($specialities);
             }
         }
     }
 
+    /**
+     * Groups API
+     *
+     * @param  Request $request
+     * @return json array of groups of this course and specaility
+     */
     public function groups(Request $request)
     {
         $specialityId = $request->input('id');

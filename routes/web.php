@@ -7,8 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SelectController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScheduleController;
-use App\Http\Controllers\UserController;
-use Illuminate\Routing\RouteGroup;
+
 
 Route::get('/', [HomeController::class, 'home'])->name('index');
 Route::get('/login', [AuthController::class, 'login'])->name('login');

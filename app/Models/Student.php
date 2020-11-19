@@ -49,9 +49,13 @@ class Student extends Model
     public function getExamsAttribute()
     {
         $exams = [];
+        $addedExamIds = [];
         foreach ($this->groups as $group) {
             foreach ($group->exams as $exam) {
-                $exams[] = $exam;
+                if (!in_array($exam->id, $addedExamIds)) {
+                    $exams[] = $exam;
+                    $addedExamIds[] = $exam->id;
+                }
             }
         }
         return $exams;

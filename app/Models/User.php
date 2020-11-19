@@ -28,6 +28,14 @@ class User extends Model
       return $this->hasOne(Teacher::class);
    }
 
+   public function getExamsAttribute()
+   {
+      if ($this->isStudent)
+         return $this->student->exams;
+      else if ($this->isTeacher)
+         return $this->teacher->exams;
+   }
+
    public function getStringRolesAttribute()
    {
       return $this->roles->implode('name', ', ');
@@ -41,5 +49,15 @@ class User extends Model
    public function getIsAdminAttribute()
    {
       return str_contains($this->stringRoles, 'deans') || str_contains($this->stringRoles, 'admin');
+   }
+
+   public function getIsStudentAttribute()
+   {
+      return isset($this->student);
+   }
+
+   public function getIsTeacherAttribute()
+   {
+      return isset($this->teacher);
    }
 }

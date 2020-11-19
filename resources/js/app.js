@@ -407,7 +407,7 @@ Vue.component('group-select', {
 // ! PROFILE PAGE
 
 Vue.component('profile-block', {
-   props: ['title', 'expand'],
+   props: ['expand'],
    computed: {
       large: function () {
          return this.expand && this.expand === 'yes';
@@ -415,7 +415,6 @@ Vue.component('profile-block', {
    },
    template: `
       <div class="block" :class="{expand:large}">
-         <h2 class="block__title" v-if='title'>{{ title }}</h2>
          <div class="block__content">
             <slot></slot>
          </div>

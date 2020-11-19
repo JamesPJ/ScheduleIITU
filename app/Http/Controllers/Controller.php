@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Symfony\Component\HttpFoundation\Request;
 
 class Controller extends BaseController
 {
@@ -19,20 +20,17 @@ class Controller extends BaseController
     public function data()
     {
         $data = [];
-
-        // Flash Errors
         if (session('error')) {
             $data['error'] = session('error');
         }
-
-        // Flash Success
         if (session('success')) {
             $data['success'] = session('success');
         }
-
-        // If user logged in
         if (session('user')) {
             $data['user'] = session('user');
+        }
+        if (strpos(request()->route()->getName(), 'profile') !== false) {
+            $data['footer'] = false;
         }
 
         return $data;

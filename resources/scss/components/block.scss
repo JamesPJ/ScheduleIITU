@@ -2,14 +2,6 @@
    &.expand {
       flex: 1 1 auto;
    }
-   &__title {
-      font-size: 18px;
-      font-weight: bold;
-      margin: 20px 0;
-      @media (max-width: $md4) {
-         margin-top: 10px;
-      }
-   }
    &__content {
       border-radius: 5px;
       padding: 20px;
@@ -21,5 +13,13 @@
       @media (max-width: $md4) {
          padding: 10px;
       }
+   }
+}
+.blocks__title {
+   font-size: 18px;
+   font-weight: bold;
+   margin: 20px 0;
+   @media (max-width: $md4) {
+      margin-top: 10px;
    }
 }

@@ -7,18 +7,15 @@
 <profile-tab title='Groupmates'>
 
    @forelse ($user->student->groupmates as $group)
-      @forelse ($group['students'] as $index=>$groupmate)
-         @if ($index == 0)
-            <profile-block title='{{ $group['name'] }}'>
-               <div class="groupmate">{{ $groupmate->user->fullname }}</div>
-            </profile-block>
-         @else
-            <profile-block>
-               <div class="groupmate">{{ $groupmate->user->fullname }}</div>
-            </profile-block>
-         @endif
+      <div class="blocks__title">
+         {{ $group['name'] }}
+      </div>
+      @forelse ($group['students'] as $groupmate)
+         <profile-block>
+            <div class="groupmate">{{ $groupmate->user->fullname }}</div>
+         </profile-block>
       @empty
-         <profile-block title='{{ $group['name'] }}'>
+         <profile-block>
             <list-empty text="Wow! You first member"></list-empty>
          </profile-block>
       @endforelse

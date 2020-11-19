@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
 
+  /**
+   * Home - index page of unauthorized user
+   *
+   * @return view to home
+   */
   public function home()
   {
     $data = $this->data();

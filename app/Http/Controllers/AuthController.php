@@ -83,7 +83,6 @@ class AuthController extends Controller
         $user = $graph->createRequest('GET', '/me?$select=displayName,mail')
           ->setReturnType(Model\User::class)
           ->execute();
-
         $userName = $user->getDisplayName();
         $userEmail = $user->getMail();
 

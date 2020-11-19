@@ -11,6 +11,6 @@ class Graduation extends Model
 
     public function specialities()
     {
-        return $this->hasMany(Speciality::class);
+        return $this->hasMany(Speciality::class)->orderBy('abbr');
     }
 }
