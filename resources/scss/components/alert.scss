@@ -27,7 +27,7 @@
       height: 25px;
       top: 5px;
       right: 5px;
-      color: $bgLight;
+      color: $textDark;
    }
    transition: all 0.3s ease;
    background-color: darken($color: $bgLight, $amount: 10%);
@@ -39,6 +39,10 @@
    }
    &.success {
       background-color: $success;
+      color: $textLight;
+      button {
+         color: $textLight;
+      }
    }
    &.active {
       top: 30px;

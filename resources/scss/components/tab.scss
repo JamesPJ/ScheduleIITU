@@ -3,6 +3,7 @@
    min-height: 100%;
    padding: 40px 50px;
    padding-top: 100px;
+   padding-left: 350px;
    display: flex;
    flex-direction: column;
    transition: all 0.3s ease;
@@ -11,6 +12,9 @@
    background-color: $bgLight;
    @media (prefers-color-scheme: dark) {
       background-color: $bgLightDark;
+   }
+   @media (max-width: $md2) {
+      padding-left: 50px;
    }
    @media (max-width: $md4) {
       padding: 10px;

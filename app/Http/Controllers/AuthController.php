@@ -68,7 +68,7 @@ class AuthController extends Controller
     if (!isset($expectedState)) {
       return redirect()->route('index');
     }
-    if (!isset($providedState) || $expectedState != $providedState) {
+    if ($expectedState != $providedState) {
       return redirect()->route('index')
         ->with('error', 'Invalid authorization state');
     }

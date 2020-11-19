@@ -118,6 +118,8 @@ body {
   transition: all 0.3s ease;
   background-color: #ffffff;
   color: #121212;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -153,11 +155,15 @@ body.lock {
 }
 
 #app {
+  flex: 1 1 auto;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .wrapper {
+  flex: 1 1 auto;
   width: 100%;
   min-height: 100%;
   overflow: hidden;
@@ -539,6 +545,11 @@ select:disabled {
 
 #alert.success {
   background-color: #03dac6;
+  color: #121212;
+}
+
+#alert.success button {
+  color: #121212;
 }
 
 #alert.active {
@@ -645,6 +656,7 @@ select:disabled {
   min-height: 100%;
   padding: 40px 50px;
   padding-top: 100px;
+  padding-left: 350px;
   display: flex;
   flex-direction: column;
   transition: all 0.3s ease;
@@ -656,6 +668,12 @@ select:disabled {
 @media (prefers-color-scheme: dark) {
   .tab {
     background-color: #2c2f33;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .tab {
+    padding-left: 50px;
   }
 }
 
@@ -679,12 +697,6 @@ select:disabled {
   }
 }
 
-.tabs {
-  flex: 1 1 auto;
-  overflow: hidden;
-  position: relative;
-}
-
 .group {
   width: 100%;
   display: flex;
@@ -695,6 +707,7 @@ select:disabled {
 @media (max-width: 479.98px) {
   .group {
     margin: 10px 0;
+    padding-left: 15px;
   }
 }
 
@@ -809,7 +822,7 @@ select:disabled {
 
 @media (max-width: 479.98px) {
   .groupmate {
-    padding: 20px;
+    padding: 15px;
   }
 }
 
@@ -1159,7 +1172,8 @@ select:disabled {
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  width: 100%;
+  min-height: 100%;
   display: flex;
 }
 
@@ -1190,7 +1204,7 @@ select:disabled {
 }
 
 .profile #menu-open {
-  position: absolute;
+  position: fixed;
   z-index: 11;
   font-size: 30px;
   padding: 10px 25px;
@@ -1215,7 +1229,7 @@ select:disabled {
 
 @media (max-width: 479.98px) {
   .profile #menu-open.active {
-    left: 85%;
+    left: 82%;
   }
 }
 
@@ -1226,10 +1240,11 @@ select:disabled {
 }
 
 .profile .sidebar {
-  min-width: 300px;
-  max-height: 100%;
+  position: fixed;
+  top: 0;
+  width: 300px;
+  height: 100%;
   background-color: #d63030;
-  overflow: hidden;
   color: #ffffff;
   transition: all 0.3s ease;
 }
@@ -1242,8 +1257,6 @@ select:disabled {
 
 @media (max-width: 991.98px) {
   .profile .sidebar {
-    position: absolute;
-    height: 100%;
     width: 400px;
     left: -400px;
     z-index: 10;
@@ -1277,7 +1290,7 @@ select:disabled {
   height: 100%;
   padding: 50px 30px;
   padding-bottom: 100px;
-  max-height: 100%;
+  height: 100%;
   box-sizing: border-box;
   overflow-y: auto;
 }

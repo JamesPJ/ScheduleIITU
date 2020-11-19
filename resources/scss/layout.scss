@@ -3,6 +3,8 @@ body {
    transition: all 0.3s ease;
    background-color: $bgLight;
    color: $textLight;
+   display: flex;
+   flex-direction: column;
    @media (prefers-color-scheme: dark) {
       background-color: $bgDark;
       color: $textDark;
@@ -26,10 +28,14 @@ body {
    transition: all 0.3s ease;
 }
 #app {
+   flex: 1 1 auto;
    width: 100%;
    min-height: 100%;
+   display: flex;
+   flex-direction: column;
 }
 .wrapper {
+   flex: 1 1 auto;
    width: 100%;
    min-height: 100%;
    overflow: hidden;

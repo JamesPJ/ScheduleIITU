@@ -30,4 +30,9 @@ class Group extends Model
     {
         return $this->belongsTo(GroupType::class);
     }
+
+    public function timetables()
+    {
+        return $this->hasMany(Timetable::class);
+    }
 }

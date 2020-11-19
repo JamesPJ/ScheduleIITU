@@ -12,6 +12,9 @@ class ProfileController extends Controller
         $data = $this->data();
         $data['footer'] = false;
 
+        if (isset($data['user']->teacher))
+            return redirect()->route('profile.exams');
+
         return view('profile.index', $data);
     }
 
@@ -24,12 +27,13 @@ class ProfileController extends Controller
             if (isset($group)) {
                 if (!$user->student->groups->contains($group)) {
                     $user->student->groups()->attach($group);
-                    return redirect()->route('profile.index');
+                    return redirect()->route('profile.index')
+                        ->with('success', 'Group added');
                 }
                 return redirect()->route('profile.index')
                     ->with('error', 'This group already in group list');
             }
-            return redirect()->route('select')
+            return redirect()->route('profile.index')
                 ->with('error', 'This group doesn\'t exists');
         }
         return redirect()->route('index');
@@ -43,7 +47,8 @@ class ProfileController extends Controller
             $group = Group::find($groupId);
             if ($user->student->groups->contains($group)) {
                 $user->student->groups()->detach($group);
-                return redirect()->route('profile.index');
+                return redirect()->route('profile.index')
+                    ->with('success', 'Group deleted');
             }
             return redirect()->route('select')
                 ->with('error', 'This group doesn\'t exists');
@@ -55,6 +60,8 @@ class ProfileController extends Controller
     {
         $data = $this->data();
         $data['footer'] = false;
+        if (isset($data['user']->teacher))
+            return redirect()->route('profile.exams');
 
         return view('profile.groupmates', $data);
     }
@@ -71,6 +78,8 @@ class ProfileController extends Controller
     {
         $data = $this->data();
         $data['footer'] = false;
+        if (isset($data['user']->teacher))
+            return redirect()->route('profile.exams');
 
         return view('profile.teachers', $data);
     }
@@ -79,6 +88,8 @@ class ProfileController extends Controller
     {
         $data = $this->data();
         $data['footer'] = false;
+        if (isset($data['user']->student))
+            return redirect()->route('profile.index');
 
         return view('profile.departmentmates', $data);
     }
