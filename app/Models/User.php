@@ -13,21 +13,44 @@ class User extends Model
       'email'
    ];
 
+   /**
+    * roles of user
+    *
+    * @return collection of roles
+    */
    public function roles()
    {
       return $this->belongsToMany(Role::class);
    }
 
+   /**
+    * Student instance
+    * if exists
+    *
+    * @return Student
+    */
    public function student()
    {
       return $this->hasOne(Student::class);
    }
 
+   /**
+    * Teacher instance
+    * if exists
+    *
+    * @return Teacher
+    */
    public function teacher()
    {
       return $this->hasOne(Teacher::class);
    }
 
+   /**
+    * getExamsAttribute
+    * exams of teacher or student
+    *
+    * @return array|collection of exams
+    */
    public function getExamsAttribute()
    {
       if ($this->isStudent)
@@ -36,26 +59,57 @@ class User extends Model
          return $this->teacher->exams;
    }
 
+   /**
+    * getStringRolesAttribute
+    * implodes name of roles with
+    * delimiter ", "
+    *
+    * @return String
+    */
    public function getStringRolesAttribute()
    {
       return $this->roles->implode('name', ', ');
    }
 
+   /**
+    * getIsUserAttribute
+    * user role is teacher or student
+    *
+    * @return boolean
+    */
    public function getIsUserAttribute()
    {
       return isset($this->student) || isset($this->teacher);
    }
 
+   /**
+    * getIsAdminAttribute
+    * user role is admin or deans
+    *
+    * @return boolean
+    */
    public function getIsAdminAttribute()
    {
       return str_contains($this->stringRoles, 'deans') || str_contains($this->stringRoles, 'admin');
    }
 
+   /**
+    * getIsStudentAttribute
+    * user is set?
+    *
+    * @return boolean
+    */
    public function getIsStudentAttribute()
    {
       return isset($this->student);
    }
-
+   
+   /**
+    * getIsTeacherAttribute
+    * teacher is set?
+    *
+    * @return boolean
+    */
    public function getIsTeacherAttribute()
    {
       return isset($this->teacher);

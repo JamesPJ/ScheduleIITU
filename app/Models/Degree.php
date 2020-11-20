@@ -9,6 +9,12 @@ class Degree extends Model
 {
     public $timestamps = false;
 
+    /**
+     * Teachers - collection of teachers
+     * with this degree
+     *
+     * @return collection of teachers
+     */
     public function teachers()
     {
         return $this->hasMany(Teacher::class)

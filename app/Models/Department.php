@@ -13,6 +13,12 @@ class Department extends Model
         'name'
     ];
 
+    /**
+     * Teachers - collection of teachers
+     * on this department
+     *
+     * @return collection of teachers
+     */
     public function teachers()
     {
         return $this->hasMany(Teacher::class)

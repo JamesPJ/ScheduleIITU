@@ -16,6 +16,13 @@ class Group extends Model
         'group_type_id'
     ];
 
+    /**
+     * Students - collection of
+     * students which participate 
+     * in this group
+     *
+     * @return collection of students
+     */
     public function students()
     {
         return $this->belongsToMany(Student::class)
@@ -23,16 +30,37 @@ class Group extends Model
             ->orderBy('users.fullname');
     }
 
+    /**
+     * Speciality of this group
+     *
+     * @return Speciality
+     */
     public function speciality()
     {
         return $this->belongsTo(Speciality::class);
     }
 
+    /**
+     * Group Type 
+     * Example: K - Kazakh Groups
+     *          R - Russian Groups
+     *          KCCO - Kazakh After College Groups
+     *          RCCO - Russian After College Groups
+     *          etc
+     *
+     * @return void
+     */
     public function group_type()
     {
         return $this->belongsTo(GroupType::class);
     }
 
+    /**
+     * Exams - collection of exams
+     * gets only exams of this semester
+     *
+     * @return collection of Exams
+     */
     public function exams()
     {
         $monthNow = date('m');

@@ -13,21 +13,47 @@ class Student extends Model
         'user_id'
     ];
 
+    /**
+     * User - fullname, email
+     *
+     * @return User
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Groups - in which group
+     * participate this student
+     *
+     * @return collection of groups
+     */
     public function groups()
     {
         return $this->belongsToMany(Group::class)->orderBy('name');
     }
 
+    /**
+     * getHasGroupAttribute
+     * defines has groups this student
+     * 
+     * @return boolean
+     */
     public function getHasGroupAttribute()
     {
         return count($this->groups) > 0;
     }
 
+    /**
+     * getGroupmatesAttribute
+     * gets students of groups 
+     * in which participates this
+     * student
+     *
+     * @return array of groups ['name']
+     * @return subarray of groupmates ['students']
+     */
     public function getGroupmatesAttribute()
     {
         $groups = [];
@@ -46,6 +72,14 @@ class Student extends Model
         return $groups;
     }
 
+    /**
+     * getExamsAttribute
+     * get all exams of groups 
+     * in which participates this
+     * student
+     *
+     * @return array of exams
+     */
     public function getExamsAttribute()
     {
         $exams = [];

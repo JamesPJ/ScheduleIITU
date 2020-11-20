@@ -16,11 +16,24 @@ class Room extends Model
         'room_type_id'
     ];
 
+    /**
+     * Room type
+     * Example: б - Байзак
+     *          Computer class
+     *          etc
+     *
+     * @return RoomType
+     */
     public function room_type()
     {
         return $this->belongsTo(RoomType::class);
     }
 
+    /**
+     * Exams in this room
+     *
+     * @return collection of Exams
+     */
     public function exams()
     {
         return $this->hasMany(Exam::class)->orderBy('date_time')

@@ -9,6 +9,12 @@ class GroupType extends Model
 {
     public $timestamps = false;
 
+    /**
+     * groups - collection of groups
+     * with this type of group
+     *
+     * @return collection of groups
+     */
     public function groups()
     {
         return $this->hasMany(Group::class)->orderBy('name');

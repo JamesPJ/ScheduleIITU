@@ -15,11 +15,23 @@ class Speciality extends Model
         'graduation_id'
     ];
 
+    /**
+     * Graduation of this
+     * speciality
+     *
+     * @return Graduation
+     */
     public function graduation()
     {
         return $this->belongsTo(Graduation::class);
     }
 
+    /**
+     * Groups - collection of groups
+     * in this speciality
+     *
+     * @return collection
+     */
     public function groups()
     {
         return $this->hasMany(Group::class)->orderBy('name');

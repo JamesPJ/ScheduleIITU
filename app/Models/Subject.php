@@ -14,6 +14,12 @@ class Subject extends Model
         'name'
     ];
 
+    /**
+     * Exams - exams of this
+     * subject depending on groups
+     *
+     * @return Exam
+     */
     public function exams()
     {
         return $this->hasMany(Exam::class)->orderBy('date_time')
