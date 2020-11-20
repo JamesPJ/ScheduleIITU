@@ -40,9 +40,13 @@ class ProfileController extends Controller
             $group = Group::find($groupId);
             if (isset($group)) {
                 if (!$user->student->groups->contains($group)) {
-                    $user->student->groups()->attach($group);
+                    if ($user->student->maxGroups) {
+                        $user->student->groups()->attach($group);
+                        return redirect()->route('profile.index')
+                            ->with('success', 'Group added');
+                    }
                     return redirect()->route('profile.index')
-                        ->with('success', 'Group added');
+                        ->with('error', 'You have added maximum groups');
                 }
                 return redirect()->route('profile.index')
                     ->with('error', 'This group already in group list');

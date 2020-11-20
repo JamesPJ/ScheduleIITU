@@ -10,7 +10,7 @@ class RoomType extends Model
     public $timestamps = false;
 
     /**
-     * rooms with this
+     * Rooms with this
      * type of room
      *
      * @return collection of rooms

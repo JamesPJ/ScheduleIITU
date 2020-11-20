@@ -13,4 +13,15 @@ class Time extends Model
         'start',
         'end'
     ];
+
+    /**
+     * Cells - collection of cells
+     * at this time
+     *
+     * @return collection of Cells
+     */
+    public function cells()
+    {
+        return $this->hasMany(Cell::class);
+    }
 }

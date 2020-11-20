@@ -71,6 +71,12 @@ class Group extends Model
         return $this->belongsToMany(Exam::class)->orderBy('date_time')->where('semester', $semester);
     }
 
+    /**
+     * Timetables - collection of timetables
+     * of this group
+     *
+     * @return collection of Timetables
+     */
     public function timetables()
     {
         return $this->hasMany(Timetable::class);

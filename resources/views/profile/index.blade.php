@@ -21,7 +21,7 @@
    @endforelse
    </profile-block>
 
-   
+   @if ($user->student->maxGroups)
    <button class="btn outline success" data-modal="add-group">Add Group</button>
    <modal id="add-group">
       <div class="container">
@@ -33,6 +33,7 @@
                      api-groups="{{ route('api.groups') }}"></group-select>
       </div>
    </modal>
+   @endif
    
 </profile-tab>
 

@@ -14,8 +14,25 @@ class Timetable extends Model
         'group_id'
     ];
 
+    /**
+     * Group of this
+     * timetable
+     *
+     * @return Group
+     */
     public function group()
     {
         return $this->belongsTo(Group::class);
+    }
+
+    /**
+     * Cells - collection of cells
+     * of this timetable
+     *
+     * @return collection of Cells
+     */
+    public function cells()
+    {
+        return $this->hasMany(Cell::class);
     }
 }

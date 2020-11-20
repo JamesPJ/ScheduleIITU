@@ -46,6 +46,17 @@ class Student extends Model
     }
 
     /**
+     * getHasMaxGroupAttribute
+     * define has maximum (4) groups
+     *
+     * @return boolean
+     */
+    public function getMaxGroupsAttribute()
+    {
+        return count($this->groups) < 4;
+    }
+
+    /**
      * getGroupmatesAttribute
      * gets students of groups 
      * in which participates this

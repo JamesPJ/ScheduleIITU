@@ -9,7 +9,7 @@ class Role extends Model
    public $timestamps = false;
 
    /**
-    * users - collection of users 
+    * Users - collection of users 
     * with this role
     * 
     * @return collection of Users

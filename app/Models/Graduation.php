@@ -13,7 +13,7 @@ class Graduation extends Model
      * Specialities - collection of
      * specialities on this graduation
      *
-     * @return collection
+     * @return collection of specialities
      */
     public function specialities()
     {
