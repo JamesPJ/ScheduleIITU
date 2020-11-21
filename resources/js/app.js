@@ -40,7 +40,7 @@ Vue.component('app-nav', {
       }
    },
    template: `
-      <header class="header">
+      <header class="header" :class="{z:top=='yes'}">
          <div class="header__content">
             <nav class="menu">
                <div class="lang">
@@ -597,9 +597,14 @@ Vue.component('sidebar', {
 
 Vue.component('search-item', {
    props: ['type', 'name', 'link'],
+   computed: {
+      typeCap: function () {
+         return this.type.charAt(0).toUpperCase() + this.type.slice(1);
+      }
+   },
    template: `
       <a :href="link" class="search__item">
-         <span class="search__item_type">{{ type }}</span>
+         <span class="search__item_type">{{ typeCap }}</span>
          <span class="search__item_name">{{ name }}</span>
       </a>
    `

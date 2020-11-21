@@ -21,12 +21,38 @@ class ScheduleController extends Controller
     }
 
     /**
-     * Timetable page
+     * Timetable page of group
      *
      * @param  Request $id
      * @return view
      */
-    public function timetable($id)
+    public function group($id)
+    {
+        $data = $this->data();
+
+        return view('schedule', $data);
+    }
+
+    /**
+     * Timetable page of teacher
+     *
+     * @param  Request $id
+     * @return view
+     */
+    public function teacher($id)
+    {
+        $data = $this->data();
+
+        return view('schedule', $data);
+    }
+
+    /**
+     * Timetable page of room
+     *
+     * @param  Request $id
+     * @return view
+     */
+    public function room($id)
     {
         $data = $this->data();
 

@@ -2138,7 +2138,7 @@ Vue.component('app-nav', {
       this.dropDown = !this.dropDown;
     }
   },
-  template: "\n      <header class=\"header\">\n         <div class=\"header__content\">\n            <nav class=\"menu\">\n               <div class=\"lang\">\n\n                  <button class=\"btn tr\" data-modal=\"search\"><i class=\"fas fa-search\"></i></button>\n                  <modal id=\"search\">\n                     <form :action=\"searchPage\" method='GET' class=\"search__form\" id=\"search-overlay-form\">\n                        <input name=\"keyword\" type=\"text\" placeholder=\"Group, Teacher, Room...\" required\n                           autocomplete=\"off\">\n                        <button type=\"submit\"><i class=\"fas fa-search\"></i></button>\n                     </form>\n                  </modal>\n\n                  <slot></slot>\n\n                  <div class=\"lang\">\n                     <button class=\"btn lang__btn\" @click=\"langDropDown\">\n                        {{ lang }} <i class=\"fas fa-angle-down\"></i>\n                     </button>\n                     <div class=\"lang__dropdown\" :class=\"{active:dropDown}\">\n                        <a href=\"#\" class=\"btn lang__btn\" v-for=\"l of langs\" v-if=\"l != lang\">{{l}}</a>\n                     </div>\n                  </div>\n               </div>\n            </nav>\n         </div>\n      </header>\n   "
+  template: "\n      <header class=\"header\" :class=\"{z:top=='yes'}\">\n         <div class=\"header__content\">\n            <nav class=\"menu\">\n               <div class=\"lang\">\n\n                  <button class=\"btn tr\" data-modal=\"search\"><i class=\"fas fa-search\"></i></button>\n                  <modal id=\"search\">\n                     <form :action=\"searchPage\" method='GET' class=\"search__form\" id=\"search-overlay-form\">\n                        <input name=\"keyword\" type=\"text\" placeholder=\"Group, Teacher, Room...\" required\n                           autocomplete=\"off\">\n                        <button type=\"submit\"><i class=\"fas fa-search\"></i></button>\n                     </form>\n                  </modal>\n\n                  <slot></slot>\n\n                  <div class=\"lang\">\n                     <button class=\"btn lang__btn\" @click=\"langDropDown\">\n                        {{ lang }} <i class=\"fas fa-angle-down\"></i>\n                     </button>\n                     <div class=\"lang__dropdown\" :class=\"{active:dropDown}\">\n                        <a href=\"#\" class=\"btn lang__btn\" v-for=\"l of langs\" v-if=\"l != lang\">{{l}}</a>\n                     </div>\n                  </div>\n               </div>\n            </nav>\n         </div>\n      </header>\n   "
 });
 Vue.component('list-empty', {
   props: ['text'],
@@ -2573,7 +2573,12 @@ Vue.component('sidebar', {
 
 Vue.component('search-item', {
   props: ['type', 'name', 'link'],
-  template: "\n      <a :href=\"link\" class=\"search__item\">\n         <span class=\"search__item_type\">{{ type }}</span>\n         <span class=\"search__item_name\">{{ name }}</span>\n      </a>\n   "
+  computed: {
+    typeCap: function typeCap() {
+      return this.type.charAt(0).toUpperCase() + this.type.slice(1);
+    }
+  },
+  template: "\n      <a :href=\"link\" class=\"search__item\">\n         <span class=\"search__item_type\">{{ typeCap }}</span>\n         <span class=\"search__item_name\">{{ name }}</span>\n      </a>\n   "
 }); // ! SCHEDULE PAGE
 
 Vue.component('schedule', {

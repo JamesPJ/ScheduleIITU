@@ -30,7 +30,7 @@
 
       <div class="wrapper">
 
-         <app-nav lang="En" search-page='{{ route('search') }}' class='@yield(' nav-top')'>
+         <app-nav lang="En" search-page='{{ route('search') }}' @yield('nav-top')>
             @if (isset($user) && $user->isUser)
             <a class="btn tr" href="/profile"><i class="fas fa-user"></i></a>
             @endif

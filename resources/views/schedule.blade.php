@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Schedule | Schedule IITU')
-@section('nav-top', 'z')
+@section('nav-top', 'top=yes')
 
 @section('content')
 

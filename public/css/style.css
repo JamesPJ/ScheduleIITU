@@ -295,10 +295,6 @@ select:disabled {
   }
 }
 
-.footer {
-  z-index: 4;
-}
-
 .footer-content {
   padding: 25px 0;
 }

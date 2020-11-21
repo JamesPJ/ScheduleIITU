@@ -12,8 +12,16 @@ use App\Http\Controllers\ScheduleController;
 Route::get('/', [HomeController::class, 'home'])->name('index');
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/oidc', [AuthController::class, 'openID'])->name('openID');
-Route::get('/search', [SearchController::class, 'filter'])->name('search');
-Route::get('/timetable/{id}', [ScheduleController::class, 'timetable'])->name('timetable');
+Route::get('/search', [SearchController::class, 'search'])->name('search');
+
+
+Route::prefix('timetable')->group(function () {
+   Route::name('timetable.')->group(function () {
+      Route::get('group/{id}', [ScheduleController::class, 'group'])->name('group');
+      Route::get('teacher/{id}', [ScheduleController::class, 'teacher'])->name('teacher');
+      Route::get('room/{id}', [ScheduleController::class, 'room'])->name('room');
+   });
+});
 
 
 Route::middleware(['auth.only'])->group(function () {
