@@ -12,8 +12,7 @@ class Teacher extends Model
 
     protected $fillable = [
         'user_id',
-        'department_id',
-        'degree_id'
+        'department_id'
     ];
 
     /**
@@ -21,9 +20,21 @@ class Teacher extends Model
      *
      * @return Degree
      */
-    public function degree()
+    public function degrees()
     {
-        return $this->belongsTo(Degree::class);
+        return $this->belongsToMany(Degree::class);
+    }
+
+    /**
+     * getStringDegreesAttribute
+     * implodes name of degrees with
+     * delimiter ", "
+     *
+     * @return String
+     */
+    public function getStringDegreesAttribute()
+    {
+        return $this->degrees->implode('name', ', ');
     }
 
     /**

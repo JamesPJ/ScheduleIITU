@@ -123,7 +123,7 @@ class Student extends Model
                     $teachers[$cell->subject->name][] = [
                         'fullname' => $cell->teacher->user->fullname,
                         'email' => $cell->teacher->user->email,
-                        'degree' => $cell->teacher->degree->name,
+                        'degree' => $cell->teacher->stringDegrees,
                         'department' => $cell->teacher->department->name
                     ];
                 }
@@ -151,7 +151,7 @@ class Student extends Model
     }
 
     /**
-     * getStringRolesAttribute
+     * getStringGroupsAttribute
      * implodes name of groups with
      * delimiter ", "
      *

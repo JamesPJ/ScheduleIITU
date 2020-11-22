@@ -7,7 +7,7 @@
 <profile-tab title='Teachers'>
 
    @forelse ($user->student->teachers as $subject => $teachers)
-      <div class="blocks__title">
+      <div class="blocks__title center">
          {{ $subject }}
       </div>
       @foreach($teachers as $teacher)
