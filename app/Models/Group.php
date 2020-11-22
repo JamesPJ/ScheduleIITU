@@ -81,4 +81,20 @@ class Group extends Model
     {
         return $this->hasMany(Timetable::class);
     }
+
+    /**
+     * getCurrentTimetableAttribute
+     * gets timetable of current semester
+     * 
+     * @return Timetable
+     */
+    public function getCurrentTimetableAttribute()
+    {
+        $monthNow = date('m');
+        $yearNow = date('Y');
+        $semester = ($yearNow - $this->year) * 2;
+        $semester += $monthNow >= 8 && $monthNow <= 12 ? 1 : 0;
+
+        return $this->timetables->where('semester', $semester)->first();
+    }
 }

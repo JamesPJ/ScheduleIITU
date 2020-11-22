@@ -4,19 +4,25 @@
 
 @section('tab')
 
-@if (isset($user->student))
 <profile-tab title='Teachers'>
 
-   <profile-block title='Operating Systems'>
-      <profile-teacher name='Saya Z. Sapakova' 
-                  email="s.sapakova@edu.iitu.kz" 
-                  degree='Senior Lecture' 
-                  department='IT'
-                  role="Lecture, Practice, Lab">
-      </profile-teacher>
-   </profile-block>
+   @forelse ($user->student->teachers as $subject => $teachers)
+      <div class="blocks__title">
+         {{ $subject }}
+      </div>
+      @foreach($teachers as $teacher)
+         <profile-block>
+            <profile-teacher name='{{ $teacher['fullname'] }}' 
+                     email="{{ $teacher['email'] }}" 
+                     degree='{{ $teacher['degree'] }}' 
+                     department='{{ $teacher['department'] }}'>
+            </profile-teacher>
+         </profile-block>
+      @endforeach
+   @empty
+       <list-empty text='Nothing found'></list-empty>
+   @endforelse
 
 </profile-tab>
-@endif
 
 @endsection

@@ -105,4 +105,30 @@ class Student extends Model
         }
         return $exams;
     }
+
+    /**
+     * getTeachersAttribute
+     * gets all teachers of current semester
+     *
+     * @return array of teachers
+     */
+    public function getTeachersAttribute()
+    {
+        $teachers = [];
+        $addedTeacherIds = [];
+        foreach ($this->groups as $group) {
+            foreach ($group->currentTimetable->cells as $cell) {
+                if (!in_array($cell->teacher->id, $addedTeacherIds)) {
+                    $addedTeacherIds[] = $cell->teacher->id;
+                    $teachers[$cell->subject->name][] = [
+                        'fullname' => $cell->teacher->user->fullname,
+                        'email' => $cell->teacher->user->email,
+                        'degree' => $cell->teacher->degree->name,
+                        'department' => $cell->teacher->department->name
+                    ];
+                }
+            }
+        }
+        return $teachers;
+    }
 }
