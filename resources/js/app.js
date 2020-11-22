@@ -699,7 +699,7 @@ Vue.component('timetable-day', {
    computed: {
       activeDay: function () {
          return {
-            active: +this.day == Math.min(new Date().getDay() - 1, 6)
+            active: +this.day == Math.min(Math.max(new Date().getDay() - 1, 0), 5)
          }
       }
    },

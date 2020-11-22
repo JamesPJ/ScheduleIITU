@@ -24,4 +24,26 @@ class Time extends Model
     {
         return $this->hasMany(Cell::class);
     }
+
+    /**
+     * getStartStrAttribute
+     * returns only HH:MM
+     * 
+     * @return string
+     */
+    public function getStartStrAttribute()
+    {
+        return substr($this->start, 0, -3);
+    }
+
+    /**
+     * getEndStrAttribute
+     * returns only HH:MM
+     *
+     * @return string
+     */
+    public function getEndStrAttribute()
+    {
+        return substr($this->end, 0, -3);
+    }
 }

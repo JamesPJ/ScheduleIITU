@@ -19,7 +19,9 @@
       <div class="schedule__timetable">
 
          <div class="schedule__time">
-            <timetable-time start='08:00' end='08:50'></timetable-time>
+            @foreach ($timeRange as $time)
+                <timetable-time start='{{ $time->startStr }}' end='{{ $time->endStr }}'></timetable-time>
+            @endforeach
          </div>
 
          <div class="schedule__list">
