@@ -20,6 +20,11 @@ class ScheduleController extends Controller
     public function schedule(Request $request)
     {
         $data = $this->data();
+        if ($data['user']->isStudent && !$data['user']->student->hasGroup)
+            return redirect()->route('profile.index')
+                ->with('error', 'Add group firstly');
+
+
         $data['timeRange'] = $this->timeRange($data['user']->cells);
         $data['name'] = $data['user']->scheduleName;
         $data['type'] = $data['user']->scheduleType;

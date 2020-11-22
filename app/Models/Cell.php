@@ -10,7 +10,6 @@ class Cell extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'timetable_id',
         'subject_id',
         'teacher_id',
         'room_id',
@@ -25,9 +24,9 @@ class Cell extends Model
      *
      * @return Timetable
      */
-    public function timetable()
+    public function timetables()
     {
-        return $this->belongsTo(Timetable::class);
+        return $this->belongsToMany(Timetable::class);
     }
 
     /**

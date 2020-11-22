@@ -13,7 +13,7 @@
       <profile-block>
          <profile-teacher name='{{ $teacher->user->fullname }}' 
                      email="{{ $teacher->user->email }}" 
-                     degree='{{ $teacher->degree->name }}'>
+                     degree='{{ $teacher->stringDegrees }}'>
          </profile-teacher>
       </profile-block>
    @empty

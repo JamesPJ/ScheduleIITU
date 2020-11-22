@@ -142,9 +142,13 @@ class Student extends Model
     public function getCellsAttribute()
     {
         $cells = [];
+        $addedCellIds = [];
         foreach ($this->groups as $group) {
             foreach ($group->currentTimetable->cells as $cell) {
-                $cells[] = $cell;
+                if (!in_array($cell->id, $addedCellIds)) {
+                    $addedCellIds[] = $cell->id;
+                    $cells[] = $cell;
+                }
             }
         }
         return $cells;

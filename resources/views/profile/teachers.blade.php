@@ -20,7 +20,9 @@
          </profile-block>
       @endforeach
    @empty
-       <list-empty text='Nothing found'></list-empty>
+      <profile-block>
+         <list-empty text="Firstly add group"></list-empty>
+      </profile-block>
    @endforelse
 
 </profile-tab>

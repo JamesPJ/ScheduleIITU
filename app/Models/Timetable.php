@@ -33,6 +33,6 @@ class Timetable extends Model
      */
     public function cells()
     {
-        return $this->hasMany(Cell::class);
+        return $this->belongsToMany(Cell::class);
     }
 }
