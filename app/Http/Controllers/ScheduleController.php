@@ -26,6 +26,7 @@ class ScheduleController extends Controller
 
 
         $data['timeRange'] = $this->timeRange($data['user']->cells);
+        $data['schedule'] = $this->drawSchedule($data['user']->cells, $data['timeRange']);
         $data['name'] = $data['user']->scheduleName;
         $data['type'] = $data['user']->scheduleType;
 
@@ -43,6 +44,7 @@ class ScheduleController extends Controller
         $data = $this->data();
         $group = Group::findOrFail($id);
         $data['timeRange'] = $this->timeRange($group->currentTimetable->cells);
+        $data['schedule'] = $this->drawSchedule($group->currentTimetable->cells, $data['timeRange']);
         $data['name'] = $group->name;
         $data['type'] = 'group';
 
@@ -60,6 +62,7 @@ class ScheduleController extends Controller
         $data = $this->data();
         $teacher = Teacher::findOrFail($id);
         $data['timeRange'] = $this->timeRange($teacher->cells);
+        $data['schedule'] = $this->drawSchedule($teacher->cells, $data['timeRange']);
         $data['name'] = $teacher->user->fullname;
         $data['type'] = 'teacher';
 
@@ -77,6 +80,7 @@ class ScheduleController extends Controller
         $data = $this->data();
         $room = Room::findOrFail($id);
         $data['timeRange'] = $this->timeRange($room->cells);
+        $data['schedule'] = $this->drawSchedule($room->cells, $data['timeRange']);
         $data['name'] = $room->location;
         $data['type'] = 'room';
 
@@ -107,5 +111,21 @@ class ScheduleController extends Controller
             return Time::where('id', '>=', $minId)->where('id', '<=', $maxId)->get();
         }
         return [];
+    }
+
+    public function drawSchedule($cells, $timeRange)
+    {
+        $schedule = [];
+        for ($i = 0; $i < 6; $i++) {
+            $schedule[$i] = [];
+            foreach ($timeRange as $time) {
+                $schedule[$i][$time->id] = [];
+            }
+        }
+        $addedCellIds = [];
+        foreach ($cells as $cell) {
+            $schedule[$cell->day_index][$cell->time->id][] = $cell;
+        }
+        return $schedule;
     }
 }

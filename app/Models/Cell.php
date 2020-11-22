@@ -79,4 +79,17 @@ class Cell extends Model
     {
         return $this->belongsTo(Teacher::class);
     }
+
+    public function getGroupsAttribute()
+    {
+        $groups = [];
+        $addedGroupIds = [];
+        foreach ($this->timetables as $timetable) {
+            if (!in_array($timetable->group->id, $addedGroupIds)) {
+                $addedGroupIds[] = $timetable->group->id;
+                $groups[] = $timetable->group;
+            }
+        }
+        return $groups;
+    }
 }

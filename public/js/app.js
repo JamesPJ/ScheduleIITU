@@ -2615,8 +2615,13 @@ Vue.component('day-slider-btn', {
   template: "\n      <button class=\"schedule__slider_btn\" :data-day=\"day\" @click=\"changeDay\" disabled>\n         <span class=\"schedule__slider_btn--title--expand\">{{ titleLg }}</span>\n         <span class=\"schedule__slider_btn--title--tablet\">{{ titleMd }}</span>\n         <span class=\"schedule__slider_btn--title--mobile\">{{ titleSm }}</span>\n      </button>\n   "
 });
 Vue.component('timetable-folder', {
-  props: ['count'],
-  template: "\n      <div class=\"schedule-day__folder\">\n         <button class=\"schedule-day__folder_list\" data-modal=\"subject-folder\">\n            <div class=\"schedule-day__folder_elem\" v-for=\"e in Math.min(count, 4)\"></div>\n         </button>\n         <modal id='subject-folder'>\n            <div class=\"schedule-day__folder_modal\">\n               <slot></slot>\n            </div>\n         </modal>\n      </div>\n   "
+  props: ['count', 'modal-id'],
+  computed: {
+    id: function id() {
+      return "subject-folder-" + this.modalId;
+    }
+  },
+  template: "\n      <div class=\"schedule-day__folder\">\n         <button class=\"schedule-day__folder_list\" :data-modal=\"id\">\n            <div class=\"schedule-day__folder_elem\" v-for=\"e in Math.min(count, 4)\"></div>\n         </button>\n         <modal :id='id'>\n            <div class=\"schedule-day__folder_modal\">\n               <slot></slot>\n            </div>\n         </modal>\n      </div>\n   "
 });
 Vue.component('timetable-time', {
   props: ['start', 'end'],

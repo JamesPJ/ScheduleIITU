@@ -669,13 +669,18 @@ Vue.component('day-slider-btn', {
 });
 
 Vue.component('timetable-folder', {
-   props: ['count'],
+   props: ['count', 'modal-id'],
+   computed: {
+      id: function () {
+         return "subject-folder-" + this.modalId;
+      }
+   },
    template: `
       <div class="schedule-day__folder">
-         <button class="schedule-day__folder_list" data-modal="subject-folder">
+         <button class="schedule-day__folder_list" :data-modal="id">
             <div class="schedule-day__folder_elem" v-for="e in Math.min(count, 4)"></div>
          </button>
-         <modal id='subject-folder'>
+         <modal :id='id'>
             <div class="schedule-day__folder_modal">
                <slot></slot>
             </div>

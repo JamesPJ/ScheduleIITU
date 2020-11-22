@@ -130,6 +130,13 @@ class User extends Model
          return $this->teacher->cells;
    }
 
+   /**
+    * getScheduleTypeAttribute
+    * schedule type of user
+    * teacher | group
+    *
+    * @return string
+    */
    public function getScheduleTypeAttribute()
    {
       if ($this->isStudent)
@@ -138,6 +145,13 @@ class User extends Model
          return 'teacher';
    }
 
+   /**
+    * getScheduleNameAttribute
+    * schedule name of user
+    * teacher name | implode of group name list of student
+    *
+    * @return string
+    */
    public function getScheduleNameAttribute()
    {
       if ($this->isStudent)

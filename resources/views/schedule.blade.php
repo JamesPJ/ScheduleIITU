@@ -26,53 +26,41 @@
 
          <div class="schedule__list">
 
-            <timetable-day day="0">
-
-               <timetable-cell start='08:00' end='08:50' teacher='Sapakova S.Z' room='301'
-                  subject='Operating Systems' type='Lecture' degree='Senior Lecturer'>
-                  <timetable-group name='CSSE-1801K'></timetable-group>
-                  <timetable-group name='CSSE-1802K'></timetable-group>
-                  <timetable-group name='CSSE-1803K'></timetable-group>
-                  <timetable-group name='CSSE-1804K'></timetable-group>
-                  <timetable-group name='CSSE-1805K'></timetable-group>
-                  <timetable-group name='CSSE-1806K'></timetable-group>
-                  <timetable-group name='IT2CCO-2001'></timetable-group>
-               </timetable-cell>
-
-               <timetable-cell start='11:00' end='11:50'></timetable-cell>
-            </timetable-day>
-
-
-            <timetable-day day="1"></timetable-day>
-
-            <timetable-day day="2"></timetable-day>
-
-            <timetable-day day="3"></timetable-day>
-
-
-            <timetable-day day="4">
-               <timetable-folder count="3">
-
-                  <timetable-cell start='08:00' end='08:50' teacher='Teacher' room='401'
-                     subject='First Elective Example' type='Practice'>
-                     <timetable-group name='CSSE-1803K'></timetable-group>
-                  </timetable-cell>
-
-                  <timetable-cell start='08:00' end='08:50' teacher='Teacher' room='405'
-                     subject='Second Elective Example' type='Lab'>
-                     <timetable-group name='CSSE-1803K'></timetable-group>
-                  </timetable-cell>
-
-                  <timetable-cell start='08:00' end='08:50' teacher='Teacher' room='406'
-                     subject='Third Elective Example' type='Lab'>
-                     <timetable-group name='CSSE-1803K'></timetable-group>
-                  </timetable-cell>
-
-               </timetable-folder>
-            </timetable-day>
-
-
-            <timetable-day day="5"></timetable-day>
+            @for($i = 0; $i < 6; $i++)
+               <timetable-day day="{{ $i }}">
+                  @foreach($timeRange as $time)
+                     @if (count($schedule[$i][$time->id]) == 0)
+                        <timetable-cell start='{{ $time->startStr }}' end='{{ $time->endStr }}'></timetable-cell>
+                     @elseif (count($schedule[$i][$time->id]) == 1)
+                        <timetable-cell start='{{ $time->startStr }}' end='{{ $time->endStr }}'
+                              teacher='{{ $schedule[$i][$time->id][0]->teacher->user->fullname }}'
+                              room='{{ $schedule[$i][$time->id][0]->room->location }}'
+                              subject='{{ $schedule[$i][$time->id][0]->subject->name }}'
+                              type='{{ $schedule[$i][$time->id][0]->subject_type->name }}'
+                              degree='{{ $schedule[$i][$time->id][0]->teacher->stringDegrees }}'>
+                           @foreach ($schedule[$i][$time->id][0]->groups as $group)
+                               <timetable-group name='{{ $group->name }}'></timetable-group>
+                           @endforeach
+                        </timetable-cell>
+                     @elseif (count($schedule[$i][$time->id]) > 1)
+                        <timetable-folder count="{{ count($schedule[$i][$time->id]) }}" modal-id="{{ $i."-".$time->id }}">
+                           @foreach($schedule[$i][$time->id] as $c)
+                              <timetable-cell start='{{ $time->startStr }}' end='{{ $time->endStr }}'
+                                    teacher='{{ $c->teacher->user->fullname }}'
+                                    room='{{ $c->room->location }}'
+                                    subject='{{ $c->subject->name }}'
+                                    type='{{ $c->subject_type->name }}'
+                                    degree='{{ $c->teacher->stringDegrees }}'>
+                                 @foreach ($c->groups as $group)
+                                    <timetable-group name='{{ $group->name }}'></timetable-group>
+                                 @endforeach
+                              </timetable-cell>
+                           @endforeach
+                        </timetable-folder>
+                     @endif
+                  @endforeach
+               </timetable-day>
+            @endfor
 
          </div>
 
