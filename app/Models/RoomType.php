@@ -9,6 +9,10 @@ class RoomType extends Model
 {
     public $timestamps = false;
 
+    protected $fillable = [
+        'name',
+    ];
+
     /**
      * Rooms with this
      * type of room

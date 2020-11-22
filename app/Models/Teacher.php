@@ -86,30 +86,4 @@ class Teacher extends Model
     {
         return $this->hasMany(Cell::class);
     }
-
-    /**
-     * getTimeRangeAttribute
-     * returns collection of ranged time when 
-     * timetable starts and ends
-     *
-     * @return collection of time
-     */
-    public function getTimeRangeAttribute()
-    {
-        if (count($this->cells) > 0) {
-            $minId = $this->cells[0]->time->id;
-            $maxId = $this->cells[0]->time->id;
-            foreach ($this->cells as $cell) {
-                $curTimeId = $cell->time->id;
-                if ($curTimeId > $maxId) {
-                    $maxId = $curTimeId;
-                }
-                if ($curTimeId < $minId) {
-                    $minId = $curTimeId;
-                }
-            }
-            return Time::where('id', '>=', $minId)->where('id', '<=', $maxId)->get();
-        }
-        return [];
-    }
 }

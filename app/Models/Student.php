@@ -131,4 +131,34 @@ class Student extends Model
         }
         return $teachers;
     }
+
+    /**
+     * getCellsAttribute
+     * returns all cells of 
+     * the student groups
+     *
+     * @return array of cells
+     */
+    public function getCellsAttribute()
+    {
+        $cells = [];
+        foreach ($this->groups as $group) {
+            foreach ($group->currentTimetable->cells as $cell) {
+                $cells[] = $cell;
+            }
+        }
+        return $cells;
+    }
+
+    /**
+     * getStringRolesAttribute
+     * implodes name of groups with
+     * delimiter ", "
+     *
+     * @return String
+     */
+    public function getStringGroupsAttribute()
+    {
+        return $this->groups->implode('name', ', ');
+    }
 }

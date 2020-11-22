@@ -103,7 +103,7 @@ class User extends Model
    {
       return isset($this->student);
    }
-   
+
    /**
     * getIsTeacherAttribute
     * teacher is set?
@@ -113,5 +113,36 @@ class User extends Model
    public function getIsTeacherAttribute()
    {
       return isset($this->teacher);
+   }
+
+   /**
+    * getCellsAttribute
+    * returns collection of cells 
+    * depending on isTeacher of isStudent
+    *
+    * @return collection of cells
+    */
+   public function getCellsAttribute()
+   {
+      if ($this->isStudent)
+         return $this->student->cells;
+      if ($this->isTeacher)
+         return $this->teacher->cells;
+   }
+
+   public function getScheduleTypeAttribute()
+   {
+      if ($this->isStudent)
+         return 'group';
+      if ($this->isTeacher)
+         return 'teacher';
+   }
+
+   public function getScheduleNameAttribute()
+   {
+      if ($this->isStudent)
+         return $this->student->stringGroups;
+      if ($this->isTeacher)
+         return $this->fullname;
    }
 }

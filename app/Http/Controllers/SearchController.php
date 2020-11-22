@@ -24,9 +24,9 @@ class SearchController extends Controller
         $data['word'] = $word;
         $word = '%' . $word . '%';
 
-        $groups = Group::where('name', 'like', $word)->get();
-        $rooms = Room::where('location', 'like', $word)->get();
-        $teachers = User::where('fullname', 'like', $word)
+        $groups = Group::where('name', 'like', $word)->orderBy('name')->get();
+        $rooms = Room::where('location', 'like', $word)->orderBy('location')->get();
+        $teachers = User::where('fullname', 'like', $word)->orderBy('fullname')
             ->join('teachers', 'users.id', '=', 'teachers.user_id')->get();
 
         $data['result'] = [];

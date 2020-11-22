@@ -8,6 +8,10 @@ class Role extends Model
 {
    public $timestamps = false;
 
+   protected $fillable = [
+      'name',
+   ];
+
    /**
     * Users - collection of users 
     * with this role

@@ -9,6 +9,10 @@ class SubjectType extends Model
 {
     public $timestamps = false;
 
+    protected $fillable = [
+        'name',
+    ];
+
     /**
      * Cells - collection of cells
      * of this subject type

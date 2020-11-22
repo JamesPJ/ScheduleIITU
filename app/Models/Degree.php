@@ -9,6 +9,10 @@ class Degree extends Model
 {
     public $timestamps = false;
 
+    protected $fillable = [
+        'name',
+    ];
+
     /**
      * Teachers - collection of teachers
      * with this degree

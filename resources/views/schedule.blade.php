@@ -6,7 +6,7 @@
 
 <main class="page">
 
-   <schedule name='CSSE-1803K' type='group'>
+   <schedule name='{{ $name }}' type='{{ $type }}'>
       <day-slider>
          <day-slider-btn title-lg="Monday" title-md="Mon" title-sm="M" day="0"></day-slider-btn>
          <day-slider-btn title-lg="Tuesday" title-md="Tue" title-sm="Tu" day="1"></day-slider-btn>

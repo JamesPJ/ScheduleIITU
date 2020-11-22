@@ -9,6 +9,11 @@ class Graduation extends Model
 {
     public $timestamps = false;
 
+    protected $fillable = [
+        'name',
+        'abbr'
+    ];
+
     /**
      * Specialities - collection of
      * specialities on this graduation

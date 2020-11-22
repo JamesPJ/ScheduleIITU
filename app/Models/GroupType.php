@@ -9,6 +9,11 @@ class GroupType extends Model
 {
     public $timestamps = false;
 
+    protected $fillable = [
+        'name',
+        'abbr'
+    ];
+
     /**
      * Groups - collection of groups
      * with this type of group
