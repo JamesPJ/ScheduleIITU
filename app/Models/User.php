@@ -49,7 +49,7 @@ class User extends Model
     * getExamsAttribute
     * exams of teacher or student
     *
-    * @return array|collection of exams
+    * @return collection of exams
     */
    public function getExamsAttribute()
    {
@@ -158,5 +158,18 @@ class User extends Model
          return $this->student->stringGroups;
       if ($this->isTeacher)
          return $this->fullname;
+   }
+
+   /**
+    * getShortFullnameAttribute
+    * gets shorted fullname like Name F.K.
+    *
+    * @return string
+    */
+   public function getShortFullnameAttribute()
+   {
+      $indexOfLastnameLetter = strrpos($this->fullname, ' ') + 1;
+      $substringOfLastname = substr($this->fullname, $indexOfLastnameLetter + 1);
+      return str_replace($substringOfLastname, '.', $this->fullname);
    }
 }

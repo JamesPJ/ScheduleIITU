@@ -29,34 +29,36 @@
             @for($i = 0; $i < 6; $i++)
                <timetable-day day="{{ $i }}">
                   @foreach($timeRange as $time)
-                     @if (count($schedule[$i][$time->id]) == 0)
-                        <timetable-cell start='{{ $time->startStr }}' end='{{ $time->endStr }}'></timetable-cell>
-                     @elseif (count($schedule[$i][$time->id]) == 1)
-                        <timetable-cell start='{{ $time->startStr }}' end='{{ $time->endStr }}'
-                              teacher='{{ $schedule[$i][$time->id][0]->teacher->user->fullname }}'
-                              room='{{ $schedule[$i][$time->id][0]->room->location }}'
-                              subject='{{ $schedule[$i][$time->id][0]->subject->name }}'
-                              type='{{ $schedule[$i][$time->id][0]->subject_type->name }}'
-                              degree='{{ $schedule[$i][$time->id][0]->teacher->stringDegrees }}'>
-                           @foreach ($schedule[$i][$time->id][0]->groups as $group)
-                               <timetable-group name='{{ $group->name }}'></timetable-group>
-                           @endforeach
-                        </timetable-cell>
-                     @elseif (count($schedule[$i][$time->id]) > 1)
-                        <timetable-folder count="{{ count($schedule[$i][$time->id]) }}" modal-id="{{ $i."-".$time->id }}">
-                           @foreach($schedule[$i][$time->id] as $c)
-                              <timetable-cell start='{{ $time->startStr }}' end='{{ $time->endStr }}'
-                                    teacher='{{ $c->teacher->user->fullname }}'
-                                    room='{{ $c->room->location }}'
-                                    subject='{{ $c->subject->name }}'
-                                    type='{{ $c->subject_type->name }}'
-                                    degree='{{ $c->teacher->stringDegrees }}'>
-                                 @foreach ($c->groups as $group)
-                                    <timetable-group name='{{ $group->name }}'></timetable-group>
-                                 @endforeach
-                              </timetable-cell>
-                           @endforeach
-                        </timetable-folder>
+                     @if (isset($schedule[$i][$time->id]))
+                        @if (count($schedule[$i][$time->id]) == 0)
+                           <timetable-cell start='{{ $time->startStr }}' end='{{ $time->endStr }}'></timetable-cell>
+                        @elseif (count($schedule[$i][$time->id]) == 1)
+                           <timetable-cell start='{{ $time->startStr }}' end='{{ $time->endStr }}'
+                                 teacher='{{ $schedule[$i][$time->id][0]->teacher->user->shortFullname }}'
+                                 room='{{ $schedule[$i][$time->id][0]->room->location }}'
+                                 subject='{{ $schedule[$i][$time->id][0]->subject->name }}'
+                                 type='{{ $schedule[$i][$time->id][0]->subject_type->name }}'
+                                 degree='{{ $schedule[$i][$time->id][0]->teacher->stringDegrees }}'>
+                              @foreach ($schedule[$i][$time->id][0]->groups as $group)
+                                 <timetable-group name='{{ $group->name }}'></timetable-group>
+                              @endforeach
+                           </timetable-cell>
+                        @elseif (count($schedule[$i][$time->id]) > 1)
+                           <timetable-folder count="{{ count($schedule[$i][$time->id]) }}" modal-id="{{ $i."-".$time->id }}">
+                              @foreach($schedule[$i][$time->id] as $c)
+                                 <timetable-cell start='{{ $time->startStr }}' end='{{ $time->endStr }}'
+                                       teacher='{{ $c->teacher->user->shortFullname }}'
+                                       room='{{ $c->room->location }}'
+                                       subject='{{ $c->subject->name }}'
+                                       type='{{ $c->subject_type->name }}'
+                                       degree='{{ $c->teacher->stringDegrees }}'>
+                                    @foreach ($c->groups as $group)
+                                       <timetable-group name='{{ $group->name }}'></timetable-group>
+                                    @endforeach
+                                 </timetable-cell>
+                              @endforeach
+                           </timetable-folder>
+                        @endif
                      @endif
                   @endforeach
                </timetable-day>

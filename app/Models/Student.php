@@ -89,7 +89,7 @@ class Student extends Model
      * in which participates this
      * student
      *
-     * @return array of exams
+     * @return collection of exams
      */
     public function getExamsAttribute()
     {
@@ -103,14 +103,14 @@ class Student extends Model
                 }
             }
         }
-        return $exams;
+        return collect($exams)->sortBy('date_time');
     }
 
     /**
      * getTeachersAttribute
      * gets all teachers of current semester
      *
-     * @return array of teachers
+     * @return collection of teachers
      */
     public function getTeachersAttribute()
     {
@@ -129,7 +129,7 @@ class Student extends Model
                 }
             }
         }
-        return $teachers;
+        return collect($teachers);
     }
 
     /**
@@ -137,7 +137,7 @@ class Student extends Model
      * returns all cells of 
      * the student groups
      *
-     * @return array of cells
+     * @return collection of cells
      */
     public function getCellsAttribute()
     {
@@ -151,7 +151,7 @@ class Student extends Model
                 }
             }
         }
-        return $cells;
+        return collect($cells);
     }
 
     /**

@@ -63,7 +63,7 @@ class Teacher extends Model
      * in which participate this
      * teacher
      *
-     * @return array of teachers
+     * @return collection of teachers
      */
     public function getDepmatesAttribute()
     {
@@ -73,7 +73,7 @@ class Teacher extends Model
                 $depmates[] = $teacher;
             }
         }
-        return $depmates;
+        return collect($depmates);
     }
 
     /**

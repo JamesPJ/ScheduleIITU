@@ -48,7 +48,7 @@ class Group extends Model
      *          RCCO - Russian After College Groups
      *          etc
      *
-     * @return void
+     * @return GroupType
      */
     public function group_type()
     {

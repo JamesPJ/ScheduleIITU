@@ -2616,12 +2616,30 @@ Vue.component('day-slider-btn', {
 });
 Vue.component('timetable-folder', {
   props: ['count', 'modal-id'],
+  data: function data() {
+    return {
+      soon: false,
+      ongoing: false
+    };
+  },
   computed: {
     id: function id() {
       return "subject-folder-" + this.modalId;
+    },
+    classObj: function classObj() {
+      return {
+        soon: this.soon,
+        ongoing: this.ongoing
+      };
     }
   },
-  template: "\n      <div class=\"schedule-day__folder\">\n         <button class=\"schedule-day__folder_list\" :data-modal=\"id\">\n            <div class=\"schedule-day__folder_elem\" v-for=\"e in Math.min(count, 4)\"></div>\n         </button>\n         <modal :id='id'>\n            <div class=\"schedule-day__folder_modal\">\n               <slot></slot>\n            </div>\n         </modal>\n      </div>\n   "
+  mounted: function mounted() {
+    this.$nextTick(function () {
+      if (document.getElementById(this.id).querySelector(".schedule-day__subj_content.schedule-subj.soon")) this.soon = true;
+      if (document.getElementById(this.id).querySelector(".schedule-day__subj_content.schedule-subj.ongoing")) this.ongoing = true;
+    });
+  },
+  template: "\n      <div class=\"schedule-day__folder\" :class=\"classObj\">\n         <button class=\"schedule-day__folder_list\" :data-modal=\"id\">\n            <div class=\"schedule-day__folder_elem\" v-for=\"e in Math.min(count, 4)\"></div>\n         </button>\n         <modal :id='id'>\n            <div class=\"schedule-day__folder_modal\">\n               <slot></slot>\n            </div>\n         </modal>\n      </div>\n   "
 });
 Vue.component('timetable-time', {
   props: ['start', 'end'],
@@ -2650,9 +2668,12 @@ Vue.component('timetable-cell', {
     },
     near: function near() {
       var s = this.startSeconds;
+      var e = this.endSeconds;
+      var c = this.currentSeconds;
+      var isCurrentDay = this.currentDay;
       return {
-        'soon': this.startSeconds - this.currentSeconds <= 1200 && this.startSeconds - this.currentSeconds >= 0 && this.currentDay,
-        'ongoing': this.currentSeconds >= this.startSeconds && this.currentSeconds < this.endSeconds && this.currentDay
+        'soon': s - c <= 1200 && s - c >= 0 && isCurrentDay,
+        'ongoing': c >= s && c < e && isCurrentDay
       };
     },
     startSeconds: function startSeconds() {
@@ -2674,7 +2695,7 @@ Vue.component('timetable-cell', {
     },
     currentDay: function currentDay() {
       var todayDay = new Date().getDay() - 1;
-      var subjDay = this.$parent.day;
+      var subjDay = this.$parent.day || this.$parent.$parent.$parent.day;
       return todayDay == subjDay;
     }
   },

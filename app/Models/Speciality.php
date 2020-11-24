@@ -30,7 +30,7 @@ class Speciality extends Model
      * Groups - collection of groups
      * in this speciality
      *
-     * @return collection
+     * @return collection of groups
      */
     public function groups()
     {

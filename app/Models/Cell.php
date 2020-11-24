@@ -80,16 +80,23 @@ class Cell extends Model
         return $this->belongsTo(Teacher::class);
     }
 
+    /**
+     * getGroupsAttribute
+     *
+     * @return collection of groups
+     */
     public function getGroupsAttribute()
     {
         $groups = [];
         $addedGroupIds = [];
         foreach ($this->timetables as $timetable) {
+            if ($this->id == 3) {
+            }
             if (!in_array($timetable->group->id, $addedGroupIds)) {
                 $addedGroupIds[] = $timetable->group->id;
                 $groups[] = $timetable->group;
             }
         }
-        return $groups;
+        return collect($groups)->sortBy('name');
     }
 }

@@ -670,13 +670,33 @@ Vue.component('day-slider-btn', {
 
 Vue.component('timetable-folder', {
    props: ['count', 'modal-id'],
+   data: function () {
+      return {
+         soon: false,
+         ongoing: false
+      }
+   },
    computed: {
       id: function () {
          return "subject-folder-" + this.modalId;
+      },
+      classObj: function () {
+         return {
+            soon: this.soon,
+            ongoing: this.ongoing
+         }
       }
    },
+   mounted: function () {
+      this.$nextTick(function () {
+         if (document.getElementById(this.id).querySelector(".schedule-day__subj_content.schedule-subj.soon"))
+            this.soon = true;
+         if (document.getElementById(this.id).querySelector(".schedule-day__subj_content.schedule-subj.ongoing"))
+            this.ongoing = true;
+      });
+   },
    template: `
-      <div class="schedule-day__folder">
+      <div class="schedule-day__folder" :class="classObj">
          <button class="schedule-day__folder_list" :data-modal="id">
             <div class="schedule-day__folder_elem" v-for="e in Math.min(count, 4)"></div>
          </button>
@@ -730,9 +750,12 @@ Vue.component('timetable-cell', {
       },
       near: function () {
          let s = this.startSeconds;
+         let e = this.endSeconds;
+         let c = this.currentSeconds;
+         let isCurrentDay = this.currentDay;
          return {
-            'soon': this.startSeconds - this.currentSeconds <= 1200 && this.startSeconds - this.currentSeconds >= 0 && this.currentDay,
-            'ongoing': this.currentSeconds >= this.startSeconds && this.currentSeconds < this.endSeconds && this.currentDay
+            'soon': s - c <= 1200 && s - c >= 0 && isCurrentDay,
+            'ongoing': c >= s && c < e && isCurrentDay
          }
       },
       startSeconds: function () {
@@ -754,7 +777,7 @@ Vue.component('timetable-cell', {
       },
       currentDay: function () {
          let todayDay = new Date().getDay() - 1;
-         let subjDay = this.$parent.day;
+         let subjDay = this.$parent.day || this.$parent.$parent.$parent.day;
          return todayDay == subjDay;
       }
    },
