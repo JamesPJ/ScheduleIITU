@@ -46,6 +46,17 @@ class User extends Model
    }
 
    /**
+    * Dean instance
+    * if exists
+    *
+    * @return Dean
+    */
+   public function dean()
+   {
+      return $this->hasOne(Dean::class);
+   }
+
+   /**
     * getExamsAttribute
     * exams of teacher or student
     *
@@ -83,17 +94,6 @@ class User extends Model
    }
 
    /**
-    * getIsAdminAttribute
-    * user role is admin or deans
-    *
-    * @return boolean
-    */
-   public function getIsAdminAttribute()
-   {
-      return str_contains($this->stringRoles, 'deans') || str_contains($this->stringRoles, 'admin');
-   }
-
-   /**
     * getIsStudentAttribute
     * user is set?
     *
@@ -113,6 +113,28 @@ class User extends Model
    public function getIsTeacherAttribute()
    {
       return isset($this->teacher);
+   }
+
+   /**
+    * getIsAdminAttribute
+    * user role is deans
+    *
+    * @return boolean
+    */
+   public function getIsAdminAttribute()
+   {
+      return isset($this->dean);
+   }
+
+   /**
+    * getIsOnlyAdminAttribute
+    * only dean is set?
+    *
+    * @return boolean
+    */
+   public function getIsOnlyAdminAttribute()
+   {
+      return !isset($this->teacher) && !isset($this->student) && isset($this->dean);
    }
 
    /**
