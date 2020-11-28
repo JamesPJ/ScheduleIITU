@@ -108,9 +108,8 @@ class AuthController extends Controller
               $student = Student::create(['user_id' => $user->id]);
               $user->student()->save($student);
             } else {
-              $role = 'teacher';
-              $teacher = Teacher::create(['user_id' => $user->id]);
-              $user->teacher()->save($teacher);
+              return redirect()->route('index')
+                ->with('error', 'Please contact with HR to add you!');
             }
             $user->roles()->attach(Role::where('name', $role)->first()->id);
 
