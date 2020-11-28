@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cell;
 use Illuminate\Http\Request;
 use App\Models\Group;
+use App\Models\Room;
+use App\Models\Subject;
+use App\Models\Time;
+use Carbon\Carbon;
 
 class ProfileController extends Controller
 {
@@ -27,7 +32,7 @@ class ProfileController extends Controller
 
     /**
      * ! Method: [POST ONLY]
-     * Attachin group to student
+     * Attaching group to student
      *
      * @param  Request $request
      * @return redirect
@@ -82,6 +87,58 @@ class ProfileController extends Controller
     }
 
     /**
+     * ! Method: [POST ONLY]
+     * Attaching subject to blocked list of student
+     *
+     * @param  Request $request
+     * @return redirect
+     */
+    public function subjectBlock(Request $request)
+    {
+        $user = session('user');
+        if (isset($user) && $user->isStudent) {
+            $subjectId = $request->input('subject_id');
+            $subject = Subject::find($subjectId);
+            if (isset($subject)) {
+                if (!$user->student->subjects->contains($subject)) {
+                    $user->student->subjects()->attach($subject);
+                    return redirect()->route('profile.subjects')
+                        ->with('success', 'Subject blocked');
+                }
+                return redirect()->route('profile.subjects')
+                    ->with('error', 'This subject already in blocked list');
+            }
+            return redirect()->route('profile.subjects')
+                ->with('error', 'This subject doesn\'t exists');
+        }
+        return redirect()->route('index');
+    }
+
+    /**
+     * ! Method: [POST ONLY]
+     * Detaching subject from blocked list of student
+     *
+     * @param  Request $request
+     * @return redirect
+     */
+    public function subjectShow(Request $request)
+    {
+        $user = session('user');
+        if (isset($user) && $user->isStudent) {
+            $subjectId = $request->input('subject_id');
+            $subject = Subject::find($subjectId);
+            if ($user->student->subjects->contains($subject)) {
+                $user->student->subjects()->detach($subject);
+                return redirect()->route('profile.subjects')
+                    ->with('success', 'Subject unblocked');
+            }
+            return redirect()->route('profile.subjects')
+                ->with('error', 'This subject doesn\'t exists');
+        }
+        return redirect()->route('index');
+    }
+
+    /**
      * Groupmates - page of students
      * shows list of groupmates
      *
@@ -111,6 +168,45 @@ class ProfileController extends Controller
     }
 
     /**
+     * Free - page of students and teachers
+     * shows list of free rooms at current time
+     *
+     * @return view
+     */
+    public function free()
+    {
+        $data = $this->data();
+        $freeRooms = [];
+        $data['text'] = "Have a blessed and beautiful Sunday";
+        $weekDay = date('w') - 1;
+        if ($weekDay >= 0 && $weekDay <= 5) {
+            $data['text'] = "Nothing Found";
+            $time = Time::where('start', '<=', Carbon::now())->where('end', '>=', Carbon::now())->first();
+            if (isset($time)) {
+                $cells = Cell::where('time_id', $time->id)->where('day_index', $weekDay)->get();
+                $rooms = Room::all();
+                foreach ($rooms as $room) {
+                    $find = false;
+                    foreach ($cells as $cell) {
+                        if ($cell->room == $room) {
+                            $find = true;
+                            break;
+                        }
+                    }
+                    if (!$find) {
+                        $freeRooms[] = $room;
+                    }
+                }
+            } else {
+                $data['text'] = "Too late";
+            }
+        }
+        $data['freeRooms'] = collect($freeRooms)->sortBy('location');
+
+        return view('profile.free', $data);
+    }
+
+    /**
      * Teachers - page of students
      * shows list of teachers
      *
@@ -123,6 +219,20 @@ class ProfileController extends Controller
             return redirect()->route('profile.exams');
 
         return view('profile.teachers', $data);
+    }
+
+    /**
+     * Subjects - page of students
+     * shows list of subjects
+     *
+     * @return view
+     */
+    public function subjects()
+    {
+        $data = $this->data();
+        if ($data['user']->isTeacher)
+            return redirect()->route('profile.exams');
+        return view('profile.subjects', $data);
     }
 
     /**

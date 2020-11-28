@@ -15,7 +15,8 @@
             <profile-teacher name='{{ $teacher['fullname'] }}' 
                      email="{{ $teacher['email'] }}" 
                      degree='{{ $teacher['degree'] }}' 
-                     department='{{ $teacher['department'] }}'>
+                     department='{{ $teacher['department'] }}'
+                     timetable='{{ route('timetable.teacher', $teacher['id']) }}'>
             </profile-teacher>
          </profile-block>
       @endforeach

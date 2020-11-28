@@ -37,6 +37,8 @@ Route::middleware(['auth.only'])->group(function () {
          Route::get('groupmates', [ProfileController::class, 'groupmates'])->name('groupmates');
          Route::get('exams', [ProfileController::class, 'exams'])->name('exams');
          Route::get('teachers', [ProfileController::class, 'teachers'])->name('teachers');
+         Route::get('subjects', [ProfileController::class, 'subjects'])->name('subjects');
+         Route::get('free', [ProfileController::class, 'free'])->name('free');
 
          Route::get('departmentmates', [ProfileController::class, 'departmentmates'])->name('departmentmates');
 
@@ -44,6 +46,13 @@ Route::middleware(['auth.only'])->group(function () {
             Route::name('group.')->group(function () {
                Route::post('add', [ProfileController::class, 'groupAdd'])->name('add');
                Route::post('delete', [ProfileController::class, 'groupDelete'])->name('delete');
+            });
+         });
+
+         Route::prefix('subject')->group(function () {
+            Route::name('subject.')->group(function () {
+               Route::post('block', [ProfileController::class, 'subjectBlock'])->name('block');
+               Route::post('show', [ProfileController::class, 'subjectShow'])->name('show');
             });
          });
       });

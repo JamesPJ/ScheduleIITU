@@ -423,7 +423,7 @@ Vue.component('profile-block', {
 });
 
 Vue.component('profile-group', {
-   props: ['group-id', 'name', 'link'],
+   props: ['group-id', 'name', 'link', 'timetable'],
    computed: {
       csrf: function () {
          return document.querySelector('meta[name="csrf-token"]').content;
@@ -431,7 +431,7 @@ Vue.component('profile-group', {
    },
    template: `
       <div class="group">
-         <h1 class="group__name">{{ name }}</h1>
+         <a :href="timetable" class="group__name">{{ name }}</a>
          <button class="btn outline error" :data-modal="name">Delete</button>
          <modal :id='name'>
             <div class="group__modal">
@@ -542,7 +542,7 @@ Vue.component('profile-exam', {
 });
 
 Vue.component('profile-teacher', {
-   props: ['name', 'email', 'role', 'degree', 'department'],
+   props: ['name', 'email', 'role', 'degree', 'department', 'timetable'],
    computed: {
       link: function () {
          return "mailto:" + this.email;
@@ -550,7 +550,7 @@ Vue.component('profile-teacher', {
    },
    template: `
       <div class="profile-teacher">
-         <h1>{{name}}</h1>
+         <a :href="timetable" class="profile-teacher-link">{{name}}</a>
          <p v-if="role">{{role}}</p>
          <p>{{degree}}</p>
          <p v-if="department">Department: {{department}}</p>

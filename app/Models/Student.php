@@ -35,6 +35,32 @@ class Student extends Model
     }
 
     /**
+     * subjects
+     * collection of subjects which user is blocked
+     *
+     * @return collection
+     */
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::class);
+    }
+
+    /**
+     * isBlocked
+     * checks is this subject is blocked
+     *
+     * @param  Subject
+     * @return boolean
+     */
+    public function isBlocked($subject)
+    {
+        if (isset($subject) && $this->subjects->contains($subject)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * getHasGroupAttribute
      * defines has groups this student
      * 
@@ -121,6 +147,7 @@ class Student extends Model
                 if (!in_array($cell->teacher->id, $addedTeacherIds)) {
                     $addedTeacherIds[] = $cell->teacher->id;
                     $teachers[$cell->subject->name][] = [
+                        'id' => $cell->teacher->id,
                         'fullname' => $cell->teacher->user->fullname,
                         'email' => $cell->teacher->user->email,
                         'degree' => $cell->teacher->stringDegrees,
@@ -130,6 +157,27 @@ class Student extends Model
             }
         }
         return collect($teachers);
+    }
+
+    /**
+     * getSubjectsAttribute
+     * gets all subjects of current semester
+     *
+     * @return collection of subjects
+     */
+    public function getAllSubjectsAttribute()
+    {
+        $subjects = [];
+        $addedSubjectIds = [];
+        foreach ($this->groups as $group) {
+            foreach ($group->currentTimetable->cells as $cell) {
+                if (!in_array($cell->subject->id, $addedSubjectIds)) {
+                    $addedSubjectIds[] = $cell->subject->id;
+                    $subjects[] = $cell->subject;
+                }
+            }
+        }
+        return collect($subjects)->sortBy('name');
     }
 
     /**
@@ -145,7 +193,7 @@ class Student extends Model
         $addedCellIds = [];
         foreach ($this->groups as $group) {
             foreach ($group->currentTimetable->cells as $cell) {
-                if (!in_array($cell->id, $addedCellIds)) {
+                if (!in_array($cell->id, $addedCellIds) && !$this->isBlocked($cell->subject)) {
                     $addedCellIds[] = $cell->id;
                     $cells[] = $cell;
                 }

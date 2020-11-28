@@ -14,7 +14,8 @@
    @forelse ($user->student->groups as $group)
       <profile-group group-id='{{ $group->id }}' 
                      name='{{ $group->name }}' 
-                     link='{{ route('profile.group.delete') }}'>
+                     link='{{ route('profile.group.delete') }}'
+                     timetable='{{ route('timetable.group', $group->id) }}'>
       </profile-group>
    @empty
       <list-empty text="You haven't added any group"></list-empty>

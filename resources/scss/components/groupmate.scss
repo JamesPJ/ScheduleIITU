@@ -5,3 +5,26 @@
       padding: 15px;
    }
 }
+.subject {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   &-text {
+      font-weight: bold;
+      font-size: 20px;
+      @media (max-width: $md4) {
+         padding: 15px;
+      }
+   }
+}
+.room {
+   font-weight: bold;
+   font-size: 20px;
+   @media (max-width: $md4) {
+      padding: 15px;
+   }
+   color: $textLight;
+   @media (prefers-color-scheme: dark) {
+      color: $textDark;
+   }
+}

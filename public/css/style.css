@@ -708,6 +708,7 @@ select:disabled {
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin: 20px 0;
 }
 
@@ -727,9 +728,15 @@ select:disabled {
 }
 
 .group__name {
-  flex: 1 1 auto;
   font-weight: bold;
   font-size: 24px;
+  color: #121212;
+}
+
+@media (prefers-color-scheme: dark) {
+  .group__name {
+    color: #ffffff;
+  }
 }
 
 @media (max-width: 479.98px) {
@@ -833,9 +840,51 @@ select:disabled {
   }
 }
 
-.profile-teacher h1 {
+.subject {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.subject-text {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+@media (max-width: 479.98px) {
+  .subject-text {
+    padding: 15px;
+  }
+}
+
+.room {
+  font-weight: bold;
+  font-size: 20px;
+  color: #121212;
+}
+
+@media (max-width: 479.98px) {
+  .room {
+    padding: 15px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .room {
+    color: #ffffff;
+  }
+}
+
+.profile-teacher-link {
   font-weight: bold;
   font-size: 24px;
+  color: #121212 !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .profile-teacher-link {
+    color: #ffffff !important;
+  }
 }
 
 .profile-teacher p {

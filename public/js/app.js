@@ -2490,13 +2490,13 @@ Vue.component('profile-block', {
   template: "\n      <div class=\"block\" :class=\"{expand:large}\">\n         <div class=\"block__content\">\n            <slot></slot>\n         </div>\n      </div>\n   "
 });
 Vue.component('profile-group', {
-  props: ['group-id', 'name', 'link'],
+  props: ['group-id', 'name', 'link', 'timetable'],
   computed: {
     csrf: function csrf() {
       return document.querySelector('meta[name="csrf-token"]').content;
     }
   },
-  template: "\n      <div class=\"group\">\n         <h1 class=\"group__name\">{{ name }}</h1>\n         <button class=\"btn outline error\" :data-modal=\"name\">Delete</button>\n         <modal :id='name'>\n            <div class=\"group__modal\">\n               <h1>Do you want delete {{name}} from group list?</h1>\n               <form :action='link' method='post'>\n                  <input type=\"hidden\" name=\"_token\" v-model=\"csrf\">\n                  <input type=\"hidden\" name=\"id\" v-model=\"groupId\">\n                  <button class=\"btn\">Delete</button>\n               </form>\n            </div>\n         </modal>\n      </div>\n   "
+  template: "\n      <div class=\"group\">\n         <a :href=\"timetable\" class=\"group__name\">{{ name }}</a>\n         <button class=\"btn outline error\" :data-modal=\"name\">Delete</button>\n         <modal :id='name'>\n            <div class=\"group__modal\">\n               <h1>Do you want delete {{name}} from group list?</h1>\n               <form :action='link' method='post'>\n                  <input type=\"hidden\" name=\"_token\" v-model=\"csrf\">\n                  <input type=\"hidden\" name=\"id\" v-model=\"groupId\">\n                  <button class=\"btn\">Delete</button>\n               </form>\n            </div>\n         </modal>\n      </div>\n   "
 });
 Vue.component('profile-exam', {
   props: ['subject-name', 'date', 'duration', 'room', 'students-number', 'exam-form', 'teacher', 'group'],
@@ -2549,13 +2549,13 @@ Vue.component('profile-exam', {
   template: "\n      <div class=\"exam\">\n         <h1 :class=\"classObj\">{{when}}</h1>\n         <ul>\n            <li>\n               <i class=\"fas fa-circle\"></i>\n               <span>Subject:</span> {{subjectName}}\n            </li>\n            <li>\n               <i class=\"far fa-calendar-alt\"></i>\n               <span>Date and Time:</span> {{dateComputed}}\n            </li>\n            <li>\n               <i class=\"fas fa-hourglass\"></i>\n               <span>Duration:</span> {{duration}} min\n            </li>\n            <li>\n               <i class=\"fas fa-map-marker-alt\"></i>\n               <span>Room:</span> {{room}}\n            </li>\n            <li>\n               <i class=\"fas fa-users\"></i>\n               <span>Students Number:</span> {{studentsNumber}}\n            </li>\n            <li>\n               <i class=\"fas fa-edit\"></i>\n               <span>Exam Form:</span> {{examForm}}\n            </li>\n            <li v-if=\"teacher\">\n               <i class=\"fas fa-user-tie\"></i>\n               <span>Teacher:</span> {{teacher}}\n            </li>\n            <li>\n               <i class=\"fas fa-users\"></i>\n               <span>Group:</span> {{group}}\n            </li>\n         </ul>\n      </div>\n   "
 });
 Vue.component('profile-teacher', {
-  props: ['name', 'email', 'role', 'degree', 'department'],
+  props: ['name', 'email', 'role', 'degree', 'department', 'timetable'],
   computed: {
     link: function link() {
       return "mailto:" + this.email;
     }
   },
-  template: "\n      <div class=\"profile-teacher\">\n         <h1>{{name}}</h1>\n         <p v-if=\"role\">{{role}}</p>\n         <p>{{degree}}</p>\n         <p v-if=\"department\">Department: {{department}}</p>\n         <a :href=\"link\">{{email}}</a>\n      </div>\n   "
+  template: "\n      <div class=\"profile-teacher\">\n         <a :href=\"timetable\" class=\"profile-teacher-link\">{{name}}</a>\n         <p v-if=\"role\">{{role}}</p>\n         <p>{{degree}}</p>\n         <p v-if=\"department\">Department: {{department}}</p>\n         <a :href=\"link\">{{email}}</a>\n      </div>\n   "
 });
 Vue.component('profile-tab', {
   props: ['title', 'center-block-title'],

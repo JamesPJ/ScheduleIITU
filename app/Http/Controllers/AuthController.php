@@ -85,6 +85,7 @@ class AuthController extends Controller
           ->execute();
         $userName = $user->getDisplayName();
         $userEmail = $user->getMail();
+        // n.alpysbay@edu.iitu.kz
 
 
         /**

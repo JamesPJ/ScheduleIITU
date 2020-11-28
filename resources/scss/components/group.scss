@@ -2,6 +2,7 @@
    width: 100%;
    display: flex;
    align-items: center;
+   justify-content: space-between;
    margin: 20px 0;
    @media (max-width: $md4) {
       margin: 10px 0;
@@ -14,9 +15,12 @@
       margin-bottom: 0;
    }
    &__name {
-      flex: 1 1 auto;
       font-weight: bold;
       font-size: 24px;
+      color: $textLight;
+      @media (prefers-color-scheme: dark) {
+         color: $textDark;
+      }
       @media (max-width: $md4) {
          font-size: 18px;
       }

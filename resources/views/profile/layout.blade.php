@@ -14,12 +14,14 @@
             <a href="{{ route('profile.index') }}" class="sidebar__link @yield('profile')">Profile</a>
             <a href="{{ route('profile.groupmates') }}" class="sidebar__link @yield('groupmates')">Groupmates</a>
             <a href="{{ route('profile.teachers') }}" class="sidebar__link @yield('teachers')">Teachers</a>
+            <a href="{{ route('profile.subjects') }}" class="sidebar__link @yield('subjects')">Subjects</a>
          @endif
          @if($user->isTeacher)
             <a href="{{ route('profile.departmentmates') }}" class="sidebar__link @yield('departmentmates')">Departmentmates</a>
          @endif
-         <a href="{{ route('schedule') }}" class="sidebar__link">Schedule</a>
          <a href="{{ route('profile.exams') }}" class="sidebar__link @yield('exams')">Exams</a>
+         <a href="{{ route('profile.free') }}" class="sidebar__link @yield('free')">Free Rooms</a>
+         <a href="{{ route('schedule') }}" class="sidebar__link">Schedule</a>
          <a href="{{ route('logout') }}" class="sidebar__link danger">Logout</a>
       </sidebar>
       

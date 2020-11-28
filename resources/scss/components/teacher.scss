@@ -1,7 +1,11 @@
 .profile-teacher {
-   h1 {
+   &-link {
       font-weight: bold;
       font-size: 24px;
+      color: $textLight !important;
+      @media (prefers-color-scheme: dark) {
+         color: $textDark !important;
+      }
    }
    p {
       margin: 10px 0;

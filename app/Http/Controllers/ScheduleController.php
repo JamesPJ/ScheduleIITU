@@ -113,6 +113,13 @@ class ScheduleController extends Controller
         return [];
     }
 
+    /**
+     * drawSchedule
+     *
+     * @param  collectio of cells
+     * @param  collection of time
+     * @return array of schedule
+     */
     public function drawSchedule($cells, $timeRange)
     {
         $schedule = [];
