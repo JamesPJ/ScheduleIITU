@@ -219,6 +219,27 @@ select:disabled {
   background-color: #dddddd;
 }
 
+input {
+  font-family: "Product Sans", sans-serif;
+  font-size: 16px;
+  line-height: 1;
+  padding: 10px 15px;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  transition: all 0.3s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  input {
+    box-shadow: none;
+  }
+}
+
+input:disabled {
+  background-color: #dddddd;
+}
+
 .loader {
   position: fixed;
   z-index: 1000;
@@ -495,7 +516,7 @@ select:disabled {
 #alert {
   position: fixed;
   color: #ffffff;
-  z-index: 20;
+  z-index: 200;
   left: 50%;
   top: 0;
   transform: translateX(-50%);

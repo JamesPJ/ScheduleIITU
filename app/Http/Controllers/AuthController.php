@@ -85,7 +85,8 @@ class AuthController extends Controller
           ->execute();
         $userName = $user->getDisplayName();
         $userEmail = $user->getMail();
-        // n.alpysbay@edu.iitu.kz
+        // $userEmail = 'n.alpysbay@edu.iitu.kz';
+        // $userEmail = 'admin@edu.iitu.kz';
 
 
         /**
@@ -118,6 +119,8 @@ class AuthController extends Controller
               ->with('success', 'Registration is completed');
           }
           session(['user' => $user]);
+          if ($user->isOnlyAdmin)
+            return redirect()->route('admin.login');
 
           return redirect()->route('profile.index');
         }
@@ -145,6 +148,7 @@ class AuthController extends Controller
   public function logout()
   {
     session()->forget('user');
+    session()->forget('logged');
     return redirect()->route('index');
   }
 }

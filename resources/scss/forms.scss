@@ -21,3 +21,19 @@ select {
       background-color: #dddddd;
    }
 }
+input {
+   font-family: $fontFamily;
+   font-size: 16px;
+   line-height: 1;
+   padding: 10px 15px;
+   border-radius: 5px;
+   background-color: #fff;
+   @media (prefers-color-scheme: dark) {
+      box-shadow: none;
+   }
+   box-shadow: $shadow;
+   transition: all 0.3s ease;
+   &:disabled {
+      background-color: #dddddd;
+   }
+}

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\HomeController;
@@ -53,6 +54,20 @@ Route::middleware(['auth.only'])->group(function () {
             Route::name('subject.')->group(function () {
                Route::post('block', [ProfileController::class, 'subjectBlock'])->name('block');
                Route::post('show', [ProfileController::class, 'subjectShow'])->name('show');
+            });
+         });
+      });
+   });
+
+
+   Route::middleware(['admin.only'])->group(function () {
+      Route::prefix('admin')->group(function () {
+         Route::name('admin.')->group(function () {
+            Route::get('login', [AdminController::class, 'login'])->name('login');
+            Route::post('auth', [AdminController::class, 'auth'])->name('auth');
+
+            Route::middleware(['admin.logged'])->group(function () {
+               Route::get('', [AdminController::class, 'dashboard'])->name('dashboard');
             });
          });
       });

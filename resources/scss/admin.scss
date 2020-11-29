@@ -1,0 +1,44 @@
+@import "vars";
+
+.login-block {
+   flex: 1 1 auto;
+   display: flex;
+   flex-direction: column;
+   padding: 50px;
+   max-width: 400px;
+   margin: 0 5px;
+   background-color: $bgLight;
+   color: $textLight;
+   box-shadow: $shadow;
+   @media (prefers-color-scheme: dark) {
+      background-color: $bgLightDark;
+      color: $textDark;
+      box-shadow: none;
+   }
+   border-radius: 5px;
+   text-align: center;
+   &-name {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+   }
+   &-email {
+      font-size: 20px;
+   }
+}
+.admin-login-form {
+   display: flex;
+   flex-direction: column;
+   margin-top: 25px;
+   * {
+      margin-top: 25px;
+   }
+   &-btn {
+      background-image: linear-gradient(to right, #ff512f 0%, #dd2476 51%, #ff512f 100%);
+      background-size: 300% 100%;
+      &:hover {
+         background-position: 100% 0;
+      }
+      padding: 10px 0;
+   }
+}
