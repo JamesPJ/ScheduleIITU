@@ -11,6 +11,12 @@
       align-items: center;
       justify-content: flex-end;
       padding: 0 10px;
+      button.right {
+         position: absolute;
+         left: 10px;
+         top: 50%;
+         transform: translateY(-50%);
+      }
    }
    &__logo {
       height: 50%;

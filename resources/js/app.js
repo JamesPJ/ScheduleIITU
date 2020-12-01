@@ -27,12 +27,17 @@ Vue.component('app-footer', {
 });
 
 Vue.component('app-nav', {
-   props: ['lang', 'top', 'search-page'],
+   props: ['lang', 'top', 'search-page', 'menu-left'],
    data: function () {
       return {
          dropDown: false,
          langs: ['En', 'Ru', 'Kz'],
       };
+   },
+   computed: {
+      isMenuLeft: function () {
+         return this.menuLeft && this.menuLeft == "yes";
+      }
    },
    methods: {
       langDropDown: function () {
@@ -42,6 +47,7 @@ Vue.component('app-nav', {
    template: `
       <header class="header" :class="{z:top=='yes'}">
          <div class="header__content">
+            <button class="btn tr right" v-if="isMenuLeft" onclick="toggleAdminMenu()"><i class="fas fa-bars"></i></button>
             <nav class="menu">
                <div class="lang">
 
@@ -57,11 +63,11 @@ Vue.component('app-nav', {
                   <slot></slot>
 
                   <div class="lang">
-                     <button class="btn lang__btn" @click="langDropDown">
+                     <button class="btn lang__btn" @click="langDropDown" :class="{'secondary':isMenuLeft}">
                         {{ lang }} <i class="fas fa-angle-down"></i>
                      </button>
                      <div class="lang__dropdown" :class="{active:dropDown}">
-                        <a href="#" class="btn lang__btn" v-for="l of langs" v-if="l != lang">{{l}}</a>
+                        <a href="#" class="btn lang__btn" :class="{'secondary':isMenuLeft}" v-for="l of langs" v-if="l != lang">{{l}}</a>
                      </div>
                   </div>
                </div>

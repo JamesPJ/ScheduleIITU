@@ -32,10 +32,10 @@
 
          <app-nav lang="En" search-page='{{ route('search') }}' @yield('nav-top')>
             @if (isset($user) && $user->isUser)
-            <a class="btn tr" href="/profile"><i class="fas fa-user"></i></a>
+            <a class="btn tr" href="{{ route('profile.index') }}"><i class="fas fa-user"></i></a>
             @endif
             @if (isset($user) && $user->isAdmin)
-            <a class="btn tr" href="/admin"><i class="fas fa-cog"></i></a>
+            <a class="btn tr" href="{{ route('admin.dashboard') }}"><i class="fas fa-cog"></i></a>
             @endif
          </app-nav>
 

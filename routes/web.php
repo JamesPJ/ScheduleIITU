@@ -68,6 +68,14 @@ Route::middleware(['auth.only'])->group(function () {
 
             Route::middleware(['admin.logged'])->group(function () {
                Route::get('', [AdminController::class, 'dashboard'])->name('dashboard');
+               Route::get('users', [AdminController::class, 'users'])->name('users');
+               Route::get('groups', [AdminController::class, 'groups'])->name('groups');
+               Route::get('departments', [AdminController::class, 'departments'])->name('departments');
+               Route::get('timetables', [AdminController::class, 'timetables'])->name('timetables');
+               Route::get('exams', [AdminController::class, 'exams'])->name('exams');
+
+               Route::get('settings', [AdminController::class, 'settings'])->name('settings');
+               Route::post('change_password', [AdminController::class, 'changePassword'])->name('changePassword');
             });
          });
       });

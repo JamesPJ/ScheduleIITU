@@ -34,6 +34,14 @@
          rgba($color: $primary, $alpha: 0.1) 33%,
          rgba($color: $primary, $alpha: 1) 100%
       );
+      &.secondary {
+         background: $success;
+         background: linear-gradient(
+            0deg,
+            rgba($color: $success, $alpha: 0.1) 33%,
+            rgba($color: $success, $alpha: 1) 100%
+         );
+      }
       animation: spin 0.5s linear 0s infinite;
       @keyframes spin {
          from {

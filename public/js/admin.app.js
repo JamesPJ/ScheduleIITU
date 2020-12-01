@@ -2104,6 +2104,10 @@ process.umask = function() { return 0; };
 var _require = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"),
     Axios = _require["default"];
 
+window.toggleAdminMenu = function () {
+  document.getElementById("admin-menu").classList.toggle("active");
+};
+
 /***/ }),
 
 /***/ 1:

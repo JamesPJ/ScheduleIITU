@@ -2126,19 +2126,24 @@ Vue.component('app-footer', {
   template: "\n      <footer class=\"footer\">\n         <div class=\"footer-content container\">\n            <p class=\"footer-content-text\">\n               {{ text }} &copy;\n               <a :href=\"link\" target=\"_blank\">{{ name }}</a>\n               {{ year }}\n            </p>\n         </div>\n      </footer>\n   "
 });
 Vue.component('app-nav', {
-  props: ['lang', 'top', 'search-page'],
+  props: ['lang', 'top', 'search-page', 'menu-left'],
   data: function data() {
     return {
       dropDown: false,
       langs: ['En', 'Ru', 'Kz']
     };
   },
+  computed: {
+    isMenuLeft: function isMenuLeft() {
+      return this.menuLeft && this.menuLeft == "yes";
+    }
+  },
   methods: {
     langDropDown: function langDropDown() {
       this.dropDown = !this.dropDown;
     }
   },
-  template: "\n      <header class=\"header\" :class=\"{z:top=='yes'}\">\n         <div class=\"header__content\">\n            <nav class=\"menu\">\n               <div class=\"lang\">\n\n                  <button class=\"btn tr\" data-modal=\"search\"><i class=\"fas fa-search\"></i></button>\n                  <modal id=\"search\">\n                     <form :action=\"searchPage\" method='GET' class=\"search__form\" id=\"search-overlay-form\">\n                        <input name=\"keyword\" type=\"text\" placeholder=\"Group, Teacher, Room...\" required\n                           autocomplete=\"off\">\n                        <button type=\"submit\"><i class=\"fas fa-search\"></i></button>\n                     </form>\n                  </modal>\n\n                  <slot></slot>\n\n                  <div class=\"lang\">\n                     <button class=\"btn lang__btn\" @click=\"langDropDown\">\n                        {{ lang }} <i class=\"fas fa-angle-down\"></i>\n                     </button>\n                     <div class=\"lang__dropdown\" :class=\"{active:dropDown}\">\n                        <a href=\"#\" class=\"btn lang__btn\" v-for=\"l of langs\" v-if=\"l != lang\">{{l}}</a>\n                     </div>\n                  </div>\n               </div>\n            </nav>\n         </div>\n      </header>\n   "
+  template: "\n      <header class=\"header\" :class=\"{z:top=='yes'}\">\n         <div class=\"header__content\">\n            <button class=\"btn tr right\" v-if=\"isMenuLeft\" onclick=\"toggleAdminMenu()\"><i class=\"fas fa-bars\"></i></button>\n            <nav class=\"menu\">\n               <div class=\"lang\">\n\n                  <button class=\"btn tr\" data-modal=\"search\"><i class=\"fas fa-search\"></i></button>\n                  <modal id=\"search\">\n                     <form :action=\"searchPage\" method='GET' class=\"search__form\" id=\"search-overlay-form\">\n                        <input name=\"keyword\" type=\"text\" placeholder=\"Group, Teacher, Room...\" required\n                           autocomplete=\"off\">\n                        <button type=\"submit\"><i class=\"fas fa-search\"></i></button>\n                     </form>\n                  </modal>\n\n                  <slot></slot>\n\n                  <div class=\"lang\">\n                     <button class=\"btn lang__btn\" @click=\"langDropDown\" :class=\"{'secondary':isMenuLeft}\">\n                        {{ lang }} <i class=\"fas fa-angle-down\"></i>\n                     </button>\n                     <div class=\"lang__dropdown\" :class=\"{active:dropDown}\">\n                        <a href=\"#\" class=\"btn lang__btn\" :class=\"{'secondary':isMenuLeft}\" v-for=\"l of langs\" v-if=\"l != lang\">{{l}}</a>\n                     </div>\n                  </div>\n               </div>\n            </nav>\n         </div>\n      </header>\n   "
 });
 Vue.component('list-empty', {
   props: ['text'],

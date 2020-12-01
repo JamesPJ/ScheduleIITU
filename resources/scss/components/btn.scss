@@ -6,12 +6,24 @@
    background-color: $primary;
    font-weight: bold;
    transition: all 0.3s ease;
+   &.secondary {
+      color: $textLight;
+      background-color: $success;
+      &:hover {
+         background-color: lighten($color: $success, $amount: 10%);
+      }
+   }
    &:hover {
       background-color: lighten($color: $primary, $amount: 10%);
    }
    @media (prefers-color-scheme: dark) {
       &:hover {
          background-color: darken($color: $primary, $amount: 10%);
+      }
+      &.secondary {
+         &:hover {
+            background-color: darken($color: $success, $amount: 10%);
+         }
       }
    }
    &.tr {
@@ -43,7 +55,7 @@
          border-color: $success;
          &:hover {
             background-color: $success;
-            color: $textDark;
+            color: $textLight;
          }
       }
    }

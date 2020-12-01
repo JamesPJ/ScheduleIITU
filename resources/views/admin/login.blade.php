@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 @section('title', 'Login | Admin Panel')
 
 @section('content')
@@ -10,6 +10,7 @@
       <form action="{{ route('admin.auth') }}" class="admin-login-form" method="post">
          @csrf
          <input type="password" name="password" placeholder="Password">
+         <a href="#">Forgot password?</a>
          <button class="admin-login-form-btn btn">Login</button>
       </form>
    </div>
