@@ -816,9 +816,10 @@ var app = new Vue({
       this.$nextTick(function () {
          setTimeout(() => {
             data.loaderActive = false;
+            document.body.classList.remove("lock");
             setTimeout(() => {
-               document.body.classList.remove("lock");
-            }, 10);
+               document.getElementsByClassName("loader")[0].style.display = "none";
+            }, 320);
          }, 300);
       });
    }

@@ -71,7 +71,7 @@
 
    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2"></script> -->
-   <script src="{{ asset('/js/app.js') }}"></script>
    <script src="{{ asset('/js/admin.app.js') }}"></script>
+   <script src="{{ asset('/js/app.js') }}"></script>
 </body>
 </html>

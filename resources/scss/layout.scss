@@ -5,6 +5,7 @@ body {
    color: $textLight;
    display: flex;
    flex-direction: column;
+   overflow-x: hidden;
    @media (prefers-color-scheme: dark) {
       background-color: $bgDark;
       color: $textDark;

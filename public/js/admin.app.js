@@ -2101,8 +2101,53 @@ process.umask = function() { return 0; };
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var _require = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"),
     Axios = _require["default"];
+
+Vue.component('circle-bar', {
+  props: ['progress'],
+  data: function data() {
+    return {
+      offset: 471
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    setTimeout(function () {
+      _this.offset = 471 * ((100 - _this.progress) / 100);
+    }, 700);
+  },
+  template: "\n      <div class=\"circle\">\n\t\t\t<div class=\"progress-text\">\n\t\t\t\t{{ progress }}%\n\t\t\t</div>\n         <svg>\n            <linearGradient id=\"gradient\" x1=\"0%\" y1=\"0%\" x2=\"0%\" y2=\"100%\">\n               <stop offset=\"0%\" stop-color=\"#5eaefd\" />\n               <stop offset=\"100%\" stop-color=\"#03dac6\" />\n            </linearGradient>\n\t\t\t\t<circle class=\"bg\" cx=\"100\" cy=\"100\" r=\"75\"></circle>\n\t\t\t\t<circle :stroke-dashoffset=\"offset\" class=\"progress\" cx=\"100\" cy=\"100\" r=\"75\"></circle>\n         </svg>\n\t\t</div>\n   "
+});
+Vue.component('app-chart', {
+  template: "\n      <div class=\"admin-dashboard-chart\">\n         <slot></slot>\n      </div>\n   "
+});
+Vue.component('app-chart-elem', {
+  props: ['text', 'percentage'],
+  data: function data() {
+    return {
+      "class": false
+    };
+  },
+  computed: {
+    percentageClass: function percentageClass() {
+      var _ref;
+
+      return _ref = {}, _defineProperty(_ref, 'p-' + this.percentage, true), _defineProperty(_ref, 'active', this["class"]), _ref;
+    }
+  },
+  created: function created() {
+    var _this2 = this;
+
+    setTimeout(function () {
+      _this2["class"] = true;
+    }, 700);
+  },
+  template: "\n      <div class=\"admin-dashboard-chart-elem\">\n         <div class=\"admin-dashboard-chart-elem-tooltip\">\n            {{ percentage }}%\n         </div>\n         <div class=\"admin-dashboard-chart-elem-bar\">\n            <div class=\"admin-dashboard-chart-elem-bar-indicator\" :class=\"percentageClass\"></div>\n         </div>\n         <div class=\"admin-dashboard-chart-elem-text\">\n            {{ text }}\n         </div>\n      </div>\n   "
+});
 
 window.toggleAdminMenu = function () {
   document.getElementById("admin-menu").classList.toggle("active");

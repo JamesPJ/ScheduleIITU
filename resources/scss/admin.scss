@@ -1,5 +1,31 @@
 @import "vars";
 
+@mixin p-x {
+   @for $i from 1 to 100 {
+      .p-#{$i} {
+         width: 100%;
+         height: 0%;
+         bottom: 0;
+         transition: all 0.3s ease;
+         @media (max-width: $md4) {
+            width: 0%;
+            height: 100%;
+            left: 0;
+         }
+         &.active {
+            width: 100%;
+            height: $i * 1%;
+            bottom: 0;
+            @media (max-width: $md4) {
+               width: $i * 1%;
+               height: 100%;
+               left: 0;
+            }
+         }
+      }
+   }
+}
+
 ::-webkit-scrollbar-thumb {
    background-color: $success;
 }
@@ -28,6 +54,7 @@
    @media (prefers-color-scheme: dark) {
       background-color: $bgLightDark;
       color: $textDark;
+      box-shadow: none;
       &::-webkit-scrollbar {
          background-color: $bgLightDark !important;
       }
@@ -130,6 +157,209 @@
          }
          &.btn {
             margin-top: 20px;
+         }
+      }
+   }
+}
+.admin-dashboard {
+   display: flex;
+   align-items: stretch;
+   justify-content: center;
+   padding: 0 20px;
+   margin-top: 40px;
+   flex-wrap: wrap;
+   .circle {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      svg {
+         width: 200px;
+         height: 200px;
+      }
+      .bg {
+         fill: none;
+         stroke-width: 10px;
+         stroke: darken($color: $bgLight, $amount: 10%);
+         @media (prefers-color-scheme: dark) {
+            stroke: lighten($color: $bgLightDark, $amount: 10%);
+         }
+      }
+      .progress {
+         fill: none;
+         stroke-width: 10px;
+         stroke: url(#gradient);
+         stroke-linecap: round;
+         stroke-dasharray: 471;
+         transform: rotate(-90deg);
+         transform-origin: 50% 50%;
+         transition: all 0.7s ease;
+      }
+      .progress-text {
+         position: absolute;
+         width: 100%;
+         top: 50%;
+         transform: translateY(-50%);
+         font-size: 24px;
+         text-align: center;
+         font-weight: bold;
+      }
+   }
+   &-block {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 20px;
+      margin: 20px;
+      background-color: $bgLight;
+      box-shadow: $shadow;
+      @media (max-width: $md4) {
+         width: 100%;
+         margin: 20px 5px;
+      }
+      @media (prefers-color-scheme: dark) {
+         background-color: $bgLightDark;
+         box-shadow: none;
+      }
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      flex-grow: 1;
+      &:hover {
+         transform: scale(1.02);
+      }
+      &-text {
+         text-align: center;
+         font-weight: bold;
+         font-size: 18px;
+      }
+      &-total {
+         &-img {
+            font-size: 24px;
+            color: $textDark;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 3em;
+            height: 3em;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #5eaefd, $success);
+         }
+         &-count {
+            margin: 20px 0;
+            font-weight: bold;
+            font-size: 24px;
+            background: linear-gradient(45deg, #5eaefd, $success);
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+         }
+      }
+   }
+   &-chart {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      margin-bottom: 25px;
+      border-radius: 20px;
+      padding: 20px;
+      background-color: darken($color: $bgLight, $amount: 3%);
+      @media (prefers-color-scheme: dark) {
+         background-color: lighten($color: $bgLightDark, $amount: 3%);
+      }
+      @media (max-width: $md4) {
+         flex-direction: column;
+         align-items: flex-start;
+         width: 100%;
+      }
+      &-elem {
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         margin: 0 15px;
+         position: relative;
+         @media (max-width: $md4) {
+            flex-direction: row-reverse;
+            justify-content: space-between;
+            margin: 15px 0;
+            width: 100%;
+         }
+         &:hover {
+            cursor: pointer;
+            .admin-dashboard-chart-elem-tooltip {
+               visibility: visible;
+               opacity: 1;
+               transform: translate(-50%) scale(1);
+               @media (max-width: $md4) {
+                  transform: translate(-50%, 50%) scale(1);
+               }
+            }
+            .admin-dashboard-chart-elem-bar {
+               background-color: darken($color: $bgLight, $amount: 15%);
+               @media (prefers-color-scheme: dark) {
+                  background-color: lighten($color: $bgLightDark, $amount: 15%);
+               }
+            }
+            .admin-dashboard-chart-elem-bar-indicator {
+               background-color: lighten($color: $success, $amount: 10%);
+            }
+         }
+         &-bar {
+            width: 10px;
+            height: 150px;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+            background-color: darken($color: $bgLight, $amount: 10%);
+            @media (prefers-color-scheme: dark) {
+               background-color: lighten($color: $bgLightDark, $amount: 10%);
+            }
+            transition: all 0.3s ease;
+            @media (max-width: $md4) {
+               flex: 1 1 auto;
+               height: 10px;
+            }
+            @include p-x;
+            &-indicator {
+               position: absolute;
+               background-color: $success;
+               border-radius: 5px;
+               transition: all 0.3s ease;
+               @media (max-width: $md4) {
+                  height: 100%;
+                  left: 0;
+               }
+            }
+         }
+         &-text {
+            font-weight: bold;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px;
+            line-height: 20px;
+            @media (max-width: $md4) {
+               margin-top: 0;
+               margin-right: 10px;
+               width: 40px;
+            }
+         }
+         &-tooltip {
+            z-index: 2;
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            padding: 5px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            transform: translate(-50%) scale(0);
+            background-color: lighten($color: $success, $amount: 10%);
+            color: $textLight;
+            box-shadow: $shadow;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            @media (max-width: $md4) {
+               transform: translate(-50%, 50%) scale(0);
+            }
          }
       }
    }
