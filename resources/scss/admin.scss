@@ -116,6 +116,38 @@
       font-size: 24px;
       font-weight: bold;
    }
+   &-slider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+      &-content {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         background-color: darken($color: $bgLight, $amount: 5%);
+         @media (prefers-color-scheme: dark) {
+            background-color: $bgLightDark;
+         }
+         overflow: hidden;
+         border-radius: 10px;
+      }
+      &-elem {
+         padding: 15px 25px;
+         font-weight: bold;
+         font-size: 16px;
+         border-radius: 10px;
+         color: $textLight;
+         transition: all 0.3s ease;
+         @media (prefers-color-scheme: dark) {
+            color: $textDark;
+         }
+         &.active {
+            background-color: $success;
+            color: $textLight;
+         }
+      }
+   }
 }
 .admin-settings {
    max-width: 700px;

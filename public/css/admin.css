@@ -108,6 +108,48 @@
   font-weight: bold;
 }
 
+.admin-page-slider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.admin-page-slider-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ebebeb;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .admin-page-slider-content {
+    background-color: #2c2f33;
+  }
+}
+
+.admin-page-slider-elem {
+  padding: 15px 25px;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 10px;
+  color: #121212;
+  transition: all 0.3s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  .admin-page-slider-elem {
+    color: #ffffff;
+  }
+}
+
+.admin-page-slider-elem.active {
+  background-color: #03dac6;
+  color: #121212;
+}
+
 .admin-settings {
   max-width: 700px;
   margin: 0 auto;

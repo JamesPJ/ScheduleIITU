@@ -208,8 +208,7 @@ class AdminController extends Controller
     }
 
     /**
-     * totalStudents - count of total
-     * students
+     * totalStudents - count of total students
      *
      * @return integer
      */
@@ -219,8 +218,7 @@ class AdminController extends Controller
     }
 
     /**
-     * totalStudents - count of total
-     * teachers
+     * totalStudents - count of total teachers
      *
      * @return integer
      */
@@ -230,21 +228,53 @@ class AdminController extends Controller
     }
 
     /**
-     * users - managing users (students, teacher)
-     * of the admin panel
+     * users - managing users (students, teacher, deans)
      *
-     * @return view
+     * @return redirect to admin.students
      */
     public function users()
     {
+        return redirect()->route('admin.students');
+    }
+
+    /**
+     * students - managing students
+     *
+     * @return view
+     */
+    public function students()
+    {
         $data = $this->data();
 
-        return view('admin.users', $data);
+        return view('admin.users.students', $data);
+    }
+
+    /**
+     * teachers - managing teachers
+     *
+     * @return view
+     */
+    public function teachers()
+    {
+        $data = $this->data();
+
+        return view('admin.users.teachers', $data);
+    }
+
+    /**
+     * deans - managing deans
+     *
+     * @return view
+     */
+    public function deans()
+    {
+        $data = $this->data();
+
+        return view('admin.users.deans', $data);
     }
 
     /**
      * groups - managing groups
-     * of the admin panel
      *
      * @return view
      */
@@ -252,12 +282,23 @@ class AdminController extends Controller
     {
         $data = $this->data();
 
-        return view('admin.groups', $data);
+        return view('admin.groups.groups', $data);
+    }
+
+    /**
+     * specialities - managing specialities
+     *
+     * @return view
+     */
+    public function specialities()
+    {
+        $data = $this->data();
+
+        return view('admin.groups.specialities', $data);
     }
 
     /**
      * departments - managing departments
-     * of the admin panel
      *
      * @return view
      */
@@ -265,7 +306,19 @@ class AdminController extends Controller
     {
         $data = $this->data();
 
-        return view('admin.departments', $data);
+        return view('admin.departments.departments', $data);
+    }
+
+    /**
+     * degrees - managing degrees
+     *
+     * @return view
+     */
+    public function degrees()
+    {
+        $data = $this->data();
+
+        return view('admin.departments.degrees', $data);
     }
 
     /**

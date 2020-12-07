@@ -1,28 +1,26 @@
 @extends('layouts.admin')
-@section('title', 'Timetables | Admin Panel')
-@section('timetables', 'active')
+@section('groups', 'active')
 
 @section('content')
 
 <main class="page">
    <h1 class="admin-page-title">
-      Timetables
+      @yield('page-title')
    </h1>
    <div class="container">
 
       <div class="admin-page-slider">
          <div class="admin-page-slider-content">
-            <a href="#" class="admin-page-slider-elem active">
+            <a href="{{ route('admin.groups') }}" class="admin-page-slider-elem @yield('groups-link')">
                Groups
             </a>
-            <a href="#" class="admin-page-slider-elem">
-               Teachers
-            </a>
-            <a href="#" class="admin-page-slider-elem">
-               Rooms
+            <a href="{{ route('admin.specialities') }}" class="admin-page-slider-elem @yield('specialities-link')">
+               Specialities
             </a>
          </div>
       </div>
+
+      @yield('subcontent')
       
    </div>
 </main>

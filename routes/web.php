@@ -68,9 +68,21 @@ Route::middleware(['auth.only'])->group(function () {
 
             Route::middleware(['admin.logged'])->group(function () {
                Route::get('', [AdminController::class, 'dashboard'])->name('dashboard');
+
                Route::get('users', [AdminController::class, 'users'])->name('users');
+               Route::get('students', [AdminController::class, 'students'])->name('students');
+               Route::get('teachers', [AdminController::class, 'teachers'])->name('teachers');
+               Route::get('deans', [AdminController::class, 'deans'])->name('deans');
+
+
                Route::get('groups', [AdminController::class, 'groups'])->name('groups');
+               Route::get('specialities', [AdminController::class, 'specialities'])->name('specialities');
+
+
                Route::get('departments', [AdminController::class, 'departments'])->name('departments');
+               Route::get('degrees', [AdminController::class, 'degrees'])->name('degrees');
+
+
                Route::get('timetables', [AdminController::class, 'timetables'])->name('timetables');
                Route::get('exams', [AdminController::class, 'exams'])->name('exams');
 
