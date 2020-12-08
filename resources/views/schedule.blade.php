@@ -59,8 +59,6 @@
                               @endforeach
                            </timetable-folder>
                         @endif
-                     @else
-                           <timetable-cell start='{{ $time->startStr }}' end='{{ $time->endStr }}'></timetable-cell>
                      @endif
                   @endforeach
                </timetable-day>

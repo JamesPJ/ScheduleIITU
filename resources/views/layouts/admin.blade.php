@@ -50,8 +50,8 @@
             <div class="admin-menu-content">
                <a href="{{ route('admin.dashboard') }}" class="admin-menu-link @yield('dashboard')">Dashboard</a>
                <a href="{{ route('admin.users') }}" class="admin-menu-link @yield('users')">Users</a>
-               <a href="{{ route('admin.groups') }}" class="admin-menu-link @yield('groups')">Groups</a>
-               <a href="{{ route('admin.departments') }}" class="admin-menu-link @yield('departments')">Departments</a>
+               {{-- <a href="{{ route('admin.groups') }}" class="admin-menu-link @yield('groups')">Groups</a>
+               <a href="{{ route('admin.departments') }}" class="admin-menu-link @yield('departments')">Departments</a> --}}
                {{-- <a href="{{ route('admin.timetables') }}" class="admin-menu-link @yield('timetables')">Timetables</a> --}}
                {{-- <a href="{{ route('admin.exams') }}" class="admin-menu-link @yield('exams')">Exams</a> --}}
                <a href="{{ route('admin.settings') }}" class="admin-menu-link @yield('settings')">Settings</a>

@@ -248,7 +248,7 @@ class AdminController extends Controller
     {
         $data = $this->data();
 
-        return view('admin.groups.groups', $data);
+        return view('admin.groups', $data);
     }
 
     /**
@@ -260,7 +260,7 @@ class AdminController extends Controller
     {
         $data = $this->data();
 
-        return view('admin.groups.specialities', $data);
+        return view('admin.specialities', $data);
     }
 
     /**
@@ -272,7 +272,7 @@ class AdminController extends Controller
     {
         $data = $this->data();
 
-        return view('admin.departments.departments', $data);
+        return view('admin.departments', $data);
     }
 
     /**
@@ -284,7 +284,7 @@ class AdminController extends Controller
     {
         $data = $this->data();
 
-        return view('admin.departments.degrees', $data);
+        return view('admin.degrees', $data);
     }
 
     /**

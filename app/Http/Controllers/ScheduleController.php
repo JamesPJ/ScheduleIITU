@@ -141,11 +141,11 @@ class ScheduleController extends Controller
             }
         }
         for ($i = 0; $i < 6; $i++) {
-            for ($j = count($schedule[$i]); $j >= 0; $j--) {
-                if (isset($schedule[$i][$j])) {
-                    if (count($schedule[$i][$j]) == 0) {
-                        unset($schedule[$i][$j]);
-                    } else if (count($schedule[$i][$j]) > 0) {
+            foreach ($timeRange->reverse() as $j) {
+                if (isset($schedule[$i][$j->id])) {
+                    if (count($schedule[$i][$j->id]) == 0) {
+                        unset($schedule[$i][$j->id]);
+                    } else if (count($schedule[$i][$j->id]) > 0) {
                         break;
                     }
                 }

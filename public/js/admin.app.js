@@ -2101,6 +2101,12 @@ process.umask = function() { return 0; };
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var _require = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"),
@@ -2147,6 +2153,340 @@ Vue.component('app-chart-elem', {
     }, 700);
   },
   template: "\n      <div class=\"admin-dashboard-chart-elem\">\n         <div class=\"admin-dashboard-chart-elem-tooltip\">\n            {{ percentage }}%\n         </div>\n         <div class=\"admin-dashboard-chart-elem-bar\">\n            <div class=\"admin-dashboard-chart-elem-bar-indicator\" :class=\"percentageClass\"></div>\n         </div>\n         <div class=\"admin-dashboard-chart-elem-text\">\n            {{ text }}\n         </div>\n      </div>\n   "
+});
+Vue.component('admin-user-elem', {
+  props: ['id', 'email', 'fullname', 'roles'],
+  computed: {
+    stringRoles: function stringRoles() {
+      var str = this.roles.join(", ");
+      return str.charAt(0).toUpperCase() + str.slice(1);
+      ;
+    }
+  },
+  template: "\n      <div class=\"admin-users-elem\">\n         <span class=\"admin-users-elem-email\">{{ email }}</span>\n         <span class=\"admin-users-elem-fullname\">{{ fullname }}</span>\n         <span class=\"admin-users-elem-role\">{{ stringRoles }}</span>\n         <button class=\"btn secondary\">Edit</button>\n      </div>\n   "
+});
+Vue.component('add-user', {
+  props: ['link', 'departments-link'],
+  data: function data() {
+    return {
+      fullname: "",
+      email: "",
+      role: "",
+      department: "",
+      password: "",
+      departments: []
+    };
+  },
+  computed: {
+    csrf: function csrf() {
+      return document.querySelector('meta[name="csrf-token"]').content;
+    }
+  },
+  methods: {
+    getDepartments: function getDepartments() {
+      var _this3 = this;
+
+      Axios.get(this.departmentsLink).then(function (response) {
+        var _iterator = _createForOfIteratorHelper(response.data),
+            _step;
+
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+            d = _step.value;
+
+            _this3.departments.push(d);
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
+        }
+      });
+    }
+  },
+  created: function created() {
+    this.getDepartments();
+  },
+  template: "\n      <modal id=\"add-user\">\n         <form method=\"post\" :action=\"link\" class=\"admin-users-add\">\n            <input type=\"hidden\" name=\"_token\" v-model=\"csrf\">\n            <input type=\"text\" name=\"fullname\" placeholder=\"Fullname\" v-model=\"fullname\" required>\n            <input type=\"email\" name=\"email\" placeholder=\"Email\" v-model=\"email\" required>\n            <select name=\"role\" v-model=\"role\" required>\n               <option disabled selected value=\"\">Role</option>\n               <option value=\"student\">Student</option>\n               <option value=\"teacher\">Teacher</option>\n               <option value=\"dean\">Dean</option>\n            </select>\n            <select name=\"department_id\" v-if=\"role == 'teacher'\" v-model=\"department\" required>\n               <option disabled selected value=\"\">Department</option>\n               <option v-for=\"d of departments\" :value=\"d.id\">{{ d.name }}</option>\n            </select>\n            <input type=\"password\" v-if=\"role == 'dean'\" placeholder=\"Passowrd\" v-model=\"password\" required>\n            <p v-if=\"role == 'student'\">After adding you can edit groups!</p>\n            <p v-if=\"role == 'teacher'\">After adding you can edit degrees!</p>\n            <button class=\"btn secondary\">Add</button>\n         </form>\n      </modal>\n   "
+});
+Vue.component('admin-users', {
+  props: ['users-link', 'students-link', 'teachers-link', 'deans-link', 'add-user-link', 'edit-user-link', 'delete-user-link', 'departments-link'],
+  data: function data() {
+    return {
+      users: [],
+      students: [],
+      teachers: [],
+      deans: [],
+      filterString: "",
+      role: "",
+      sort: "",
+      currentOrder: "desc"
+    };
+  },
+  computed: {
+    list: function list() {
+      var users = [];
+      var list = this.role == "student" ? this.students : this.role == "teacher" ? this.teachers : this.role == "dean" ? this.deans : this.users;
+
+      var _iterator2 = _createForOfIteratorHelper(list),
+          _step2;
+
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          u = _step2.value;
+          if (u.fullname.toLowerCase().includes(this.filterString.toLowerCase()) || u.email.toLowerCase().includes(this.filterString)) users.push(u);
+        }
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
+
+      if (this.sort != "") {
+        var asc = this.currentOrder == "asc";
+
+        if (this.sort == "id") {
+          users.sort(function (a, b) {
+            if (asc) {
+              return a.id - b.id;
+            }
+
+            return b.id - a.id;
+          });
+        } else if (this.sort == "email") {
+          users.sort(function (a, b) {
+            if (asc) {
+              return a.email > b.email ? 1 : a.email < b.email ? -1 : 0;
+            }
+
+            return a.email < b.email ? 1 : a.email > b.email ? -1 : 0;
+          });
+        } else if (this.sort == "fullname") {
+          users.sort(function (a, b) {
+            if (asc) {
+              return a.fullname > b.fullname ? 1 : a.fullname < b.fullname ? -1 : 0;
+            }
+
+            return a.fullname < b.fullname ? 1 : a.fullname > b.fullname ? -1 : 0;
+          });
+        }
+      }
+
+      return users;
+    },
+    iconClass: function iconClass() {
+      return {
+        "fa-sort-alpha-down": this.currentOrder == "asc",
+        "fa-sort-alpha-up": this.currentOrder == "desc"
+      };
+    }
+  },
+  methods: {
+    getUsers: function getUsers() {
+      var _this4 = this;
+
+      Axios.get(this.usersLink).then(function (response) {
+        var _iterator3 = _createForOfIteratorHelper(response.data),
+            _step3;
+
+        try {
+          for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+            u = _step3.value;
+            var user = {
+              id: u.id,
+              email: u.email,
+              fullname: u.fullname,
+              roles: []
+            };
+
+            var _iterator4 = _createForOfIteratorHelper(u.roles),
+                _step4;
+
+            try {
+              for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+                r = _step4.value;
+                user.roles.push(r.name);
+              }
+            } catch (err) {
+              _iterator4.e(err);
+            } finally {
+              _iterator4.f();
+            }
+
+            _this4.users.push(user);
+          }
+        } catch (err) {
+          _iterator3.e(err);
+        } finally {
+          _iterator3.f();
+        }
+      });
+    },
+    getStudents: function getStudents() {
+      var _this5 = this;
+
+      Axios.get(this.studentsLink).then(function (response) {
+        var _iterator5 = _createForOfIteratorHelper(response.data),
+            _step5;
+
+        try {
+          for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+            s = _step5.value;
+            var student = {
+              id: s.id,
+              user_id: s.user.id,
+              email: s.user.email,
+              fullname: s.user.fullname,
+              roles: [],
+              groups: []
+            };
+
+            var _iterator6 = _createForOfIteratorHelper(s.user.roles),
+                _step6;
+
+            try {
+              for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
+                r = _step6.value;
+                student.roles.push(r.name);
+              }
+            } catch (err) {
+              _iterator6.e(err);
+            } finally {
+              _iterator6.f();
+            }
+
+            var _iterator7 = _createForOfIteratorHelper(s.groups),
+                _step7;
+
+            try {
+              for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
+                g = _step7.value;
+                student.groups.push(g.name);
+              }
+            } catch (err) {
+              _iterator7.e(err);
+            } finally {
+              _iterator7.f();
+            }
+
+            _this5.students.push(student);
+          }
+        } catch (err) {
+          _iterator5.e(err);
+        } finally {
+          _iterator5.f();
+        }
+      });
+    },
+    getTeachers: function getTeachers() {
+      var _this6 = this;
+
+      Axios.get(this.teachersLink).then(function (response) {
+        var _iterator8 = _createForOfIteratorHelper(response.data),
+            _step8;
+
+        try {
+          for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
+            t = _step8.value;
+            var teacher = {
+              id: t.id,
+              user_id: t.user.id,
+              email: t.user.email,
+              fullname: t.user.fullname,
+              roles: [],
+              department: t.department.name,
+              degrees: []
+            };
+
+            var _iterator9 = _createForOfIteratorHelper(t.user.roles),
+                _step9;
+
+            try {
+              for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
+                r = _step9.value;
+                teacher.roles.push(r.name);
+              }
+            } catch (err) {
+              _iterator9.e(err);
+            } finally {
+              _iterator9.f();
+            }
+
+            var _iterator10 = _createForOfIteratorHelper(t.degrees),
+                _step10;
+
+            try {
+              for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
+                d = _step10.value;
+                teacher.degrees.push(d.name);
+              }
+            } catch (err) {
+              _iterator10.e(err);
+            } finally {
+              _iterator10.f();
+            }
+
+            _this6.teachers.push(teacher);
+          }
+        } catch (err) {
+          _iterator8.e(err);
+        } finally {
+          _iterator8.f();
+        }
+      });
+    },
+    getDeans: function getDeans() {
+      var _this7 = this;
+
+      Axios.get(this.deansLink).then(function (response) {
+        var _iterator11 = _createForOfIteratorHelper(response.data),
+            _step11;
+
+        try {
+          for (_iterator11.s(); !(_step11 = _iterator11.n()).done;) {
+            d = _step11.value;
+            var dean = {
+              id: d.id,
+              user_id: d.user.id,
+              email: d.user.email,
+              fullname: d.user.fullname,
+              roles: []
+            };
+
+            var _iterator12 = _createForOfIteratorHelper(d.user.roles),
+                _step12;
+
+            try {
+              for (_iterator12.s(); !(_step12 = _iterator12.n()).done;) {
+                r = _step12.value;
+                dean.roles.push(r.name);
+              }
+            } catch (err) {
+              _iterator12.e(err);
+            } finally {
+              _iterator12.f();
+            }
+
+            _this7.deans.push(dean);
+          }
+        } catch (err) {
+          _iterator11.e(err);
+        } finally {
+          _iterator11.f();
+        }
+      });
+    },
+    reverseOrder: function reverseOrder() {
+      this.currentOrder = this.currentOrder == "asc" ? "desc" : "asc";
+    }
+  },
+  created: function created() {
+    this.getUsers();
+    this.getStudents();
+    this.getTeachers();
+    this.getDeans();
+  },
+  template: "\n      <div class=\"admin-users\">\n         <div class=\"admin-users-filter\">\n            <input type=\"text\" placeholder=\"Fullname or email\" v-model=\"filterString\">\n            <select v-model=\"role\">\n               <option disabled selected value=\"\">User Role</option>\n               <option value=\"any\">Any</option>\n               <option value=\"student\">Student</option>\n               <option value=\"teacher\">Teacher</option>\n               <option value=\"dean\">Dean</option>\n            </select>\n            <select v-model=\"sort\">\n               <option disabled selected value=\"\">Sort By</option>\n               <option value=\"id\">Register time</option>\n               <option value=\"fullname\">Fullname</option>\n               <option value=\"email\">Email</option>\n            </select>\n            <button class=\"btn secondary\" @click=\"reverseOrder\">\n               <i class=\"fas\" :class=\"iconClass\"></i>\n            </button>\n            <button class=\"btn secondary\" data-modal=\"add-user\">\n               Add User\n            </button>\n         </div>\n         <add-user :link=\"addUserLink\" :departments-link=\"departmentsLink\"></add-user>\n         <div class=\"admin-users-list\">\n            <admin-user-elem v-for=\"u of list\" \n                           :id=\"u.id\" \n                           :key=\"u.id\" \n                           :email=\"u.email\" \n                           :fullname=\"u.fullname\" \n                           :roles=\"u.roles\">\n            </admin-user-elem>\n         </div>\n      </div>\n   "
 });
 
 window.toggleAdminMenu = function () {

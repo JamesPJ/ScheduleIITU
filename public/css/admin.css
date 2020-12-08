@@ -3337,3 +3337,134 @@
   }
 }
 
+.admin-users-filter {
+  margin-top: 20px;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.admin-users-filter * {
+  flex: 1 1 auto;
+  margin: 5px;
+}
+
+.admin-users-list {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.admin-users-elem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 40px 10px;
+  border-radius: 10px;
+  background-color: #f8f8f8;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  margin: 10px 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .admin-users-elem {
+    background-color: #2c2f33;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 479.98px) {
+  .admin-users-elem {
+    padding: 60px;
+  }
+}
+
+.admin-users-elem-email {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  font-size: 14px;
+}
+
+.admin-users-elem-email::before {
+  content: "Email: ";
+  font-size: 14px;
+  font-weight: bold;
+  opacity: 0.5;
+  margin-right: 5px;
+}
+
+.admin-users-elem-fullname {
+  font-weight: bold;
+  font-size: 28px;
+  text-align: center;
+}
+
+@media (max-width: 479.98px) {
+  .admin-users-elem-fullname {
+    font-size: 18px;
+  }
+}
+
+.admin-users-elem-role {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 14px;
+}
+
+@media (max-width: 479.98px) {
+  .admin-users-elem-role {
+    top: auto;
+    right: auto;
+    bottom: 15px;
+    left: 15px;
+  }
+}
+
+.admin-users-elem-role::before {
+  content: "Role: ";
+  font-size: 14px;
+  font-weight: bold;
+  opacity: 0.5;
+  margin-right: 5px;
+}
+
+.admin-users-elem button {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  padding: 5px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.admin-users-add {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f8f8f8;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .admin-users-add {
+    background-color: #2c2f33;
+    box-shadow: none;
+  }
+}
+
+.admin-users-add * {
+  margin: 10px 0;
+}
+
+.admin-users-add p {
+  text-align: center;
+}
+

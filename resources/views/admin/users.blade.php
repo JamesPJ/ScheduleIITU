@@ -9,23 +9,14 @@
       Users
    </h1>
    <div class="container">
-
-      <div class="admin-page-slider">
-         <div class="admin-page-slider-content">
-            <a href="#" class="admin-page-slider-elem active">
-               Students
-            </a>
-            <a href="#" class="admin-page-slider-elem">
-               Teachers
-            </a>
-            <a href="#" class="admin-page-slider-elem">
-               Deans
-            </a>
-         </div>
-      </div>
-
-      
-      
+      <admin-users users-link="{{ route('admin.api.users') }}"
+                  students-link="{{ route('admin.api.students') }}"
+                  teachers-link="{{ route('admin.api.teachers') }}"
+                  deans-link="{{ route('admin.api.deans') }}"
+                  add-user-link="{{ route('admin.api.add-user') }}"
+                  edit-user-link="{{ route('admin.api.edit-user') }}"
+                  delete-user-link="{{ route('admin.api.delete-user') }}"
+                  departments-link="{{ route('admin.api.departments') }}"></admin-users>
    </div>
 </main>
 

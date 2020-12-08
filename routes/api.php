@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\SelectController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::name('api.')->group(function () {

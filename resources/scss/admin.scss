@@ -396,3 +396,108 @@
       }
    }
 }
+.admin-users {
+   &-filter {
+      margin-top: 20px;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 20px;
+      * {
+         flex: 1 1 auto;
+         margin: 5px;
+      }
+   }
+   &-list {
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      padding: 20px;
+   }
+   &-elem {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 40px 10px;
+      border-radius: 10px;
+      background-color: $bgLight;
+      box-shadow: $shadow;
+      margin: 10px 0;
+      @media (prefers-color-scheme: dark) {
+         background-color: $bgLightDark;
+         box-shadow: none;
+      }
+      @media (max-width: $md4) {
+         padding: 60px;
+      }
+      &-email {
+         position: absolute;
+         top: 15px;
+         left: 15px;
+         font-size: 14px;
+         &::before {
+            content: "Email: ";
+            font-size: 14px;
+            font-weight: bold;
+            opacity: 0.5;
+            margin-right: 5px;
+         }
+      }
+      &-fullname {
+         font-weight: bold;
+         font-size: 28px;
+         text-align: center;
+         @media (max-width: $md4) {
+            font-size: 18px;
+         }
+      }
+      &-role {
+         position: absolute;
+         top: 15px;
+         right: 15px;
+         font-size: 14px;
+         @media (max-width: $md4) {
+            top: auto;
+            right: auto;
+            bottom: 15px;
+            left: 15px;
+         }
+         &::before {
+            content: "Role: ";
+            font-size: 14px;
+            font-weight: bold;
+            opacity: 0.5;
+            margin-right: 5px;
+         }
+      }
+      button {
+         position: absolute;
+         right: 15px;
+         bottom: 15px;
+         padding: 5px;
+         font-weight: bold;
+         font-size: 14px;
+      }
+   }
+   &-add {
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: $bgLight;
+      box-shadow: $shadow;
+      @media (prefers-color-scheme: dark) {
+         background-color: $bgLightDark;
+         box-shadow: none;
+      }
+      * {
+         margin: 10px 0;
+      }
+      p {
+         text-align: center;
+      }
+   }
+}
