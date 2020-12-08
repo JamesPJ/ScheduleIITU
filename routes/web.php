@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\HomeController;
@@ -8,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SelectController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\AdminController;
 
 
 Route::get('/', [HomeController::class, 'home'])->name('index');
@@ -70,9 +70,6 @@ Route::middleware(['auth.only'])->group(function () {
                Route::get('', [AdminController::class, 'dashboard'])->name('dashboard');
 
                Route::get('users', [AdminController::class, 'users'])->name('users');
-               Route::get('students', [AdminController::class, 'students'])->name('students');
-               Route::get('teachers', [AdminController::class, 'teachers'])->name('teachers');
-               Route::get('deans', [AdminController::class, 'deans'])->name('deans');
 
 
                Route::get('groups', [AdminController::class, 'groups'])->name('groups');

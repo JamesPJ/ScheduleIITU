@@ -230,47 +230,13 @@ class AdminController extends Controller
     /**
      * users - managing users (students, teacher, deans)
      *
-     * @return redirect to admin.students
+     * @return view
      */
     public function users()
     {
-        return redirect()->route('admin.students');
-    }
-
-    /**
-     * students - managing students
-     *
-     * @return view
-     */
-    public function students()
-    {
         $data = $this->data();
 
-        return view('admin.users.students', $data);
-    }
-
-    /**
-     * teachers - managing teachers
-     *
-     * @return view
-     */
-    public function teachers()
-    {
-        $data = $this->data();
-
-        return view('admin.users.teachers', $data);
-    }
-
-    /**
-     * deans - managing deans
-     *
-     * @return view
-     */
-    public function deans()
-    {
-        $data = $this->data();
-
-        return view('admin.users.deans', $data);
+        return view('admin.users', $data);
     }
 
     /**

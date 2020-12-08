@@ -29,6 +29,7 @@ class ScheduleController extends Controller
         $data['schedule'] = $this->drawSchedule($data['user']->cells, $data['timeRange']);
         $data['name'] = $data['user']->scheduleName;
         $data['type'] = $data['user']->scheduleType;
+        $data['title'] = "Schedule";
 
         return view('schedule', $data);
     }
@@ -47,6 +48,7 @@ class ScheduleController extends Controller
         $data['schedule'] = $this->drawSchedule($group->currentTimetable->cells, $data['timeRange']);
         $data['name'] = $group->name;
         $data['type'] = 'group';
+        $data['title'] = $group->name;
 
         return view('schedule', $data);
     }
@@ -65,6 +67,7 @@ class ScheduleController extends Controller
         $data['schedule'] = $this->drawSchedule($teacher->cells, $data['timeRange']);
         $data['name'] = $teacher->user->fullname;
         $data['type'] = 'teacher';
+        $data['title'] = $teacher->user->fullname;
 
         return view('schedule', $data);
     }
@@ -83,6 +86,7 @@ class ScheduleController extends Controller
         $data['schedule'] = $this->drawSchedule($room->cells, $data['timeRange']);
         $data['name'] = $room->location;
         $data['type'] = 'room';
+        $data['title'] = $room->location;
 
         return view('schedule', $data);
     }

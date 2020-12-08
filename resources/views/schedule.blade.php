@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Schedule | Schedule IITU')
+@section('title', $title.' | Schedule IITU')
 @section('nav-top', 'top=yes')
 
 @section('content')
@@ -59,6 +59,8 @@
                               @endforeach
                            </timetable-folder>
                         @endif
+                     @else
+                           <timetable-cell start='{{ $time->startStr }}' end='{{ $time->endStr }}'></timetable-cell>
                      @endif
                   @endforeach
                </timetable-day>
