@@ -475,11 +475,24 @@
       }
       button {
          position: absolute;
-         right: 15px;
-         bottom: 15px;
+         &.edit {
+            right: 15px;
+            bottom: 15px;
+            font-size: 14px;
+         }
+         &.delete {
+            left: 15px;
+            bottom: 15px;
+            font-size: 14px;
+            @media (max-width: $md4) {
+               left: auto;
+               bottom: auto;
+               right: 15px;
+               top: 15px;
+            }
+         }
          padding: 5px;
          font-weight: bold;
-         font-size: 14px;
       }
    }
    &-add {

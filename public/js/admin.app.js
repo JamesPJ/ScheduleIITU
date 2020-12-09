@@ -2161,9 +2161,35 @@ Vue.component('admin-user-elem', {
       var str = this.roles.join(", ");
       return str.charAt(0).toUpperCase() + str.slice(1);
       ;
+    },
+    generatedEditId: function generatedEditId() {
+      return "edit-user-" + this.id;
+    },
+    generatedDeleteId: function generatedDeleteId() {
+      return "delete-user-" + this.id;
     }
   },
-  template: "\n      <div class=\"admin-users-elem\">\n         <span class=\"admin-users-elem-email\">{{ email }}</span>\n         <span class=\"admin-users-elem-fullname\">{{ fullname }}</span>\n         <span class=\"admin-users-elem-role\">{{ stringRoles }}</span>\n         <button class=\"btn secondary\">Edit</button>\n      </div>\n   "
+  methods: {
+    openEditModal: function openEditModal() {
+      var _this3 = this;
+
+      document.body.classList.add("lock");
+      document.getElementById(this.generatedEditId).classList.add("df");
+      setTimeout(function () {
+        document.getElementById(_this3.generatedEditId).classList.add("active");
+      }, 10);
+    },
+    openDeleteModal: function openDeleteModal() {
+      var _this4 = this;
+
+      document.body.classList.add("lock");
+      document.getElementById(this.generatedDeleteId).classList.add("df");
+      setTimeout(function () {
+        document.getElementById(_this4.generatedDeleteId).classList.add("active");
+      }, 10);
+    }
+  },
+  template: "\n      <div class=\"admin-users-elem\">\n         <span class=\"admin-users-elem-email\">{{ email }}</span>\n         <span class=\"admin-users-elem-fullname\">{{ fullname }}</span>\n         <span class=\"admin-users-elem-role\">{{ stringRoles }}</span>\n      </div>\n   "
 });
 Vue.component('add-user', {
   props: ['link', 'departments-link'],
@@ -2184,7 +2210,7 @@ Vue.component('add-user', {
   },
   methods: {
     getDepartments: function getDepartments() {
-      var _this3 = this;
+      var _this5 = this;
 
       Axios.get(this.departmentsLink).then(function (response) {
         var _iterator = _createForOfIteratorHelper(response.data),
@@ -2194,7 +2220,7 @@ Vue.component('add-user', {
           for (_iterator.s(); !(_step = _iterator.n()).done;) {
             d = _step.value;
 
-            _this3.departments.push(d);
+            _this5.departments.push(d);
           }
         } catch (err) {
           _iterator.e(err);
@@ -2207,7 +2233,7 @@ Vue.component('add-user', {
   created: function created() {
     this.getDepartments();
   },
-  template: "\n      <modal id=\"add-user\">\n         <form method=\"post\" :action=\"link\" class=\"admin-users-add\">\n            <input type=\"hidden\" name=\"_token\" v-model=\"csrf\">\n            <input type=\"text\" name=\"fullname\" placeholder=\"Fullname\" v-model=\"fullname\" required>\n            <input type=\"email\" name=\"email\" placeholder=\"Email\" v-model=\"email\" required>\n            <select name=\"role\" v-model=\"role\" required>\n               <option disabled selected value=\"\">Role</option>\n               <option value=\"student\">Student</option>\n               <option value=\"teacher\">Teacher</option>\n               <option value=\"dean\">Dean</option>\n            </select>\n            <select name=\"department_id\" v-if=\"role == 'teacher'\" v-model=\"department\" required>\n               <option disabled selected value=\"\">Department</option>\n               <option v-for=\"d of departments\" :value=\"d.id\">{{ d.name }}</option>\n            </select>\n            <input type=\"password\" v-if=\"role == 'dean'\" placeholder=\"Passowrd\" v-model=\"password\" required>\n            <p v-if=\"role == 'student'\">After adding you can edit groups!</p>\n            <p v-if=\"role == 'teacher'\">After adding you can edit degrees!</p>\n            <button class=\"btn secondary\">Add</button>\n         </form>\n      </modal>\n   "
+  template: "\n      <modal id=\"add-user\">\n         <form method=\"post\" :action=\"link\" class=\"admin-users-add\">\n            <input type=\"hidden\" name=\"_token\" v-model=\"csrf\">\n            <input type=\"text\" name=\"fullname\" placeholder=\"Fullname\" v-model=\"fullname\" required>\n            <input type=\"email\" name=\"email\" placeholder=\"Email\" v-model=\"email\" required>\n            <select name=\"role\" v-model=\"role\" required>\n               <option disabled selected value=\"\">Role</option>\n               <option value=\"student\">Student</option>\n               <option value=\"teacher\">Teacher</option>\n               <option value=\"dean\">Dean</option>\n            </select>\n            <select name=\"department_id\" v-if=\"role == 'teacher'\" v-model=\"department\" required>\n               <option disabled selected value=\"\">Department</option>\n               <option v-for=\"d of departments\" :value=\"d.id\">{{ d.name }}</option>\n            </select>\n            <input type=\"password\" v-if=\"role == 'dean'\" placeholder=\"Passowrd\" v-model=\"password\" required>\n            <p v-if=\"role == 'teacher'\">After adding you can edit degrees!</p>\n            <button class=\"btn secondary\">Add</button>\n         </form>\n      </modal>\n   "
 });
 Vue.component('admin-users', {
   props: ['users-link', 'students-link', 'teachers-link', 'deans-link', 'add-user-link', 'edit-user-link', 'delete-user-link', 'departments-link'],
@@ -2283,7 +2309,7 @@ Vue.component('admin-users', {
   },
   methods: {
     getUsers: function getUsers() {
-      var _this4 = this;
+      var _this6 = this;
 
       Axios.get(this.usersLink).then(function (response) {
         var _iterator3 = _createForOfIteratorHelper(response.data),
@@ -2313,7 +2339,7 @@ Vue.component('admin-users', {
               _iterator4.f();
             }
 
-            _this4.users.push(user);
+            _this6.users.push(user);
           }
         } catch (err) {
           _iterator3.e(err);
@@ -2323,7 +2349,7 @@ Vue.component('admin-users', {
       });
     },
     getStudents: function getStudents() {
-      var _this5 = this;
+      var _this7 = this;
 
       Axios.get(this.studentsLink).then(function (response) {
         var _iterator5 = _createForOfIteratorHelper(response.data),
@@ -2369,7 +2395,7 @@ Vue.component('admin-users', {
               _iterator7.f();
             }
 
-            _this5.students.push(student);
+            _this7.students.push(student);
           }
         } catch (err) {
           _iterator5.e(err);
@@ -2379,7 +2405,7 @@ Vue.component('admin-users', {
       });
     },
     getTeachers: function getTeachers() {
-      var _this6 = this;
+      var _this8 = this;
 
       Axios.get(this.teachersLink).then(function (response) {
         var _iterator8 = _createForOfIteratorHelper(response.data),
@@ -2426,7 +2452,7 @@ Vue.component('admin-users', {
               _iterator10.f();
             }
 
-            _this6.teachers.push(teacher);
+            _this8.teachers.push(teacher);
           }
         } catch (err) {
           _iterator8.e(err);
@@ -2436,7 +2462,7 @@ Vue.component('admin-users', {
       });
     },
     getDeans: function getDeans() {
-      var _this7 = this;
+      var _this9 = this;
 
       Axios.get(this.deansLink).then(function (response) {
         var _iterator11 = _createForOfIteratorHelper(response.data),
@@ -2467,7 +2493,7 @@ Vue.component('admin-users', {
               _iterator12.f();
             }
 
-            _this7.deans.push(dean);
+            _this9.deans.push(dean);
           }
         } catch (err) {
           _iterator11.e(err);
@@ -2486,7 +2512,7 @@ Vue.component('admin-users', {
     this.getTeachers();
     this.getDeans();
   },
-  template: "\n      <div class=\"admin-users\">\n         <div class=\"admin-users-filter\">\n            <input type=\"text\" placeholder=\"Fullname or email\" v-model=\"filterString\">\n            <select v-model=\"role\">\n               <option disabled selected value=\"\">User Role</option>\n               <option value=\"any\">Any</option>\n               <option value=\"student\">Student</option>\n               <option value=\"teacher\">Teacher</option>\n               <option value=\"dean\">Dean</option>\n            </select>\n            <select v-model=\"sort\">\n               <option disabled selected value=\"\">Sort By</option>\n               <option value=\"id\">Register time</option>\n               <option value=\"fullname\">Fullname</option>\n               <option value=\"email\">Email</option>\n            </select>\n            <button class=\"btn secondary\" @click=\"reverseOrder\">\n               <i class=\"fas\" :class=\"iconClass\"></i>\n            </button>\n            <button class=\"btn secondary\" data-modal=\"add-user\">\n               Add User\n            </button>\n         </div>\n         <add-user :link=\"addUserLink\" :departments-link=\"departmentsLink\"></add-user>\n         <div class=\"admin-users-list\">\n            <admin-user-elem v-for=\"u of list\" \n                           :id=\"u.id\" \n                           :key=\"u.id\" \n                           :email=\"u.email\" \n                           :fullname=\"u.fullname\" \n                           :roles=\"u.roles\">\n            </admin-user-elem>\n         </div>\n      </div>\n   "
+  template: "\n      <div class=\"admin-users\">\n         <div class=\"admin-users-filter\">\n            <input type=\"text\" placeholder=\"Fullname or email\" v-model=\"filterString\">\n            <select v-model=\"role\">\n               <option disabled selected value=\"\">User Role</option>\n               <option value=\"any\">Any</option>\n               <option value=\"student\">Student</option>\n               <option value=\"teacher\">Teacher</option>\n               <option value=\"dean\">Dean</option>\n            </select>\n            <select v-model=\"sort\">\n               <option disabled selected value=\"\">Sort By</option>\n               <option value=\"id\">Register time</option>\n               <option value=\"fullname\">Fullname</option>\n               <option value=\"email\">Email</option>\n            </select>\n            <button class=\"btn secondary\" @click=\"reverseOrder\">\n               <i class=\"fas\" :class=\"iconClass\"></i>\n            </button>\n         </div>\n         <div class=\"admin-users-list\">\n            <admin-user-elem v-for=\"u of list\" \n                           :id=\"u.id\" \n                           :key=\"u.id\" \n                           :email=\"u.email\" \n                           :fullname=\"u.fullname\" \n                           :roles=\"u.roles\">\n            </admin-user-elem>\n         </div>\n      </div>\n   "
 });
 
 window.toggleAdminMenu = function () {

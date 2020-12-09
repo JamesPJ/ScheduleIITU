@@ -3437,11 +3437,29 @@
 
 .admin-users-elem button {
   position: absolute;
-  right: 15px;
-  bottom: 15px;
   padding: 5px;
   font-weight: bold;
+}
+
+.admin-users-elem button.edit {
+  right: 15px;
+  bottom: 15px;
   font-size: 14px;
+}
+
+.admin-users-elem button.delete {
+  left: 15px;
+  bottom: 15px;
+  font-size: 14px;
+}
+
+@media (max-width: 479.98px) {
+  .admin-users-elem button.delete {
+    left: auto;
+    bottom: auto;
+    right: 15px;
+    top: 15px;
+  }
 }
 
 .admin-users-add {

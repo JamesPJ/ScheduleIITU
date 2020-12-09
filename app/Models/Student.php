@@ -144,7 +144,7 @@ class Student extends Model
         $addedTeacherIds = [];
         foreach ($this->groups as $group) {
             foreach ($group->currentTimetable->cells as $cell) {
-                if (!in_array($cell->teacher->id, $addedTeacherIds)) {
+                if (!in_array($cell->teacher->id, $addedTeacherIds) && !$this->isBlocked($cell->subject)) {
                     $addedTeacherIds[] = $cell->teacher->id;
                     $teachers[$cell->subject->name][] = [
                         'id' => $cell->teacher->id,

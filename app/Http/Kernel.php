@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'auth.only' => \App\Http\Middleware\AuthOnly::class,
         'admin.only' => \App\Http\Middleware\AdminOnly::class,
         'admin.logged' => \App\Http\Middleware\AdminLogged::class,
+        'not.user' => \App\Http\Middleware\NotUser::class,
     ];
 }

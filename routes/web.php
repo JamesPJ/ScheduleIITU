@@ -27,32 +27,34 @@ Route::prefix('timetable')->group(function () {
    });
 });
 Route::middleware(['auth.only'])->group(function () {
-   Route::get('/select', [SelectController::class, 'select'])->name('select');
    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-   Route::get('/schedule', [ScheduleController::class, 'schedule'])->name('schedule');
-   Route::prefix('profile')->group(function () {
-      Route::name('profile.')->group(function () {
+   Route::middleware(['not.user'])->group(function () {
+      Route::get('/select', [SelectController::class, 'select'])->name('select');
+      Route::get('/schedule', [ScheduleController::class, 'schedule'])->name('schedule');
+      Route::prefix('profile')->group(function () {
+         Route::name('profile.')->group(function () {
 
-         Route::get('', [ProfileController::class, 'profile'])->name('index');
-         Route::get('groupmates', [ProfileController::class, 'groupmates'])->name('groupmates');
-         Route::get('exams', [ProfileController::class, 'exams'])->name('exams');
-         Route::get('teachers', [ProfileController::class, 'teachers'])->name('teachers');
-         Route::get('subjects', [ProfileController::class, 'subjects'])->name('subjects');
-         Route::get('free', [ProfileController::class, 'free'])->name('free');
+            Route::get('', [ProfileController::class, 'profile'])->name('index');
+            Route::get('groupmates', [ProfileController::class, 'groupmates'])->name('groupmates');
+            Route::get('exams', [ProfileController::class, 'exams'])->name('exams');
+            Route::get('teachers', [ProfileController::class, 'teachers'])->name('teachers');
+            Route::get('subjects', [ProfileController::class, 'subjects'])->name('subjects');
+            Route::get('free', [ProfileController::class, 'free'])->name('free');
 
-         Route::get('departmentmates', [ProfileController::class, 'departmentmates'])->name('departmentmates');
+            Route::get('departmentmates', [ProfileController::class, 'departmentmates'])->name('departmentmates');
 
-         Route::prefix('group')->group(function () {
-            Route::name('group.')->group(function () {
-               Route::post('add', [ProfileController::class, 'groupAdd'])->name('add');
-               Route::post('delete', [ProfileController::class, 'groupDelete'])->name('delete');
+            Route::prefix('group')->group(function () {
+               Route::name('group.')->group(function () {
+                  Route::post('add', [ProfileController::class, 'groupAdd'])->name('add');
+                  Route::post('delete', [ProfileController::class, 'groupDelete'])->name('delete');
+               });
             });
-         });
 
-         Route::prefix('subject')->group(function () {
-            Route::name('subject.')->group(function () {
-               Route::post('block', [ProfileController::class, 'subjectBlock'])->name('block');
-               Route::post('show', [ProfileController::class, 'subjectShow'])->name('show');
+            Route::prefix('subject')->group(function () {
+               Route::name('subject.')->group(function () {
+                  Route::post('block', [ProfileController::class, 'subjectBlock'])->name('block');
+                  Route::post('show', [ProfileController::class, 'subjectShow'])->name('show');
+               });
             });
          });
       });

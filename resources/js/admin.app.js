@@ -78,6 +78,28 @@ Vue.component('admin-user-elem', {
       stringRoles: function () {
          let str = this.roles.join(", ");
          return str.charAt(0).toUpperCase() + str.slice(1);;
+      },
+      generatedEditId: function () {
+         return "edit-user-" + this.id;
+      },
+      generatedDeleteId: function () {
+         return "delete-user-" + this.id;
+      }
+   },
+   methods: {
+      openEditModal: function () {
+         document.body.classList.add("lock");
+         document.getElementById(this.generatedEditId).classList.add("df");
+         setTimeout(() => {
+            document.getElementById(this.generatedEditId).classList.add("active");
+         }, 10);
+      },
+      openDeleteModal: function () {
+         document.body.classList.add("lock");
+         document.getElementById(this.generatedDeleteId).classList.add("df");
+         setTimeout(() => {
+            document.getElementById(this.generatedDeleteId).classList.add("active");
+         }, 10);
       }
    },
    template: `
@@ -85,7 +107,6 @@ Vue.component('admin-user-elem', {
          <span class="admin-users-elem-email">{{ email }}</span>
          <span class="admin-users-elem-fullname">{{ fullname }}</span>
          <span class="admin-users-elem-role">{{ stringRoles }}</span>
-         <button class="btn secondary">Edit</button>
       </div>
    `
 });
@@ -138,7 +159,6 @@ Vue.component('add-user', {
                <option v-for="d of departments" :value="d.id">{{ d.name }}</option>
             </select>
             <input type="password" v-if="role == 'dean'" placeholder="Passowrd" v-model="password" required>
-            <p v-if="role == 'student'">After adding you can edit groups!</p>
             <p v-if="role == 'teacher'">After adding you can edit degrees!</p>
             <button class="btn secondary">Add</button>
          </form>
@@ -330,11 +350,7 @@ Vue.component('admin-users', {
             <button class="btn secondary" @click="reverseOrder">
                <i class="fas" :class="iconClass"></i>
             </button>
-            <button class="btn secondary" data-modal="add-user">
-               Add User
-            </button>
          </div>
-         <add-user :link="addUserLink" :departments-link="departmentsLink"></add-user>
          <div class="admin-users-list">
             <admin-user-elem v-for="u of list" 
                            :id="u.id" 
