@@ -2528,7 +2528,7 @@ window.toggleAdminMenu = function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\schedule-iitu\resources\js\admin.app.js */"./resources/js/admin.app.js");
+module.exports = __webpack_require__(/*! D:\My Docs\Projects\ScheduleIITU\resources\js\admin.app.js */"./resources/js/admin.app.js");
 
 
 /***/ })

@@ -2907,9 +2907,9 @@ window.subjModalClose = function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\schedule-iitu\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! C:\xampp\htdocs\schedule-iitu\resources\scss\style.scss */"./resources/scss/style.scss");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\schedule-iitu\resources\scss\admin.scss */"./resources/scss/admin.scss");
+__webpack_require__(/*! D:\My Docs\Projects\ScheduleIITU\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! D:\My Docs\Projects\ScheduleIITU\resources\scss\style.scss */"./resources/scss/style.scss");
+module.exports = __webpack_require__(/*! D:\My Docs\Projects\ScheduleIITU\resources\scss\admin.scss */"./resources/scss/admin.scss");
 
 
 /***/ })

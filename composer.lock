@@ -1819,7 +1819,7 @@
         },
         {
             "name": "microsoft/microsoft-graph",
-            "version": "1.23.0",
+            "version": "1.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/microsoftgraph/msgraph-sdk-php.git",
