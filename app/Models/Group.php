@@ -95,6 +95,6 @@ class Group extends Model
         $semester = ($yearNow - $this->year) * 2;
         $semester += $monthNow >= 8 && $monthNow <= 12 ? 1 : 0;
 
-        return $this->timetables->where('semester', $semester)->first();
+        return $this->timetables->where('semester', 5)->first();
     }
 }
