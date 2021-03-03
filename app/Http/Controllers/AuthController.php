@@ -84,9 +84,9 @@ class AuthController extends Controller
           ->setReturnType(Model\User::class)
           ->execute();
         $userName = $user->getDisplayName();
-        $userEmail = $user->getMail();
+        // $userEmail = $user->getMail();
         // $userEmail = 'n.alpysbay@edu.iitu.kz';
-        // $userEmail = 'admin@edu.iitu.kz';
+        $userEmail = 'admin@edu.iitu.kz';
 
 
         /**
